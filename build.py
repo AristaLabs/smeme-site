@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 from pathlib import Path
 from types import SimpleNamespace
@@ -120,6 +121,11 @@ def _rewrite_host_links(html: str) -> str:
     }
     for old, new in replacements.items():
         html = html.replace(old, new)
+    html = re.sub(
+        r'(href|action)="(/(?:auth|decision-trees|billing|api|\.well-known)/[^"]*)"',
+        lambda match: f'{match.group(1)}="{APP_BASE}{match.group(2)}"',
+        html,
+    )
     return html.replace("https://smeme.ai/api/v1/mcp", MCP_ENDPOINT)
 
 
