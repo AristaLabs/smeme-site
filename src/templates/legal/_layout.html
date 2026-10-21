@@ -1,0 +1,88 @@
+{% extends "layouts/base.html" %}
+{% block title %}{{ page_title }} — SMEme{% endblock %}
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <nav class="text-sm text-ui-ink-muted" aria-label="Breadcrumb">
+      <a href="/" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 dark:hover:text-brand-200 font-medium">Home</a>
+      <span class="mx-2" aria-hidden="true">/</span>
+      <a href="/legal" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 dark:hover:text-brand-200 font-medium">Legal</a>
+      <span class="mx-2" aria-hidden="true">/</span>
+      <span class="text-ui-ink font-medium">{{ page_title }}</span>
+    </nav>
+    {% set social_class = "-mr-2" %}
+    {% include "landing/_social_icons.html" %}
+  </div>
+
+  <header class="space-y-2">
+    <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight text-ui-ink leading-tight">{{ page_title }}</h1>
+    {% block legal_meta %}{% endblock %}
+  </header>
+
+  <article class="legal-prose space-y-6 text-base text-ui-ink-secondary leading-relaxed">
+    {% block legal_body %}{% endblock %}
+  </article>
+
+  {% include "legal/_nav.html" %}
+</div>
+<style>
+  .legal-prose h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--tw-prose-headings, inherit);
+    margin-top: 2rem;
+    padding-top: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .legal-prose h2:first-child { margin-top: 0; }
+  .legal-prose h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgb(var(--ui-ink) / 1);
+    margin-top: 1.25rem;
+  }
+  .legal-prose p { margin-top: 0.75rem; }
+  .legal-prose p:first-child { margin-top: 0; }
+  .legal-prose ul, .legal-prose ol {
+    margin-top: 0.75rem;
+    padding-left: 1.5rem;
+    list-style: disc;
+  }
+  .legal-prose li { margin-top: 0.35rem; }
+  .legal-prose li::marker { color: rgb(var(--ui-ink-muted) / 1); }
+  .legal-prose hr {
+    margin: 1.75rem 0;
+    border: 0;
+    border-top: 1px solid rgb(var(--ui-line) / 1);
+  }
+  .legal-prose a {
+    color: rgb(0 40 104 / 1);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .dark .legal-prose a { color: rgb(125 159 212 / 1); }
+  .legal-prose table {
+    width: 100%;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    border-collapse: collapse;
+  }
+  .legal-prose th, .legal-prose td {
+    border: 1px solid rgb(var(--ui-line) / 1);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  .legal-prose th {
+    font-weight: 600;
+    color: rgb(var(--ui-ink) / 1);
+    background: rgb(var(--ui-surface) / 1);
+  }
+  .legal-prose .legal-callout {
+    border-left: 3px solid rgb(0 40 104 / 0.35);
+    padding-left: 1rem;
+    color: rgb(var(--ui-ink) / 1);
+    font-size: 0.95rem;
+  }
+</style>
+{% endblock %}

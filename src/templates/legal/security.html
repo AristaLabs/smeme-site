@@ -1,0 +1,93 @@
+{% extends "legal/_layout.html" %}
+{% block legal_meta %}
+<p class="text-sm text-ui-ink-muted">Last updated: June 1, 2026</p>
+{% endblock %}
+{% block legal_body %}
+<p>
+  This page summarizes how Arista Labs secures the SMEme platform and the expert reasoning systems hosted on it.
+  For binding terms, see the <a href="/legal/terms">Terms of Use</a> and
+  <a href="/legal/privacy">Privacy Policy</a>.
+</p>
+
+<hr>
+
+<h2>Where data is stored</h2>
+<p>
+  The Service is hosted on cloud infrastructure in the United States. Application data—including account information,
+  Expert Assets, and Generated Outputs—is stored in managed PostgreSQL databases provided by our infrastructure vendors.
+  Authentication credentials and session state are managed through our authentication provider.
+</p>
+<p>
+  Deterministic reasoning evaluation (the automated reasoning engine for published workflows) runs on SMEme application
+  servers hosted by Render Services, Inc. Hosted SMEme does not call OpenAI, Tavily, or other third-party model APIs.
+</p>
+<p>
+  See our <a href="/legal/subprocessors">Subprocessors</a> page for the vendors we use to operate the Service.
+</p>
+
+<hr>
+
+<h2>Encryption in transit</h2>
+<p>
+  Connections to the Service use HTTPS (TLS). API traffic, web sessions, and integrations with third-party services
+  are encrypted in transit using industry-standard protocols.
+</p>
+
+<hr>
+
+<h2>Encryption at rest</h2>
+<p>
+  Data at rest is protected through encryption and access controls provided by our cloud infrastructure and database vendors.
+  We do not operate our own physical data centers.
+</p>
+
+<hr>
+
+<h2>Backups</h2>
+<p>
+  Database backups are performed by our infrastructure providers on a regular schedule to support disaster recovery
+  and operational continuity. Backup retention follows provider defaults and our operational requirements.
+  Deleted data may persist in backups for a limited period before being overwritten.
+</p>
+
+<hr>
+
+<h2>Authentication</h2>
+<p>
+  Web authentication is handled through Clerk, which supports secure sign-in flows including email verification
+  and optional multi-factor authentication configured in your account settings.
+  API and MCP access for connected agents uses OAuth 2.1 bearer tokens with scoped permissions.
+</p>
+
+<hr>
+
+<h2>Access controls</h2>
+<p>
+  Access to production systems is restricted to authorized personnel with a legitimate operational need.
+  Application-level authorization ensures users can access only their own Expert Assets and workflows unless
+  they have been explicitly granted access through platform features (for example, published public workflows
+  or organization-scoped sharing when available).
+</p>
+
+<hr>
+
+<h2>Monitoring and incident response</h2>
+<p>
+  We monitor platform availability and security-relevant events. If you believe you have discovered a security
+  vulnerability or unauthorized access related to the Service, contact us promptly at
+  <a href="mailto:contact@aristalabs.ai">contact@aristalabs.ai</a>.
+</p>
+<p>
+  We will investigate good-faith reports and take reasonable steps to address confirmed issues.
+  Please do not publicly disclose vulnerabilities before we have had a reasonable opportunity to respond.
+</p>
+
+<hr>
+
+<h2>Your responsibilities</h2>
+<p>
+  You are responsible for safeguarding your account credentials, reviewing Generated Outputs before relying on them,
+  and configuring access to your Expert Assets appropriately. We provide the SMEme platform; you control what expertise
+  you encode and who may use it.
+</p>
+{% endblock %}

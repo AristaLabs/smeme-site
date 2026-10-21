@@ -1,0 +1,420 @@
+{# How it works — two build paths + two run paths.
+   Anchors: #how-it-works, #get-started / #build (Phase 01), #run (Phase 02).
+   Design: design_handoff_landing_how_it_works. Vocabulary: decision tree; LangGraph/agent run sequences only. #}
+{% from "components/macros.html" import btn %}
+
+<section id="how-it-works" aria-labelledby="hiw-heading" class="landing-hiw">
+
+  {# Intro #}
+  <div class="hiw-intro smw-reveal">
+    <p class="hiw-intro-kicker"><span class="hiw-intro-kicker-slash" aria-hidden="true">/</span> neuro-symbolic AI at scale</p>
+    <h1 id="hiw-heading" class="hiw-intro-h1">From your expertise to a tool your agent runs</h1>
+    <p class="hiw-intro-lead">
+      SMEme is the reasoning layer your agent calls when judgment has to be repeatable &mdash;
+      not a saved prompt or runbook that re-burns tokens re-explaining your methodology every run.
+      Build and edit your decision tree however you work; your agent calls it on real evidence and gets back a deterministic, attributable answer.
+    </p>
+  </div>
+
+  {# ── PHASE 01 — You build the reasoning ─────────────────────────────── #}
+  <div id="build" class="hiw-phase-wrap smw-reveal">
+    <div id="get-started" class="hiw-phase">
+      <span class="hiw-phase-num">01</span>
+      <span class="hiw-phase-label">You build the reasoning</span>
+      <span class="hiw-phase-rule" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <div class="hiw-section smw-reveal">
+    <p class="hiw-section-lead">
+      Two ways in &mdash; author the decision tree with your agent over MCP, then edit the saved draft in the webapp.
+      Both compile to the same deployed decision tree.
+    </p>
+
+    <div class="hiw-fork">
+      {# Webapp column #}
+      <div class="hiw-path">
+        <div class="hiw-path-head">
+          <span class="hiw-path-badge hiw-path-badge--webapp">Webapp</span>
+          <span class="hiw-path-sub">Guided &amp; visual</span>
+        </div>
+
+        <article class="hiw-step-card hiw-step-card--webapp">
+          <div class="hiw-step-head">
+            <span class="hiw-step-num hiw-step-num--webapp" aria-hidden="true">1</span>
+            <h3 class="hiw-step-title">Review the draft</h3>
+            <span class="hiw-step-meta">After MCP authoring</span>
+          </div>
+          <p class="hiw-step-body">
+            Your agent authors the decision tree over MCP. SMEme validates and saves the draft.
+            Open it here to check the branching before you Deploy.
+          </p>
+        </article>
+
+        <div class="hiw-path-connector hiw-path-connector--webapp" aria-hidden="true"></div>
+
+        <article class="hiw-step-card hiw-step-card--webapp">
+          <div class="hiw-step-head">
+            <span class="hiw-step-num hiw-step-num--webapp" aria-hidden="true">2</span>
+            <h3 class="hiw-step-title">Refine in the editor</h3>
+            <span class="hiw-step-meta">Optional</span>
+          </div>
+          <p class="hiw-step-body">
+            Tune wording, branches, or conclusions in the graphical/text editor.
+            A live validation panel runs continuously with a &ldquo;How to fix&rdquo; hint under every issue.
+          </p>
+          <div class="hiw-editor-mini" aria-hidden="true">
+            <div class="hiw-editor-node">Integrated into sales org?</div>
+            <div class="hiw-editor-stem"></div>
+            <div class="hiw-editor-outcomes">
+              <span class="hiw-editor-out hiw-editor-out--a">Outcome A</span>
+              <span class="hiw-editor-out hiw-editor-out--b">Outcome B</span>
+            </div>
+          </div>
+        </article>
+
+        <div class="hiw-path-connector hiw-path-connector--webapp" aria-hidden="true"></div>
+
+        <article class="hiw-step-card hiw-step-card--webapp">
+          <div class="hiw-step-head">
+            <span class="hiw-step-num hiw-step-num--webapp" aria-hidden="true">3</span>
+            <h3 class="hiw-step-title">Connect your agent</h3>
+            <span class="hiw-step-meta">Once, anytime</span>
+          </div>
+          <p class="hiw-step-body">
+            Add the SMEme MCP server from your dashboard and sign in.
+            Your agent will be ready to call the decision tree as soon as it&rsquo;s deployed.
+          </p>
+        </article>
+      </div>
+
+      {# Agent · MCP column #}
+      <div class="hiw-path">
+        <div class="hiw-path-head">
+          <span class="hiw-path-badge hiw-path-badge--mcp">Agent &middot; MCP</span>
+          <span class="hiw-path-sub">In chat or agentic runs</span>
+        </div>
+
+        <article class="hiw-step-card hiw-step-card--mcp">
+          <div class="hiw-step-head">
+            <span class="hiw-step-num hiw-step-num--mcp" aria-hidden="true">1</span>
+            <h3 class="hiw-step-title">Connect your agent</h3>
+            <span class="hiw-step-meta hiw-step-meta--mcp">Prerequisite</span>
+          </div>
+          <p class="hiw-step-body">
+            Connect to SMEme through MCP and authenticate &mdash;
+            the authoring tools your agent uses to generate and revise decision trees are MCP tools too.
+          </p>
+        </article>
+
+        <div class="hiw-path-connector hiw-path-connector--mcp" aria-hidden="true"></div>
+
+        <article class="hiw-step-card hiw-step-card--mcp">
+          <div class="hiw-step-head">
+            <span class="hiw-step-num hiw-step-num--mcp" aria-hidden="true">2</span>
+            <h3 class="hiw-step-title">Generate in chat</h3>
+            <span class="hiw-step-meta hiw-step-meta--mcp">Minutes, in your agent</span>
+          </div>
+          <p class="hiw-step-body">
+            Ask your AI chat to help you build a decision tree with SMEme.
+            Add operating procedures, prompts, runbooks, templates, files, or websites to the working context.
+            Your agent harness can also use other MCP connectors (email, cloud drives, CRM) to pull source material.
+            It drafts a decision tree you can refine in chat; once approved, it formats and uploads the draft to SMEme for validation.
+            Drafts are not live for agents until you Deploy from the dashboard.
+          </p>
+        </article>
+
+        <div class="hiw-path-connector hiw-path-connector--mcp" aria-hidden="true"></div>
+
+        <article class="hiw-step-card hiw-step-card--mcp">
+          <div class="hiw-step-head">
+            <span class="hiw-step-num hiw-step-num--mcp" aria-hidden="true">3</span>
+            <h3 class="hiw-step-title">Revise via MCP</h3>
+            <span class="hiw-step-meta hiw-step-meta--mcp">Optional</span>
+          </div>
+          <p class="hiw-step-body">
+            Keep the conversation going to refine it &mdash;
+            your agent can revise the draft directly, or you can open it in the visual editor any time to fine-tune by hand.
+          </p>
+          <p class="hiw-step-note">Self-hosted deployments: ask your admin to turn this feature on.</p>
+        </article>
+      </div>
+    </div>
+
+    <p class="hiw-converge-hint">Manage and Run your decision trees &darr;</p>
+  </div>
+
+  {# Shared manage step #}
+  <div class="hiw-manage smw-reveal">
+    <div class="hiw-manage-copy">
+      <div class="hiw-step-head">
+        <span class="hiw-step-num hiw-step-num--manage" aria-hidden="true">4</span>
+        <span class="hiw-step-meta">Your dashboard</span>
+      </div>
+      <h2 class="hiw-manage-h2">Manage your decision trees in the SMEme platform</h2>
+      <p class="hiw-manage-body">
+        Manage your decision trees and access from your SMEme dashboard.
+        <strong>Deploy</strong> runs readiness checks &mdash; structure, reachability, coverage, logic consistency, node completeness &mdash;
+        and compiles the live version your agent calls.
+      </p>
+      <p class="hiw-manage-body">
+        <strong>Listed</strong> controls whether your agent can discover it.
+        List or hide, download, or delete any decision tree, any time &mdash; nothing is locked in.
+      </p>
+    </div>
+
+    <div class="hiw-dashboard" aria-hidden="true">
+      <div class="hiw-dashboard-bar">
+        <span class="hiw-dashboard-title">Your decision trees</span>
+        <span class="hiw-dashboard-new">+ New</span>
+      </div>
+      <div class="hiw-dashboard-cols">
+        <span class="hiw-dashboard-col-name">Name</span>
+        <span class="hiw-dashboard-col-tools">Tools</span>
+        <span class="hiw-dashboard-col-listed">Listed</span>
+        <span class="hiw-dashboard-col-actions">Actions</span>
+      </div>
+      <div class="hiw-dashboard-row">
+        <span class="hiw-dashboard-name">Foreign-national property tax</span>
+        <span class="hiw-dashboard-tools"><span class="hiw-status-dot hiw-status-dot--live"></span>Live</span>
+        <span class="hiw-dashboard-listed"><span class="hiw-toggle hiw-toggle--on"></span></span>
+        <span class="hiw-dashboard-actions">
+          <span class="hiw-action-btn">&darr;</span>
+          <span class="hiw-action-btn hiw-action-btn--danger">&times;</span>
+        </span>
+      </div>
+      <div class="hiw-dashboard-row">
+        <span class="hiw-dashboard-name">Enterprise deal qualification</span>
+        <span class="hiw-dashboard-tools hiw-dashboard-tools--stack">
+          <span><span class="hiw-status-dot hiw-status-dot--stale"></span>Stale</span>
+          <span class="hiw-redeploy">Redeploy</span>
+        </span>
+        <span class="hiw-dashboard-listed"><span class="hiw-toggle hiw-toggle--on"></span></span>
+        <span class="hiw-dashboard-actions">
+          <span class="hiw-action-btn">&darr;</span>
+          <span class="hiw-action-btn hiw-action-btn--danger">&times;</span>
+        </span>
+      </div>
+      <div class="hiw-dashboard-row hiw-dashboard-row--last">
+        <span class="hiw-dashboard-name">Vendor onboarding intake</span>
+        <span class="hiw-dashboard-tools"><span class="hiw-deploy-pill">Deploy</span></span>
+        <span class="hiw-dashboard-listed"><span class="hiw-toggle"></span></span>
+        <span class="hiw-dashboard-actions">
+          <span class="hiw-action-btn">&darr;</span>
+          <span class="hiw-action-btn hiw-action-btn--danger">&times;</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  {# ── PHASE 02 — Your agent runs it ──────────────────────────────────── #}
+  <div id="run" class="hiw-phase-wrap smw-reveal">
+    <div class="hiw-phase">
+      <span class="hiw-phase-num">02</span>
+      <span class="hiw-phase-label">Your agent runs it</span>
+      <span class="hiw-phase-rule" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <div class="hiw-section smw-reveal">
+    <p class="hiw-section-lead">
+      Two ways to run decision trees &mdash; directly in AI chat harness or agentically through runbooks or workflows like LangGraph or n8n.
+      Either way, SMEme evaluates the same deployed decision tree.
+    </p>
+
+    <div class="hiw-fork hiw-fork--run">
+      {# In conversation #}
+      <div class="hiw-path">
+        <div class="hiw-path-head">
+          <span class="hiw-path-badge hiw-path-badge--chat">In chat</span>
+        </div>
+        <p class="hiw-path-blurb">
+          Leverage SMEme tools directly in chat. You can run decision trees by name.
+          Your agent gathers from its connected sources. SMEme returns one question and its options;
+          the agent cites a source and admits one option. Repeat until a structured report comes back
+          for follow-ups.
+        </p>
+
+        <div class="hiw-chat-card">
+          <div class="hiw-chat-bar">
+            <div class="hiw-chat-agent">
+              <span class="hiw-chat-avatar" aria-hidden="true">A</span>
+              <div>
+                <p class="hiw-chat-agent-name">Your agent</p>
+                <p class="hiw-chat-agent-sub">Connected to SMEme</p>
+              </div>
+            </div>
+            <span class="hiw-chat-live"><span class="hiw-status-dot hiw-status-dot--live"></span>Live</span>
+          </div>
+
+          <div class="hiw-chat-beat">
+            <div class="hiw-beat-label">
+              <span class="hiw-beat-num">5</span>
+              <span>Ask</span>
+            </div>
+            <div class="hiw-chat-user">
+              <p>&ldquo;Run our enterprise deal-qualification decision tree on this opportunity.&rdquo;</p>
+            </div>
+            <div class="hiw-chat-agent-line">
+              <span class="hiw-chat-mini-avatar" aria-hidden="true">A</span>
+              <p>Starting Enterprise deal qualification. I&rsquo;ll gather from my connected sources as SMEme asks.</p>
+            </div>
+            <div class="hiw-chat-chips">
+              <span>Docs</span>
+              <span>CRM</span>
+            </div>
+          </div>
+
+          <hr class="hiw-chat-rule" />
+
+          <div class="hiw-chat-beat">
+            <div class="hiw-beat-label">
+              <span class="hiw-beat-num">6</span>
+              <span>Guided gather</span>
+            </div>
+            <div class="hiw-structured">
+              <div class="hiw-kv"><span>SMEme asks</span><strong>Named strategic account?</strong></div>
+              <div class="hiw-kv"><span>Options</span><strong>Yes &middot; No</strong></div>
+            </div>
+            <div class="hiw-chat-agent-line">
+              <span class="hiw-chat-mini-avatar" aria-hidden="true">A</span>
+              <p>CRM account record: named strategic. Admitting Yes.</p>
+            </div>
+            <div class="hiw-structured">
+              <div class="hiw-kv"><span>SMEme asks</span><strong>Discount requested?</strong></div>
+              <div class="hiw-kv"><span>Options</span><strong>0&ndash;15% &middot; 16&ndash;20% &middot; Over 20%</strong></div>
+            </div>
+            <div class="hiw-chat-agent-line">
+              <span class="hiw-chat-mini-avatar" aria-hidden="true">A</span>
+              <p>Opportunity notes: 22% requested. Admitting Over 20%.</p>
+            </div>
+          </div>
+
+          <hr class="hiw-chat-rule" />
+
+          <div class="hiw-chat-beat">
+            <div class="hiw-beat-label">
+              <span class="hiw-beat-num">7</span>
+              <span>Report &amp; continue</span>
+            </div>
+            <div class="hiw-report">
+              <p class="hiw-report-conclusion">VP approval required &mdash; requested discount exceeds AE authority.</p>
+              <p class="hiw-report-meta">Structured report &middot; Enterprise deal qualification &middot; concluded</p>
+            </div>
+            <div class="hiw-chat-user">
+              <p>&ldquo;What if they commit to three years at list price?&rdquo;</p>
+            </div>
+            <div class="hiw-whatif">
+              Within standard authority &mdash; can advance without escalation.
+            </div>
+          </div>
+        </div>
+        <p class="hiw-path-footnote">Human-in-the-loop, start to finish.</p>
+      </div>
+
+      {# Agentic orchestration #}
+      <div class="hiw-path">
+        <div class="hiw-path-head">
+          <span class="hiw-path-badge hiw-path-badge--mcp">Agentic trigger</span>
+          <span class="hiw-path-sub">e.g. LangGraph, n8n</span>
+        </div>
+        <p class="hiw-path-blurb">
+          SMEme calls are single, deterministic evaluates &mdash; not hedges.
+          This run calls two different decision trees: deal qualification up front,
+          and counter-offer authority only if escalation is triggered, several ordinary steps later.
+        </p>
+
+        <div class="hiw-orch" aria-hidden="true">
+          <span class="hiw-wf-trigger">Trigger &middot; New opportunity in CRM</span>
+          <div class="hiw-wf-arrow"></div>
+
+          <div class="hiw-wf-zone">
+            <span class="hiw-wf-zone-label">Agent &middot; orchestration</span>
+            <div class="hiw-wf-node">
+              <p class="hiw-wf-node-title">Gather facts</p>
+              <div class="hiw-chat-chips hiw-chat-chips--center">
+                <span>Docs</span><span>CRM</span><span>Web</span>
+              </div>
+            </div>
+            <div class="hiw-wf-stem"></div>
+            <div class="hiw-wf-node">
+              <p class="hiw-wf-node-title">Determine which decision-tree to call</p>
+            </div>
+          </div>
+
+          <div class="hiw-wf-arrow"></div>
+
+          <div class="hiw-wf-zone hiw-wf-zone--smeme">
+            <span class="hiw-wf-zone-label hiw-wf-zone-label--smeme">SMEme &middot; decision-tree: deal qualification</span>
+            <div class="hiw-wf-smeme">
+              <p class="hiw-wf-smeme-title">SMEme &mdash; logical reasoning</p>
+              <p class="hiw-wf-smeme-sub">Evaluate</p>
+            </div>
+            <span class="hiw-wf-result">Result: VP approval required</span>
+          </div>
+
+          <div class="hiw-wf-arrow"></div>
+
+          <div class="hiw-wf-zone">
+            <span class="hiw-wf-zone-label">Agent &middot; orchestration</span>
+            <div class="hiw-wf-diamond-row">
+              <span class="hiw-wf-diamond"></span>
+              <span class="hiw-wf-diamond-label">Escalation required?</span>
+            </div>
+          </div>
+
+          <div class="hiw-wf-arrow"></div>
+
+          <div class="hiw-wf-fork">
+            <div class="hiw-wf-branch">
+              <span class="hiw-wf-branch-label">No</span>
+              <div class="hiw-wf-stem"></div>
+              <div class="hiw-wf-chip hiw-wf-chip--teal">Continue path</div>
+              <div class="hiw-wf-stem"></div>
+              <div class="hiw-wf-chip hiw-wf-chip--muted">Update CRM stage</div>
+            </div>
+            <div class="hiw-wf-branch hiw-wf-branch--yes">
+              <span class="hiw-wf-branch-label">Yes</span>
+              <div class="hiw-wf-stem"></div>
+              <div class="hiw-wf-chip hiw-wf-chip--terracotta">Notify manager</div>
+              <div class="hiw-wf-stem"></div>
+              <div class="hiw-wf-chip">Check counter-offer eligibility</div>
+              <div class="hiw-wf-stem"></div>
+              <div class="hiw-wf-zone hiw-wf-zone--smeme hiw-wf-zone--compact">
+                <span class="hiw-wf-zone-label hiw-wf-zone-label--smeme">SMEme &middot; counter-offer authority</span>
+                <div class="hiw-wf-smeme hiw-wf-smeme--compact">
+                  <p class="hiw-wf-smeme-title">SMEme &mdash; logical reasoning</p>
+                  <p class="hiw-wf-smeme-sub">Evaluate</p>
+                </div>
+                <span class="hiw-wf-result">Result: 15% approved</span>
+              </div>
+              <div class="hiw-wf-stem"></div>
+              <div class="hiw-wf-chip hiw-wf-chip--teal">Send counter-offer</div>
+              <div class="hiw-wf-stem"></div>
+              <div class="hiw-wf-chip hiw-wf-chip--muted">Update CRM stage</div>
+            </div>
+          </div>
+        </div>
+        <p class="hiw-path-footnote">Two decision trees, one agentic run.</p>
+      </div>
+    </div>
+  </div>
+
+  {# Metering + privacy notes #}
+  <div class="hiw-notes smw-reveal">
+    <p class="smw-privacy">
+      Your subscription meters <strong class="font-semibold text-ui-ink">MCP tool calls</strong> &mdash; deploy once; every run uses your monthly allowance.
+      Start free — no credit card. <a href="/docs/mcp" class="smw-link">Connect via MCP</a> when you are ready.
+    </p>
+    <p class="smw-privacy">
+      On SMEme-hosted, you control whether to edit, download, or delete your decision trees.
+      Deterministic evaluation runs on SMEme infrastructure, not inside the LLM provider.
+      Hosted SMEme does not call a model to draft decision trees. Your agent authors the graph; SMEme validates and saves it. See
+      <a href="/legal/privacy" class="smw-link">our Privacy Policy</a>
+      and
+      <a href="/legal/terms" class="smw-link">Terms of Use</a>.
+    </p>
+  </div>
+
+
+</section>

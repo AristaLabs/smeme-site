@@ -1,0 +1,27 @@
+{# Calm first viewport — slogan + adoption answer #}
+{% from "components/macros.html" import btn %}
+<section id="see-it-work" class="landing-section landing-section-hero landing-hero-section landing-hero-shell" aria-labelledby="landing-hero-heading">
+  <div class="landing-hero-grid-bg" aria-hidden="true"></div>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 relative">
+    <div class="landing-hero-layout">
+      <div class="landing-hero-copy">
+        <p class="landing-hero-opener">
+          You already use ChatGPT, Claude, or Copilot for language, research, and conversation.
+        </p>
+        <h1 id="landing-hero-heading" class="landing-hero-headline">
+          <span class="landing-hero-headline-line">The LLM interprets context.</span>
+          <span class="landing-hero-headline-line">SMEme infers what logically follows.</span>
+        </h1>
+
+        <p class="landing-hero-sub">
+          SMEme brings symbolic decision support to your existing AI stack with a single MCP connection, not a new software project. No knowledge-engineering or consultants required.
+        </p>
+
+        <div class="landing-hero-cta-row">
+          {{ btn("Connect via MCP", variant="gradient", size="lg", href="/docs/mcp", extra_class="landing-hero-cta landing-hero-cta--start plausible-event-name=MCP+Connect") }}
+          {{ btn("Create free account", variant="secondary", size="lg", href="/auth/register", extra_class="landing-hero-cta landing-hero-cta--tour plausible-event-name=Signup+Click") }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

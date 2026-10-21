@@ -1,0 +1,321 @@
+{% extends "layouts/base.html" %}
+{% block title %}Docs Changelog — SMEme{% endblock %}
+{% block head %}
+{% set docs_canonical_path = "/docs/changelog" %}
+{% set docs_og_title = "Docs changelog — SMEme" %}
+{% set docs_meta_description = "Changelog for SMEme in-app documentation: public creator docs, metadata and discovery improvements, and release notes by docs version." %}
+{% set docs_breadcrumb_items = [{"name": "Docs", "path": "/docs"}, {"name": "Changelog", "path": "/docs/changelog"}] %}
+{% set docs_schema_type = "WebPage" %}
+{% include "docs/_docs_seo.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto">
+  {% set docs_breadcrumb_current = "Changelog" %}
+  {% include "docs/_docs_breadcrumb.html" %}
+
+  <div class="mt-6 lg:flex lg:gap-12">
+
+    {# Sidebar — desktop #}
+    <aside class="hidden lg:block lg:w-44 lg:shrink-0">
+      <div class="sticky top-8">
+        {% include "docs/_docs_nav.html" %}
+      </div>
+    </aside>
+
+    {# Main content #}
+    <article class="min-w-0 flex-1">
+
+      {# Mobile nav #}
+      <div class="mb-8 lg:hidden">
+        {% include "docs/_docs_nav.html" %}
+      </div>
+
+      <header class="mb-10">
+        <h1 class="text-2xl font-semibold tracking-tight text-ui-ink">Docs changelog</h1>
+        <p class="mt-2 text-sm text-ui-ink-secondary leading-relaxed max-w-prose">
+          Release notes for SMEme in-app documentation — what changed in each docs version, including when creator docs became publicly readable.
+        </p>
+      </header>
+
+      <div class="space-y-8">
+
+        {# v1.11.0 #}
+        <section aria-labelledby="v1110">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v1110" class="text-base font-semibold text-ui-ink">v1.11.0</h2>
+            <span class="text-xs text-ui-ink-muted">October 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/import" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Upload decision tree</a> explains how to add a downloaded <code class="text-xs font-mono">.smeme.json</code> file as a new decision tree on your account.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/download-workflow" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Download your decision tree</a> now links to that guide.
+            </li>
+          </ul>
+        </section>
+
+        <div class="border-t border-ui-line"></div>
+
+        {# v1.10.0 #}
+        <section aria-labelledby="v1100">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v1100" class="text-base font-semibold text-ui-ink">v1.10.0</h2>
+            <span class="text-xs text-ui-ink-muted">October 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              The docs home opens with <a href="/docs#why-smeme" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Why SMEme</a>: why business rules don&rsquo;t belong in prompts, and what a rational AI does differently.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/quick-start" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Quick start</a> is now three steps:
+              connect and check SMEme, choose and build a decision tree (from a written procedure, by having your agent observe your work, or by brainstorming), then Deploy, List, and try it in a new chat.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Questions can carry hints on where to find their answers and where not to look. Your agent reads them while it runs the tree.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/run-a-tree" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Run a tree</a> explains each kind of report result and how to send a batch of answers in one shot.
+              <a href="/docs/ask-more" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Ask more</a> has prompts for which answers decided an outcome, what-if, and what it would take to reach another outcome.
+            </li>
+          </ul>
+        </section>
+
+        <div class="border-t border-ui-line"></div>
+
+        {# v1.9.0 #}
+        <section aria-labelledby="v190">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v190" class="text-base font-semibold text-ui-ink">v1.9.0</h2>
+            <span class="text-xs text-ui-ink-muted">September 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Docs home leads with a prompt path:
+              <a href="/docs/quick-start" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Quick start</a>,
+              <a href="/docs/run-a-tree" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Run a tree</a>, and
+              <a href="/docs/ask-more" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Ask more</a>.
+              Copy-paste prompts live only in these pages.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Connect your agent</a> stays the connector how-to and points at Quick start for the prompts.
+            </li>
+          </ul>
+        </section>
+
+        <div class="border-t border-ui-line"></div>
+
+        {# v1.8.0 #}
+        <section aria-labelledby="v180">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v180" class="text-base font-semibold text-ui-ink">v1.8.0</h2>
+            <span class="text-xs text-ui-ink-muted">September 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Per-user sample decision tree: dashboard <strong class="font-medium text-ui-ink">Load sample</strong>, or the first empty <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_list</code>, creates a Deployed + Listed walkthrough (<code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">sample_key: smeme_sample_v1</code>). It uses one tree slot. Get a first report without an LLM via Core <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">examples/smeme_apply_sample.py</code>.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Connect your agent</a>, <a href="/docs/creator-dashboard" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Deploy, list, &amp; delete</a>, and Plans &amp; usage document both sample doors, list <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">id</code> vs later <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">decision_tree_id</code>, and that a persistent empty list is recovery — not the ordinary first run.
+            </li>
+          </ul>
+        </section>
+
+        <div class="border-t border-ui-line"></div>
+
+        {# v1.7.0 #}
+        <section aria-labelledby="v170">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v170" class="text-base font-semibold text-ui-ink">v1.7.0</h2>
+            <span class="text-xs text-ui-ink-muted">July 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Creator docs are publicly readable (anonymous + signed-in). <a href="/docs/delete-account" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Delete your account</a> remains authenticated only and is omitted from anonymous navigation.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Public pages add unique titles, meta descriptions, absolute canonical URLs, Open Graph tags, and BreadcrumbList / TechArticle (or WebPage) JSON-LD aligned with visible content.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Answer-first introductions and product vocabulary pass: decision tree, Deploy/Redeploy, Listed/Hidden, Live/Stale, report. <a href="/docs/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">/docs/mcp</a> targets creator setup; public <a href="/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">/mcp</a> remains the tool wire reference.
+            </li>
+          </ul>
+        </section>
+
+        <div class="border-t border-ui-line"></div>
+
+        {# v1.6.0 #}
+        <section aria-labelledby="v160">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v160" class="text-base font-semibold text-ui-ink">v1.6.0</h2>
+            <span class="text-xs text-ui-ink-muted">July 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/mcp#mcp-authoring-quickstart" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Connect your agent</a> — documented MCP authoring: build or revise a draft in chat (agent constructs <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">dt_graph_json</code>; SMEme validates and saves), then review, Deploy, and choose Listed or Hidden in the editor.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Docs overview and Building decision trees — visibly advertise building and revising through MCP, with links to the authoring sequence and MCP Tools / MCP Clients community categories.
+            </li>
+          </ul>
+        </section>
+
+        <div class="border-t border-ui-line"></div>
+
+        {# v1.5.0 #}
+        <section aria-labelledby="v150">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v150" class="text-base font-semibold text-ui-ink">v1.5.0</h2>
+            <span class="text-xs text-ui-ink-muted">June 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Connect your agent</a> — rewrote the tools section: nine tools (up from six), correct descriptions, and a quota-weight column.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Connect your agent</a> — added <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_what_if</code> (scenario comparison) and <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_how_to_reach</code> (repair planning) to the tool reference, tips, and use-case examples.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Connect your agent</a> — connector-first MCP setup (URL + OAuth Client ID). Corrected <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_capabilities</code> description (session bootstrap and authoritative tool catalog). Corrected <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_template_check</code> description (drift check, not the worksheet).
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/plans" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Plans &amp; usage</a> — quota weights now precise: <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">how_to_reach</code> = <strong class="font-medium text-ui-ink">2.5</strong>, <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">what_if</code> = <strong class="font-medium text-ui-ink">2</strong>. Added dormant decision tree behavior on downgrade (grayed out, download-only until under limit). Clarified archive is deployment-dependent.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Docs index — removed incorrect "start from scratch" decision tree creation path; creation is wizard-only.
+            </li>
+          </ul>
+        </section>
+
+        <div class="border-t border-ui-line"></div>
+
+        {# v1.4.0 #}
+        <section aria-labelledby="v140">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v140" class="text-base font-semibold text-ui-ink">v1.4.0</h2>
+            <span class="text-xs text-ui-ink-muted">June 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Updated <a href="/docs/plans" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Plans &amp; usage</a> — MCP quota: evidence validation now counts as <strong class="font-medium text-ui-ink">1</strong> unit (same as evaluate); typical MCP run uses both.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Updated <a href="/docs/plans" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Plans &amp; usage</a> — clearer public labels: <strong class="font-medium text-ui-ink">MCP tool calls</strong> (weighting explained in definitions) and <strong class="font-medium text-ui-ink">AI-assisted wizard builds</strong> (replacing wizard-completion jargon).
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <a href="/docs/delete-account" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Delete your account</a> — documents that account deletion forfeits remaining Pro prepaid time (unlike Stripe portal cancel) and is not restored on re-signup.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Added <a href="/docs/delete-account" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Delete your account</a> — profile flow, confirmation phrase, data removed vs retained, and how it differs from decision tree delete.
+            </li>
+          </ul>
+        </section>
+
+        {# v1.3.0 #}
+        <section aria-labelledby="v130">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v130" class="text-base font-semibold text-ui-ink">v1.3.0</h2>
+            <span class="text-xs text-ui-ink-muted">June 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Added <a href="/docs/plans" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Plans &amp; usage</a> — tier limits, weighted MCP metering, wizard credits, and quota behavior.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Updated <a href="/docs/creator-dashboard" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Deploy, list, & delete</a> — dashboard usage strip and per decision tree MCP column.
+            </li>
+          </ul>
+        </section>
+
+        {# v1.2.0 #}
+        <section aria-labelledby="v120">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v120" class="text-base font-semibold text-ui-ink">v1.2.0</h2>
+            <span class="text-xs text-ui-ink-muted">June 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Added <a href="/docs/download-workflow" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Download your decision tree</a> — how to export the saved graph as JSON from the dashboard or editor.
+            </li>
+          </ul>
+        </section>
+
+        {# v1.1.0 #}
+        <section aria-labelledby="v110">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v110" class="text-base font-semibold text-ui-ink">v1.1.0</h2>
+            <span class="text-xs text-ui-ink-muted">June 2026</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Redesigned docs layout with persistent sidebar navigation and two-column layout on desktop.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Added three-step overview to the docs index (Build → Deploy → Invoke).
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Added <strong class="font-medium text-ui-ink">Jump to node</strong> and validation issue row documentation in the Building decision trees guide.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Added satisfiability check documentation (Z3) to the Deploy, validate &amp; list guide.
+            </li>
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Updated Connect your agent guide with numbered installation steps and MCP tool reference table.
+            </li>
+          </ul>
+        </section>
+
+        <div class="border-t border-ui-line"></div>
+
+        {# v1.0.0 #}
+        <section aria-labelledby="v100">
+          <div class="flex items-baseline gap-3 mb-3">
+            <h2 id="v100" class="text-base font-semibold text-ui-ink">v1.0.0</h2>
+            <span class="text-xs text-ui-ink-muted">Initial release</span>
+          </div>
+          <ul class="space-y-1.5 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              Initial in-app docs: Building decision trees, Deploy &amp; list, and Connect your agent guides.
+            </li>
+          </ul>
+        </section>
+
+      </div>
+    </article>
+  </div>
+</div>
+{% endblock %}

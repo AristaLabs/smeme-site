@@ -1,0 +1,35 @@
+{% extends "legal/_layout.html" %}
+{% block legal_meta %}
+<p class="text-sm text-ui-ink-muted">Trust and compliance documents for the SMEme platform.</p>
+{% endblock %}
+{% block legal_body %}
+<p>
+  SMEme is the product name for a platform operated by <strong class="text-ui-ink">Arista Labs, LLC</strong> for building, operating, and scaling
+  <strong class="text-ui-ink">expert reasoning systems</strong>—not a generic SaaS marketplace.
+  These documents are written around that asset: your workflows, rules, and the outputs they produce.
+</p>
+
+<ol class="space-y-4 list-decimal pl-6 mt-4">
+  <li>
+    <a href="/legal/principles"><strong class="text-ui-ink">Sovereignty &amp; AI Usage Principles</strong></a>
+    — How we think about expertise, control, and AI on the platform.
+  </li>
+  <li>
+    <a href="/legal/security"><strong class="text-ui-ink">Security &amp; Data Handling</strong></a>
+    — Where data lives, how it is protected, and how to report a concern.
+  </li>
+  <li>
+    <a href="/legal/privacy"><strong class="text-ui-ink">Privacy Policy</strong></a>
+    — What we collect, why, and your privacy rights.
+  </li>
+  <li>
+    <a href="/legal/terms"><strong class="text-ui-ink">Terms of Use</strong></a>
+    — The binding agreement governing use of the Service.
+  </li>
+</ol>
+
+<p class="text-sm">
+  See also our
+  <a href="/legal/subprocessors">Subprocessors</a> page, linked from the Privacy Policy.
+</p>
+{% endblock %}

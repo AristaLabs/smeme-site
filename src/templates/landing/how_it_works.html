@@ -1,0 +1,93 @@
+{% extends "layouts/base.html" %}
+{% from "components/macros.html" import btn, smeme_logo_link %}
+{% set show_nav = false %}
+{% set theme_pin_light = true %}
+{% block title %}How it works — SMEme{% endblock %}
+
+{% block head %}
+<meta name="description" content="Author expert decision trees, Deploy compiled logic, and let your agent call SMEme over MCP for deterministic, attributable reports — while proprietary reasoning stays private." />
+<meta property="og:site_name" content="SMEme" />
+<meta property="og:title" content="How it works — SMEme" />
+<meta property="og:description" content="Author expert decision trees, Deploy compiled logic, and let your agent call SMEme over MCP for deterministic, attributable reports — while proprietary reasoning stays private." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ site_base }}/how-it-works" />
+<link rel="canonical" href="{{ site_base }}/how-it-works" />
+<meta property="og:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="SMEme — The formal reasoning layer for AI" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
+<meta name="twitter:image:alt" content="SMEme — The formal reasoning layer for AI" />
+{% include "landing/_styles.html" %}
+{% endblock %}
+
+{% block main_class %}w-full max-w-none px-0 py-0{% endblock %}
+
+{% block content %}
+<div class="landing-page-shell min-h-[calc(100vh-0px)] flex flex-col">
+  <header class="landing-header border-b border-ui-line backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-4">
+      {{ smeme_logo_link(href='/', img_class='h-16 w-auto sm:h-[4.5rem]') }}
+      <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+        <nav class="landing-page-nav flex items-center gap-4 sm:gap-5" aria-label="Page">
+          <a href="/">Home</a>
+          <a href="/how-it-works" aria-current="page">How it works</a>
+          <a href="/pricing">Pricing</a>
+          <a href="/mcp">MCP</a>
+          <a href="https://github.com/AristaLabs/smeme/discussions/categories/start-here"
+             target="_blank"
+             rel="noopener noreferrer">Community</a>
+        </nav>
+        {% include "landing/_social_icons.html" %}
+        {{ btn("Create account", variant="secondary", size="sm", href="/auth/register", extra_class="plausible-event-name=Signup+Click") }}
+        {{ btn("Log in", variant="primary", size="sm", href="/auth/login", attrs='aria-label="Log in to SMEme"', extra_class="plausible-event-name=Login+Click") }}
+      </div>
+    </div>
+  </header>
+
+  <div class="flex-1">
+    {% include "landing/_how_it_works_scroll.html" %}
+  </div>
+
+  <footer class="landing-footer mt-auto border-t border-ui-line bg-ui-surface">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col items-center gap-y-2 text-sm text-ui-ink-muted">
+      <p class="flex items-center gap-x-2">
+        <span>Veteran-owned and operated</span>
+        <span role="img" aria-label="American flag">&#127482;&#127480;</span>
+      </p>
+      <p class="flex flex-wrap gap-x-3 gap-y-2 justify-center items-center">
+        <span>Built by</span>
+        <a href="https://aristalabs.ai"
+           class="footer-logo"
+           title="Arista Labs, LLC"
+           target="_blank"
+           rel="noopener noreferrer">ARISTA LABS</a>
+        <span>&copy; 2026 Arista Labs, LLC. All rights reserved.</span>
+      </p>
+      {% set social_class = "justify-center" %}
+      {% include "landing/_social_icons.html" %}
+      <p class="flex flex-wrap gap-x-3 gap-y-1 justify-center items-center text-xs">
+        <a href="/mcp" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">MCP</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="https://github.com/AristaLabs/smeme/discussions/categories/start-here"
+           class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline"
+           target="_blank"
+           rel="noopener noreferrer">Community help</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="mailto:contact@aristalabs.ai?subject=SMEme%20account%20%2F%20billing"
+           class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Account / billing</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/legal/principles" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Sovereignty &amp; AI Principles</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/legal/security" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Security</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/legal/privacy" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Privacy Policy</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/legal/terms" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Terms of Use</a>
+      </p>
+    </div>
+  </footer>
+</div>
+{% include "landing/_scripts.html" %}
+{% endblock %}

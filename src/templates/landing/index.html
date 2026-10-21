@@ -1,0 +1,175 @@
+{% extends "layouts/base.html" %}
+{% from "components/macros.html" import btn, smeme_logo_link %}
+{% set show_nav = false %}
+{% set theme_pin_light = true %}
+{% block title %}SMEme — The expert reasoning layer for agents{% endblock %}
+
+{% block head %}
+<meta name="description" content="SMEme turns your expertise into deterministic decision trees your AI agents call through MCP — attributable answers with evaluation outside the LLM." />
+<meta property="og:site_name" content="SMEme" />
+<meta property="og:title" content="SMEme — The expert reasoning layer for agents" />
+<meta property="og:description" content="SMEme turns your expertise into deterministic decision trees your AI agents call through MCP — attributable answers with evaluation outside the LLM." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ site_base }}/" />
+<link rel="canonical" href="{{ site_base }}/" />
+<meta property="og:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="SMEme — The formal reasoning layer for AI" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
+<meta name="twitter:image:alt" content="SMEme — The formal reasoning layer for AI" />
+{# Entity schema: category sentence must match registry/README.md and geo-execution-plan.md #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://aristalabs.ai/#organization",
+      "name": "Arista Labs",
+      "legalName": "Arista Labs, LLC",
+      "url": "https://aristalabs.ai/",
+      "email": "contact@aristalabs.ai"
+    },
+    {
+      "@type": "Organization",
+      "@id": "{{ site_base }}/#organization",
+      "name": "SMEme",
+      "legalName": "Arista Labs, LLC",
+      "url": "{{ site_base }}/",
+      "logo": "{{ site_base }}/static/icon-512.png",
+      "email": "contact@aristalabs.ai",
+      "parentOrganization": { "@id": "https://aristalabs.ai/#organization" },
+      "sameAs": [
+        "https://aristalabs.ai",
+        "https://github.com/AristaLabs/sMeMe",
+        "https://x.com/smeme_ai",
+        "{{ site_base }}/mcp"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "{{ site_base }}/#website",
+      "url": "{{ site_base }}/",
+      "name": "SMEme",
+      "description": "SMEme turns your expertise into deterministic decision trees your AI agents call through MCP — attributable answers with evaluation outside the LLM.",
+      "publisher": { "@id": "{{ site_base }}/#organization" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "{{ site_base }}/#software",
+      "name": "SMEme",
+      "url": "{{ site_base }}/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Web, MCP (Model Context Protocol)",
+      "description": "SMEme is the expert reasoning layer for AI agents — a deterministic MCP server that runs expert-authored decision trees and returns traceable conclusions.",
+      "publisher": { "@id": "{{ site_base }}/#organization" },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Free",
+          "price": "0",
+          "priceCurrency": "USD",
+          "category": "Free"
+        },
+        {
+          "@type": "Offer",
+          "name": "Pro",
+          "price": "49",
+          "priceCurrency": "USD",
+          "category": "Subscription",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "49",
+            "priceCurrency": "USD",
+            "billingDuration": 1,
+            "unitCode": "MON"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "{{ site_base }}/#mcp-api",
+      "name": "SMEme Reasoning MCP",
+      "description": "SMEme is the expert reasoning layer for AI agents — a deterministic MCP server that runs expert-authored decision trees and returns traceable conclusions.",
+      "url": "{{ site_base }}/api/v1/mcp",
+      "documentation": "{{ site_base }}/mcp",
+      "provider": { "@id": "{{ site_base }}/#organization" }
+    }
+  ]
+}
+</script>
+{% include "landing/_styles.html" %}
+{% endblock %}
+
+{% block main_class %}w-full max-w-none px-0 py-0{% endblock %}
+
+{% block content %}
+<div class="landing-page-shell min-h-[calc(100vh-0px)] flex flex-col">
+  <header class="landing-header border-b border-ui-line backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-4">
+      {{ smeme_logo_link(href='/', img_class='h-16 w-auto sm:h-[4.5rem]') }}
+      <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+        <nav class="landing-page-nav flex items-center gap-4 sm:gap-5" aria-label="On this page">
+          <a href="/pricing">Pricing</a>
+          <a href="/mcp">MCP</a>
+          <a href="https://github.com/AristaLabs/smeme/discussions/categories/start-here"
+             target="_blank"
+             rel="noopener noreferrer">Community</a>
+        </nav>
+        {% include "landing/_social_icons.html" %}
+        {{ btn("Create account", variant="secondary", size="sm", href="/auth/register", extra_class="plausible-event-name=Signup+Click") }}
+        {{ btn("Log in", variant="primary", size="sm", href="/auth/login", attrs='aria-label="Log in to SMEme"', extra_class="plausible-event-name=Login+Click") }}
+      </div>
+    </div>
+  </header>
+
+  <div class="flex-1">
+    {% include "landing/_hero.html" %}
+    {% include "landing/_use_cases.html" %}
+    {% include "landing/_agency.html" %}
+  </div>
+
+  <footer class="landing-footer mt-auto border-t border-ui-line bg-ui-surface">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col items-center gap-y-2 text-sm text-ui-ink-muted">
+      <p class="flex items-center gap-x-2">
+        <span>Veteran-owned and operated</span>
+        <span role="img" aria-label="American flag">&#127482;&#127480;</span>
+      </p>
+      <p class="flex flex-wrap gap-x-3 gap-y-2 justify-center items-center">
+        <span>Built by</span>
+        <a href="https://aristalabs.ai"
+           class="footer-logo"
+           title="Arista Labs, LLC"
+           target="_blank"
+           rel="noopener noreferrer">ARISTA LABS</a>
+        <span>&copy; 2026 Arista Labs, LLC. All rights reserved.</span>
+      </p>
+      {% set social_class = "justify-center" %}
+      {% include "landing/_social_icons.html" %}
+      <p class="flex flex-wrap gap-x-3 gap-y-1 justify-center items-center text-xs">
+        <a href="/mcp" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">MCP</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="https://github.com/AristaLabs/smeme/discussions/categories/start-here"
+           class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline"
+           target="_blank"
+           rel="noopener noreferrer">Community help</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="mailto:contact@aristalabs.ai?subject=SMEme%20account%20%2F%20billing"
+           class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Account / billing</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/legal/principles" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Sovereignty &amp; AI Principles</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/legal/security" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Security</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/legal/privacy" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Privacy Policy</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/legal/terms" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Terms of Use</a>
+      </p>
+    </div>
+  </footer>
+</div>
+{% include "landing/_scripts.html" %}
+{% endblock %}

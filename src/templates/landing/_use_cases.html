@@ -1,0 +1,120 @@
+{# Use cases — Build / Run / Explore as blog-style worked examples #}
+<section id="use-cases" aria-labelledby="use-cases-heading" class="landing-section landing-use-cases">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="space-y-10 sm:space-y-12">
+      <div class="landing-use-cases-intro">
+        <h2 id="use-cases-heading" class="landing-use-cases-h2">Prompts are not a place to store business rules.</h2>
+        <p class="landing-use-cases-sub">
+          LLMs gather and interpret context using your approved tools and data sources.
+          Then SMEme reasons logically over your approved decision procedures —
+          built from your policies, procedures, and fresh AI-assisted research.
+        </p>
+        <p class="landing-use-cases-lead">
+          Capture your decision procedures with AI-assisted chat — client intake, deal approval, escalation, vendor checks, legal reasoning, medical diagnostics —
+          review and authorize. SMEme formalizes it and provides full logical analysis tools you can call
+          directly from chat or deterministic workflows.
+          Your org&rsquo;s decision support is fully integrated into your AI chat and agentic workflows.
+          No knowledge engineers, ontologies, or graph databases &mdash; and no custom software stack to build and maintain.
+          One MCP connection.
+        </p>
+      </div>
+
+      <div class="landing-use-cases-modes">
+        <article class="landing-use-mode" aria-labelledby="use-mode-build-heading">
+          <p class="landing-use-mode-kicker">
+            <span class="landing-use-mode-num" aria-hidden="true">01</span>
+            <span class="landing-use-mode-label">Build</span>
+          </p>
+          <h3 id="use-mode-build-heading" class="landing-use-mode-h3">Author the procedure in chat</h3>
+          <div class="landing-use-example" aria-hidden="false">
+            <p class="landing-use-prompt">
+              &ldquo;I want to build a new SMEme decision tree. It needs to determine when a U.S. company has an obligation to withhold taxes during a cross-border deal with a foreign business.
+              I&rsquo;ve added several files that can be taken as authoritative concerning the rules and context to the local project folder.
+              Do a web search and research current IRS, treaty, tariff, and other relevant authorities and updates.&rdquo;
+            </p>
+            <div class="landing-use-chips">
+              <span>Local files</span>
+              <span>Web search</span>
+              <span>Policies</span>
+              <span>Authoring tools</span>
+            </div>
+            <div class="landing-use-result">
+              <p class="landing-use-result-label">What you get</p>
+              <p class="landing-use-result-conclusion">Readable draft &mdash; you review, edit, and Deploy</p>
+              <p class="landing-use-result-meta">AI helps draft; Deploy is your authorization gate</p>
+            </div>
+          </div>
+          <p class="landing-use-mode-caption">
+            The agent drafts with your sources. You read and authorize before anything is live for agents.
+          </p>
+        </article>
+
+        <article class="landing-use-mode" aria-labelledby="use-mode-run-heading">
+          <p class="landing-use-mode-kicker">
+            <span class="landing-use-mode-num" aria-hidden="true">02</span>
+            <span class="landing-use-mode-label">Run</span>
+          </p>
+          <h3 id="use-mode-run-heading" class="landing-use-mode-h3">A real matter, in the chat you already use</h3>
+          <div class="landing-use-example" aria-hidden="false">
+            <p class="landing-use-prompt">
+              &ldquo;Run my SMEme cross-border tax withholding decision tree on the ACME, Inc. matter
+              concerning their sale of asset X to party D. The matter is already tracked in the CRM as matter #123.
+              Check the cloud drive for the associate&rsquo;s intake memo, and the email correspondence.&rdquo;
+            </p>
+            <div class="landing-use-chips">
+              <span>CRM</span>
+              <span>Cloud drive</span>
+              <span>Email</span>
+              <span>Local files</span>
+            </div>
+            <div class="landing-use-result">
+              <p class="landing-use-result-label">SMEme report</p>
+              <p class="landing-use-result-conclusion">Concluded &mdash; withholding obligation applies</p>
+              <p class="landing-use-result-meta">Decision path from your Deployed tree &middot; not an LLM judgment call</p>
+            </div>
+          </div>
+          <p class="landing-use-mode-caption">
+            Your AI gathers and proposes answers with provenance. SMEme asks what&rsquo;s next and decides what follows.
+          </p>
+        </article>
+
+        <article class="landing-use-mode landing-use-mode--wide" aria-labelledby="use-mode-explore-heading">
+          <p class="landing-use-mode-kicker">
+            <span class="landing-use-mode-num" aria-hidden="true">03</span>
+            <span class="landing-use-mode-label">Explore</span>
+          </p>
+          <h3 id="use-mode-explore-heading" class="landing-use-mode-h3">Same chat, logical follow-ups</h3>
+          <div class="landing-use-example">
+            <ul class="landing-use-followups landing-use-followups--wide">
+              <li>
+                <span class="landing-use-followup-q">&ldquo;What changes if the services are performed outside the United States?&rdquo;</span>
+              </li>
+              <li>
+                <span class="landing-use-followup-q">&ldquo;What facts would have to change to reach a different conclusion?&rdquo;</span>
+              </li>
+              <li>
+                <span class="landing-use-followup-q">&ldquo;Which facts drove this conclusion?&rdquo;</span>
+              </li>
+              <li>
+                <span class="landing-use-followup-q">&ldquo;Would changing this answer break the path the current answers force?&rdquo;</span>
+              </li>
+            </ul>
+            <div class="landing-use-result landing-use-result--quiet">
+              <p class="landing-use-result-meta">What-if, how-to-reach, decisive support, path checks &mdash; solver analysis, explained in chat</p>
+            </div>
+          </div>
+          <p class="landing-use-mode-caption">
+            Every follow-up reuses the same authorized tree. The LLM keeps the conversation going; it does not invent the logic.
+          </p>
+        </article>
+      </div>
+
+      <p class="landing-use-cases-footer">
+        <a href="/docs/quick-start" class="landing-use-cases-more">
+          <span>Quick start</span>
+          <span class="landing-use-cases-more-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </p>
+    </div>
+  </div>
+</section>

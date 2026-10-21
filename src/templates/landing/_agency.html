@@ -1,0 +1,45 @@
+{# Human agency + licensing philosophy — replaces homepage pricing / closing band #}
+{% from "components/macros.html" import btn %}
+<section id="agency" aria-labelledby="agency-heading" class="landing-section landing-section-band landing-agency">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="landing-agency-layout">
+      <div class="landing-agency-copy">
+        <h2 id="agency-heading" class="landing-agency-h2">Our mission is to make AI increase human agency &mdash; SMEme delivers outcomes you can stand behind.</h2>
+        <p class="landing-agency-lead">
+          AI should expand judgment you can stand behind&mdash;not bury consequential decisions in model weights and context interpretations.
+          You design and authorize a readable decision tree.
+          SMEme translates your decision procedure into a symbolic formalism that can be evaluated logically through MCP tools called directly from chat or programmatically through deterministic workflows.
+          All knowledge artifacts are yours to download, copy, share, and delete as you see fit.
+          See our
+          <a href="/legal/principles">Sovereignty &amp; AI Principles</a>
+          and
+          <a href="/legal/privacy">Privacy Policy</a>.
+        </p>
+      </div>
+
+      <aside class="landing-agency-cta" aria-labelledby="agency-cta-heading">
+        <h3 id="agency-cta-heading" class="landing-agency-cta-h3">Try free &mdash; no credit card</h3>
+        <p class="landing-agency-cta-lead">
+          Connect any MCP client&mdash;Claude, ChatGPT, Copilot, Cursor, or another&mdash;and call SMEme from the chat you already use.
+        </p>
+        <div class="landing-agency-cta-actions">
+          {{ btn("Connect via MCP", variant="gradient", size="lg", href="/docs/mcp", extra_class="landing-agency-cta-primary plausible-event-name=MCP+Connect") }}
+          {{ btn("Create account", variant="secondary", size="lg", href="/auth/register", extra_class="landing-agency-cta-secondary plausible-event-name=Signup+Click") }}
+        </div>
+        <p class="landing-agency-cta-note">
+          We host for convenience. Need your own environment?
+          Same Core engine, source-available under a fair-code license &mdash;
+          <a
+            href="https://github.com/AristaLabs/smeme/blob/main/docs/guides/self-host-quickstart.md"
+            class="plausible-event-name=Selfhost+Guide"
+            rel="noopener noreferrer"
+            target="_blank">self-host guide</a>
+          or
+          <a
+            href="mailto:contact@aristalabs.ai?subject=SMEme%20self-hosting"
+            class="plausible-event-name=Selfhost+Contact">contact us</a>.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>

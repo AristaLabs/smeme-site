@@ -1,0 +1,115 @@
+{# Pricing — Free / Pro / Self-host cards + Need more strip. Tier limits mirror billing tiers. #}
+{% from "components/macros.html" import btn %}
+<section id="pricing" aria-labelledby="pricing-heading" class="landing-section landing-section-band">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-8 sm:space-y-10">
+        <div class="text-center space-y-3 max-w-2xl mx-auto">
+          <p class="landing-pricing-eyebrow">Pricing</p>
+          <h2 id="pricing-heading" class="text-2xl sm:text-3xl font-semibold tracking-tight text-ui-ink">
+            Hosted or self-host
+          </h2>
+          <p class="text-sm sm:text-base text-ui-ink-secondary leading-relaxed">
+            Hosted Free and Pro for convenience. Prefer your own environment? Self-host instead.
+            You own the decision trees either way.
+          </p>
+        </div>
+
+        <div class="landing-pricing-grid">
+          {# Free #}
+          <div class="landing-pricing-card">
+            <div class="space-y-1">
+              <p class="text-xs font-semibold uppercase tracking-wider text-ui-ink-muted">Free</p>
+              <h3 class="text-xl font-semibold text-ui-ink">Try SMEme end-to-end</h3>
+            </div>
+            <div class="pt-2">
+              <p class="text-3xl font-bold text-ui-ink">
+                $0
+                <span class="text-base font-medium text-ui-ink-muted">/ month</span>
+              </p>
+              <p class="text-xs text-ui-ink-muted pt-1">No credit card required</p>
+            </div>
+            <ul class="landing-pricing-features text-sm text-ui-ink-secondary">
+              <li><span class="landing-pricing-check" aria-hidden="true">&#10003;</span><span>3 decision trees</span></li>
+              <li><span class="landing-pricing-check" aria-hidden="true">&#10003;</span><span>150 MCP tool calls<sup class="landing-pricing-asterisk" aria-hidden="true">*</sup> / month</span></li>
+              <li><span class="landing-pricing-check" aria-hidden="true">&#10003;</span><span>MCP server access</span></li>
+            </ul>
+            <div class="pt-2 mt-auto">
+              {{ btn("Start free", variant="secondary", size="md", href="/auth/register", full_width=true, extra_class="plausible-event-name=Signup+Click") }}
+            </div>
+          </div>
+
+          {# Pro — featured #}
+          <div class="landing-pricing-card landing-pricing-card--featured">
+            <div class="space-y-1">
+              <p class="text-xs font-semibold uppercase tracking-wider text-brand-700 dark:text-brand-300">Pro</p>
+              <h3 class="text-xl font-semibold text-ui-ink">For individual experts</h3>
+            </div>
+            <div class="pt-2">
+              <p class="text-3xl font-bold text-ui-ink">
+                $<span data-pricing-pro-amount>49</span>
+                <span class="text-base font-medium text-ui-ink-muted">/ month</span>
+              </p>
+              <p class="text-xs text-ui-ink-muted pt-1">Billed monthly &middot; cancel anytime</p>
+            </div>
+            <ul class="landing-pricing-features text-sm text-ui-ink-secondary">
+              <li><span class="landing-pricing-check" aria-hidden="true">&#10003;</span><span>20 decision trees</span></li>
+              <li><span class="landing-pricing-check" aria-hidden="true">&#10003;</span><span>1,500 MCP tool calls<sup class="landing-pricing-asterisk" aria-hidden="true">*</sup> / month</span></li>
+              <li><span class="landing-pricing-check" aria-hidden="true">&#10003;</span><span>MCP server access</span></li>
+              <li><span class="landing-pricing-check" aria-hidden="true">&#10003;</span><span>Email support</span></li>
+            </ul>
+            <div class="pt-2 mt-auto">
+              {{ btn("Start with Pro", variant="gradient", size="md", href="/auth/register", full_width=true, extra_class="plausible-event-name=Signup+Click") }}
+            </div>
+          </div>
+
+          {# Self-hosting — peer path, not a dollar tier #}
+          <div class="landing-pricing-card">
+            <div class="space-y-1">
+              <p class="text-xs font-semibold uppercase tracking-wider text-ui-ink-muted">Self Hosting</p>
+              <h3 class="text-xl font-semibold text-ui-ink">Run it yourself</h3>
+            </div>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed flex-1">
+              The same SMEme Core engine, source-available under a fair-code license. You operate it in your environment.
+            </p>
+            <div class="landing-pricing-selfhost-actions">
+              <a
+                href="https://github.com/AristaLabs/smeme/blob/main/docs/guides/self-host-quickstart.md"
+                class="landing-selfhost-guide plausible-event-name=Selfhost+Guide"
+                rel="noopener noreferrer"
+                target="_blank">
+                Self-host guide
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <details class="landing-pricing-usage max-w-2xl mx-auto">
+          <summary>* How usage is counted</summary>
+          <p>
+            <sup aria-hidden="true">*</sup> <strong class="text-ui-ink font-medium">MCP tool calls</strong> are weighted by operation type.
+            Evidence validation and a standard decision tree evaluation each count as <strong class="text-ui-ink">1</strong>
+            (a typical agent session uses both);
+            &ldquo;what if&rdquo; follow-ups count as <strong class="text-ui-ink">2</strong>;
+            &ldquo;how to&rdquo; follow-ups (reaching a different outcome) count as more.
+            Listing decision trees and downloading worksheets do not count toward your MCP allowance.
+            The per-user sample uses one decision-tree slot.
+          </p>
+        </details>
+
+        {# Need more — contact path, not a third SKU (D029) #}
+        <aside class="landing-pricing-need-more" aria-labelledby="need-more-heading">
+          <div class="landing-pricing-need-more-icon" aria-hidden="true">&#9670;</div>
+          <div class="landing-pricing-need-more-copy-wrap">
+            <p class="landing-pricing-need-more-copy">
+              <strong id="need-more-heading" class="landing-pricing-need-more-title">Need more?</strong>
+              SSO, regulated environments, or custom deployment.
+            </p>
+          </div>
+          <a
+            href="mailto:contact@aristalabs.ai?subject=SMEme%20SSO%20%2F%20regulated%20%2F%20custom"
+            class="landing-pricing-need-more-cta plausible-event-name=Enterprise+Contact">
+            Contact sales &rarr;
+          </a>
+        </aside>
+
+        </div>
+      </section>

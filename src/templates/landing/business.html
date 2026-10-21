@@ -1,0 +1,102 @@
+{% extends "layouts/base.html" %}
+{% from "components/macros.html" import btn %}
+{% set show_footer = true %}
+{% block title %}SMEme Business — share decision trees, keep your logic private{% endblock %}
+
+{% block head %}
+<meta name="description" content="SMEme Business (Coming Soon) will let experts share deployed decision trees with clients and colleagues. Join the waitlist — grantees get conclusions and reasoning chains; your decision logic stays on SMEme." />
+<meta property="og:title" content="SMEme Business — Coming Soon" />
+<meta property="og:description" content="The Business tier adds private decision tree sharing and decision-tree access monetization. Your decision tree logic stays on SMEme — never visible to third parties. Join the waitlist." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ site_base }}/marketplace/business" />
+<meta property="og:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="SMEme — The formal reasoning layer for AI" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
+<meta name="twitter:image:alt" content="SMEme — The formal reasoning layer for AI" />
+<link rel="canonical" href="{{ site_base }}/marketplace/business" />
+{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto space-y-10 sm:space-y-12">
+  <div class="space-y-4">
+    <p class="text-xs font-semibold uppercase tracking-wider text-brand-700 dark:text-brand-300">SMEme Business &middot; Coming Soon</p>
+    <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight text-ui-ink">
+      Share expert decision trees. Keep your logic private.
+    </h1>
+    <p class="text-lg text-ui-ink-secondary leading-relaxed">
+      Business is for professionals who deliver reasoning to clients and colleagues&mdash;not just run decision trees for themselves.
+      <strong class="font-medium text-ui-ink">Not available yet.</strong> Today, Free and Pro let you build and deploy your own decision trees; Business will add private invites and decision-tree access monetization.
+    </p>
+  </div>
+
+  <div class="rounded-xl border border-brand-200 dark:border-brand-800 bg-brand-50/60 dark:bg-brand-950/30 p-5 sm:p-6">
+    <p class="text-sm sm:text-base text-ui-ink leading-relaxed">
+      <strong class="font-semibold">Your decision-tree logic is never exposed to third parties</strong>&mdash;not to grantees or colleagues you invite, not even when you share a decision tree.
+      Others receive conclusions and reasoning chains; your decision tree stays on SMEme.
+    </p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div class="rounded-xl border border-ui-line bg-ui-surface shadow-card p-5 space-y-2">
+      <h2 class="text-base font-semibold text-ui-ink">Who it&rsquo;s for</h2>
+      <p class="text-sm text-ui-ink-secondary leading-relaxed">
+        Consultants, advisors, and subject-matter experts who need clients or teammates to run a deployed decision tree through any MCP-connected AI agent&mdash;without handing over the underlying logic.
+      </p>
+    </div>
+    <div class="rounded-xl border border-ui-line bg-ui-surface shadow-card p-5 space-y-2">
+      <h2 class="text-base font-semibold text-ui-ink">How sharing will work</h2>
+      <p class="text-sm text-ui-ink-secondary leading-relaxed">
+        After deploy, turn on Share per decision tree. Invite by email; grantees use MCP-connected agents. Paid private access comes in a later phase.
+      </p>
+    </div>
+  </div>
+
+  <div class="rounded-xl border border-ui-line bg-ui-surface shadow-card p-6 space-y-4">
+    <div class="flex flex-wrap items-baseline justify-between gap-2">
+      <h2 class="text-xl font-semibold text-ui-ink">Planned for Business</h2>
+      <p class="text-2xl font-bold text-ui-ink">
+        Pricing at launch
+        <span class="ml-2 text-sm font-semibold text-brand-700 dark:text-brand-300">Coming Soon</span>
+      </p>
+    </div>
+    <ul class="space-y-2 text-sm text-ui-ink-secondary">
+      <li>Everything in Pro</li>
+      <li>Higher limits than Pro &mdash; decision trees and MCP calls<sup aria-hidden="true">*</sup></li>
+      <li>Private decision tree sharing (invite-only)</li>
+      <li>Charge recurring access to clients&mdash;Stripe payouts to you</li>
+      <li>Priority support</li>
+    </ul>
+    <p class="text-sm text-ui-ink-secondary leading-relaxed">
+      Join the waitlist&mdash;we&rsquo;ll share launch pricing before general availability.
+    </p>
+    <p class="text-xs text-ui-ink-muted leading-relaxed">
+      <sup aria-hidden="true">*</sup> MCP tool calls are weighted by operation type.
+      <a href="/docs/plans" class="text-brand-700 dark:text-brand-300 underline underline-offset-2 hover:no-underline">Plans &amp; usage</a>
+    </p>
+  </div>
+
+  <div id="waitlist" class="rounded-xl border border-ui-line bg-ui-surface shadow-card p-6 sm:p-8 space-y-5">
+    <div class="space-y-2">
+      <h2 class="text-xl font-semibold text-ui-ink">Join the Business waitlist</h2>
+      <p class="text-sm text-ui-ink-secondary">
+        Get notified when private sharing and monetization open. Pro does not include sharing today.
+      </p>
+    </div>
+    {% include "landing/_waitlist_form.html" %}
+  </div>
+
+  <p class="text-center text-sm text-ui-ink-muted pb-4">
+    <a href="/pricing" class="text-brand-700 dark:text-brand-300 underline underline-offset-2 hover:no-underline font-medium">
+      &larr; Compare all plans
+    </a>
+  </p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{# Waitlist toggle/validation extracted to /static/js/landing-waitlist.js (M-04 CSP self-host). #}
+<script src="/static/js/landing-waitlist.js"></script>
+{% endblock %}

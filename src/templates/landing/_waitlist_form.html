@@ -1,0 +1,154 @@
+{# Business waitlist form — swapped via HTMX on /marketplace/business #}
+{% from "components/macros.html" import btn %}
+{% set errors = errors | default({}, true) %}
+{% set values = values | default({}, true) %}
+<div id="waitlist-form-panel">
+  {% if errors and errors.get('_form') %}
+  <p class="mb-4 text-sm text-danger-700 dark:text-danger-300" role="alert">{{ errors['_form'] }}</p>
+  {% endif %}
+
+  <form
+    class="space-y-4"
+    data-waitlist-form
+    hx-post="/teams-waitlist"
+    hx-target="#waitlist-form-panel"
+    hx-swap="innerHTML"
+    novalidate>
+    <div>
+      <label for="waitlist-name" class="block text-sm font-medium text-ui-ink mb-1">Name <span class="text-ui-ink-muted">(required)</span></label>
+      <input
+        type="text"
+        id="waitlist-name"
+        name="name"
+        required
+        maxlength="120"
+        autocomplete="name"
+        value="{{ values.name | default('', true) }}"
+        class="w-full rounded-md border px-3 py-2 text-sm text-ui-ink focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 {% if errors and errors.get('name') %}border-danger-500{% else %}border-ui-line bg-ui-surface{% endif %}"
+        aria-invalid="{{ 'true' if errors and errors.get('name') else 'false' }}"
+        {% if errors and errors.get('name') %}aria-describedby="waitlist-name-error"{% endif %}>
+      {% if errors and errors.get('name') %}
+      <p id="waitlist-name-error" class="mt-1 text-sm text-danger-700 dark:text-danger-300">{{ errors['name'] }}</p>
+      {% endif %}
+    </div>
+    <div>
+      <label for="waitlist-email" class="block text-sm font-medium text-ui-ink mb-1">Email address <span class="text-ui-ink-muted">(required)</span></label>
+      <input
+        type="email"
+        id="waitlist-email"
+        name="email"
+        required
+        autocomplete="email"
+        value="{{ values.email | default('', true) }}"
+        class="w-full rounded-md border px-3 py-2 text-sm text-ui-ink focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 {% if errors and errors.get('email') %}border-danger-500{% else %}border-ui-line bg-ui-surface{% endif %}"
+        aria-invalid="{{ 'true' if errors and errors.get('email') else 'false' }}"
+        {% if errors and errors.get('email') %}aria-describedby="waitlist-email-error"{% endif %}>
+      {% if errors and errors.get('email') %}
+      <p id="waitlist-email-error" class="mt-1 text-sm text-danger-700 dark:text-danger-300">{{ errors['email'] }}</p>
+      {% endif %}
+    </div>
+    <fieldset class="space-y-2">
+      <legend class="block text-sm font-medium text-ui-ink mb-1">
+        Which desktop AI workspaces do you use? <span class="text-ui-ink-muted">(required, select all that apply)</span>
+      </legend>
+      <div class="space-y-2 rounded-md border border-ui-line bg-ui-surface/50 p-3">
+        {% set selected = values.workspaces | default([], true) %}
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="none" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'none' in selected %}checked{% endif %}>
+          None
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="claude_chat" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'claude_chat' in selected %}checked{% endif %}>
+          Claude Chat
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="claude_cowork" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'claude_cowork' in selected %}checked{% endif %}>
+          Claude
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="claude_code" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'claude_code' in selected %}checked{% endif %}>
+          Claude Code
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="chatgpt" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'chatgpt' in selected %}checked{% endif %}>
+          ChatGPT
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="chatgpt_atlas" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'chatgpt_atlas' in selected %}checked{% endif %}>
+          ChatGPT Atlas
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="gemini" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'gemini' in selected %}checked{% endif %}>
+          Gemini
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="notebooklm" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'notebooklm' in selected %}checked{% endif %}>
+          NotebookLM
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="perplexity" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'perplexity' in selected %}checked{% endif %}>
+          Perplexity
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="microsoft_365_copilot" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'microsoft_365_copilot' in selected %}checked{% endif %}>
+          Microsoft 365 Copilot
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="github_copilot" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'github_copilot' in selected %}checked{% endif %}>
+          GitHub Copilot
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="cursor" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'cursor' in selected %}checked{% endif %}>
+          Cursor
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="devin_desktop" class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'devin_desktop' in selected %}checked{% endif %}>
+          Devin Desktop
+        </label>
+        <label class="flex items-center gap-2 text-sm text-ui-ink cursor-pointer">
+          <input type="checkbox" name="workspaces" value="other" id="waitlist-ws-other" data-waitlist-other-toggle class="rounded border-ui-line text-brand-600 focus:ring-brand-500" {% if 'other' in selected %}checked{% endif %}>
+          Other
+        </label>
+      </div>
+      {% if errors and errors.get('workspaces') %}
+      <p class="text-sm text-danger-700 dark:text-danger-300" role="alert">{{ errors['workspaces'] }}</p>
+      {% endif %}
+      <div id="waitlist-other-wrap" class="{% if 'other' not in selected %}hidden{% endif %}">
+        <label for="waitlist-workspace-other" class="block text-sm font-medium text-ui-ink-secondary mb-1">Other (optional)</label>
+        <input
+          type="text"
+          id="waitlist-workspace-other"
+          name="workspace_other"
+          maxlength="200"
+          placeholder="e.g. Cline, Google Antigravity, local LLM app"
+          value="{{ values.workspace_other | default('', true) }}"
+          class="w-full rounded-md border border-ui-line bg-ui-surface px-3 py-2 text-sm text-ui-ink focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+          {% if errors and errors.get('workspace_other') %}aria-describedby="waitlist-other-error"{% endif %}>
+        {% if errors and errors.get('workspace_other') %}
+        <p id="waitlist-other-error" class="mt-1 text-sm text-danger-700 dark:text-danger-300">{{ errors['workspace_other'] }}</p>
+        {% endif %}
+        <p class="mt-1 text-xs text-ui-ink-muted">Up to 200 characters. Letters, numbers, and common punctuation only.</p>
+      </div>
+    </fieldset>
+    <div>
+      <label for="waitlist-frequency" class="block text-sm font-medium text-ui-ink mb-1">How often do you use a desktop AI workspace? <span class="text-ui-ink-muted">(required)</span></label>
+      <select
+        id="waitlist-frequency"
+        name="frequency"
+        required
+        class="w-full rounded-md border px-3 py-2 text-sm text-ui-ink focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 {% if errors and errors.get('frequency') %}border-danger-500{% else %}border-ui-line bg-ui-surface{% endif %}">
+        <option value="" disabled {% if not values.frequency %}selected{% endif %}>Select an option...</option>
+        <option value="never" {% if values.frequency == 'never' %}selected{% endif %}>Never</option>
+        <option value="rarely" {% if values.frequency == 'rarely' %}selected{% endif %}>Rarely (a few times a month)</option>
+        <option value="weekly" {% if values.frequency == 'weekly' %}selected{% endif %}>Weekly</option>
+        <option value="daily" {% if values.frequency == 'daily' %}selected{% endif %}>Daily</option>
+      </select>
+      {% if errors and errors.get('frequency') %}
+      <p class="mt-1 text-sm text-danger-700 dark:text-danger-300">{{ errors['frequency'] }}</p>
+      {% endif %}
+    </div>
+    <div class="pt-2">
+      {{ btn("Join Waitlist", variant="primary", size="md", full_width=true, type="submit", attrs='id="waitlist-submit" hx-indicator="#waitlist-submit"', extra_class="plausible-event-name=Waitlist+Submit") }}
+    </div>
+  </form>
+</div>

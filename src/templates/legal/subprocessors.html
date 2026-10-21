@@ -1,0 +1,79 @@
+{% extends "legal/_layout.html" %}
+{% block legal_meta %}
+<p class="text-sm text-ui-ink-muted">Last updated: October 10, 2026</p>
+{% endblock %}
+{% block legal_body %}
+<p>
+  Arista Labs uses subprocessors—third-party service providers that process personal data or User Content on our behalf
+  to operate the SMEme platform. This page lists the subprocessors we use today. We update it when vendors change.
+</p>
+<p>
+  <strong class="text-ui-ink">Where reasoning runs:</strong> The automated reasoning engine evaluates published decision trees
+  on application servers hosted by Render Services, Inc. Hosted SMEme does not call OpenAI or Tavily.
+</p>
+<p>
+  For how we collect and use information, see the <a href="/legal/privacy">Privacy Policy</a>.
+</p>
+
+<hr>
+
+<h2>Current subprocessors</h2>
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Vendor</th>
+      <th scope="col">Purpose</th>
+      <th scope="col">Data processed</th>
+      <th scope="col">Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Clerk, Inc.</td>
+      <td>Authentication, identity management, OAuth for MCP connectors</td>
+      <td>Account credentials, email, session tokens, profile information</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <td>Stripe, Inc.</td>
+      <td>Payment processing and subscription billing</td>
+      <td>Billing name, email, payment method metadata, transaction records</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <td>Twilio SendGrid</td>
+      <td>Transactional email delivery</td>
+      <td>Email address, message content for platform notifications</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <td>Neon Tech, Inc.</td>
+      <td>Managed PostgreSQL database hosting</td>
+      <td>Account data, Expert Assets, Generated Outputs, application metadata</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <td>Render Services, Inc.</td>
+      <td>Application hosting, deployment, and execution of the automated reasoning engine</td>
+      <td>Application traffic, logs, environment configuration; inputs and outputs for deterministic reasoning evaluation</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>Updates</h2>
+<p>
+  We may add or replace subprocessors as the Service evolves. Material changes to subprocessors that affect
+  how we process personal data will be reflected on this page. Enterprise customers requiring a Data Processing
+  Agreement (DPA) should contact <a href="mailto:contact@aristalabs.ai">contact@aristalabs.ai</a>.
+</p>
+
+<hr>
+
+<h2>Contact</h2>
+<p>
+  <a href="mailto:contact@aristalabs.ai">contact@aristalabs.ai</a>
+</p>
+{% endblock %}

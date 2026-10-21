@@ -1,0 +1,19 @@
+{# Shared closing CTA band — homepage + how-it-works #}
+{% from "components/macros.html" import btn %}
+{% set _lead = cta_lead|default("Build your first decision tree free. No credit card — connect your agent when you're ready.") %}
+{% set _secondary_href = cta_secondary_href|default("/legal/principles") %}
+{% set _secondary_label = cta_secondary_label|default("Sovereignty") %}
+
+<section class="landing-closing-cta" aria-labelledby="closing-cta-heading">
+  <div class="landing-closing-cta-inner">
+    <h2 id="closing-cta-heading" class="landing-closing-cta-h2">Turn your expertise into a tool agents can run</h2>
+    <p class="landing-closing-cta-lead">{{ _lead }}</p>
+    <div class="landing-closing-cta-actions">
+      {{ btn("Start free", variant="secondary", size="lg", href="/auth/register", extra_class="landing-closing-cta-start plausible-event-name=Signup+Click") }}
+      {{ btn(_secondary_label, variant="secondary", size="lg", href=_secondary_href, extra_class="landing-closing-cta-secondary") }}
+    </div>
+    <p class="landing-closing-cta-quiet">
+      <a href="/mcp">MCP tool reference for integrators &rarr;</a>
+    </p>
+  </div>
+</section>

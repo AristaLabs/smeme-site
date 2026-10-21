@@ -1,0 +1,749 @@
+{# Public MCP hub — setup first, then ToC and tool reference #}
+{% from "components/macros.html" import btn %}
+<article class="landing-section" aria-labelledby="mcp-page-heading">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">
+    <header class="text-center max-w-3xl mx-auto space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-wider text-ui-ink-muted">MCP</p>
+      <h1 id="mcp-page-heading" class="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-ui-ink leading-tight">
+        Add deductive reasoning superpowers directly in your AI interface
+      </h1>
+      <p class="text-base sm:text-lg text-ui-ink-secondary leading-relaxed">
+        Copy prompts into the chatbot you already use. They walk you through connecting SMEme, finding a judgment worth encoding, and building your first decision tree.
+        Start at
+        <a href="/docs/quick-start" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Quick start</a>.
+        This page is the public tool wire reference any connected agent can call.
+      </p>
+    </header>
+
+    <aside id="mcp-setup-heading" class="landing-mcp-setup-lead max-w-4xl mx-auto" aria-labelledby="mcp-setup-lead-heading">
+      <div class="landing-mcp-setup-lead-copy">
+        <h2 id="mcp-setup-lead-heading" class="landing-mcp-setup-lead-title">MCP setup guide</h2>
+        <p class="landing-mcp-setup-lead-desc">
+          Connect any MCP client — endpoint URL, OAuth Client ID, and first tool call.
+        </p>
+      </div>
+      <div class="landing-mcp-setup-lead-action">
+        {{ btn("MCP setup guide", variant="gradient", size="md", href="/docs/mcp", full_width=true, extra_class="plausible-event-name=MCP+Setup") }}
+      </div>
+    </aside>
+
+    <section id="mcp-first-report" class="max-w-4xl mx-auto space-y-4" aria-labelledby="mcp-first-report-heading">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <p class="text-sm font-semibold uppercase tracking-wider text-ui-ink-muted">First report</p>
+        <h2 id="mcp-first-report-heading" class="text-xl font-semibold text-ui-ink">Get a report without an LLM</h2>
+        <p class="text-sm text-ui-ink-secondary leading-relaxed">
+          Try a ready-made decision tree before building your own. The sample is a sanitized per-user walkthrough you own — not legal, tax, or other expert advice, and not the ACME marketing vignette on the homepage.
+        </p>
+      </div>
+      <ul class="space-y-3 text-sm text-ui-ink-secondary leading-relaxed" role="list">
+        <li class="rounded-xl border border-ui-line bg-ui-surface px-4 py-3">
+          <strong class="font-medium text-ui-ink">Two doors.</strong>
+          Dashboard <strong class="font-medium text-ui-ink">Load sample</strong>, or the first empty <code class="landing-mcp-code">smeme_reasoning_list</code> when the account has zero Listed trees. Both create it Deployed + Listed. Persistent empty is recovery, not the ordinary first run.
+        </li>
+        <li class="rounded-xl border border-ui-line bg-ui-surface px-4 py-3">
+          <strong class="font-medium text-ui-ink">Quota.</strong>
+          The sample uses one decision-tree slot; later list calls reuse it. List has MCP weight 0 but is not read-only because that first call may write. <code class="landing-mcp-code">validate_answers</code> and <code class="landing-mcp-code">evaluate_answers</code> consume MCP allowance. At tree cap, list returns <code class="landing-mcp-code">quota_exceeded</code>.
+        </li>
+        <li class="rounded-xl border border-ui-line bg-ui-surface px-4 py-3">
+          <strong class="font-medium text-ui-ink">Wire ids.</strong>
+          List rows use <code class="landing-mcp-code">id</code> — pass it to later tools as <code class="landing-mcp-code">decision_tree_id</code>. Sample rows also include <code class="landing-mcp-code">sample_key: smeme_sample_v1</code>.
+        </li>
+        <li class="rounded-xl border border-ui-line bg-ui-surface px-4 py-3">
+          <strong class="font-medium text-ui-ink">No-LLM Apply.</strong>
+          Core
+          <a href="https://github.com/AristaLabs/smeme/blob/main/examples/README.md#smeme_apply_samplepy-start-here"
+             class="text-brand-700 dark:text-brand-300 underline-offset-2 hover:underline"
+             target="_blank"
+             rel="noopener noreferrer"><code class="landing-mcp-code">examples/smeme_apply_sample.py</code></a>
+          lists, validates, and evaluates canned answers. From the Core checkout, run <code class="landing-mcp-code">uv run examples/smeme_apply_sample.py</code> — its declared dependencies install in an isolated environment. That path does not use an LLM. SaaS is DCR-off: pass the public PKCE client ID; do not use bare <code class="landing-mcp-code">OAuth()</code>.
+        </li>
+      </ul>
+    </section>
+
+    <nav aria-label="MCP page sections" class="max-w-4xl mx-auto rounded-xl border border-ui-line bg-ui-surface px-4 py-3">
+      <ul class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm" role="list">
+        <li><a href="#mcp-first-report" class="text-brand-700 dark:text-brand-300 underline-offset-2 hover:underline">Get a report without an LLM</a></li>
+        <li><a href="#mcp-authoring-quickstart" class="text-ui-ink-secondary underline-offset-2 hover:underline">Build a draft in chat</a></li>
+        <li><a href="#mcp-sequence-heading" class="text-ui-ink-secondary underline-offset-2 hover:underline">Run a decision tree</a></li>
+        <li><a href="#mcp-tools-heading" class="text-ui-ink-secondary underline-offset-2 hover:underline">Browse reasoning tools</a></li>
+        <li><a href="#mcp-authoring-heading" class="text-ui-ink-secondary underline-offset-2 hover:underline">Chat authoring tools</a></li>
+      </ul>
+    </nav>
+
+    <section id="mcp-authoring-quickstart" aria-labelledby="mcp-authoring-quickstart-heading" class="max-w-4xl mx-auto space-y-4">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <p class="text-sm font-semibold uppercase tracking-wider text-ui-ink-muted">Build with your agent</p>
+        <h2 id="mcp-authoring-quickstart-heading" class="text-xl font-semibold text-ui-ink">Create or revise a decision-tree draft in chat</h2>
+        <p class="text-sm text-ui-ink-secondary leading-relaxed">
+          Your agent constructs the <code class="landing-mcp-code">dt_graph_json</code> using SMEme&rsquo;s design guidance.
+          SMEme validates and saves the graph; the MCP authoring tools do not generate or Deploy it automatically.
+        </p>
+      </div>
+      <ol class="landing-mcp-sequence list-none p-0 m-0 space-y-2" role="list">
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">1</span>
+          <div>
+            <p class="font-medium text-ui-ink">Load the design standard</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed">Call <code class="landing-mcp-code">smeme_authoring_design_guidance</code> before drafting the tree.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">2</span>
+          <div>
+            <p class="font-medium text-ui-ink">Construct the graph together</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed">You and your agent agree the questions, options, branches, and conclusions. The agent then constructs the <code class="landing-mcp-code">dt_graph_json</code> from that design.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">3</span>
+          <div>
+            <p class="font-medium text-ui-ink">Validate and fix</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed">Call <code class="landing-mcp-code">smeme_authoring_validate_graph</code>, address the returned findings, and repeat until <code class="landing-mcp-code">draft_ready</code> is true.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">4</span>
+          <div>
+            <p class="font-medium text-ui-ink">Save the draft</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed">For a new tree, call <code class="landing-mcp-code">smeme_authoring_create_draft</code>. To revise one, call <code class="landing-mcp-code">smeme_authoring_get_draft</code>, validate the revision, then call <code class="landing-mcp-code">smeme_authoring_update_draft</code> with its <code class="landing-mcp-code">expected_graph_hash</code>.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">5</span>
+          <div>
+            <p class="font-medium text-ui-ink">Review and Deploy in the editor</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed">Open the returned editor URL, review the saved draft, then Deploy it and choose <strong class="font-medium text-ui-ink">Listed</strong> or <strong class="font-medium text-ui-ink">Hidden</strong>. MCP authoring never changes those settings for you.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="text-center text-sm text-ui-ink-muted">
+        Questions about graph design or authoring tools?
+        <a href="https://github.com/AristaLabs/smeme/discussions/categories/mcp-tools"
+           class="underline-offset-2 hover:underline text-brand-700 dark:text-brand-300"
+           target="_blank"
+           rel="noopener noreferrer">Ask in MCP Tools</a>.
+      </p>
+    </section>
+
+    <section aria-labelledby="mcp-prereq-heading" class="max-w-3xl mx-auto space-y-4">
+      <h2 id="mcp-prereq-heading" class="text-xl font-semibold text-ui-ink text-center">Prerequisites</h2>
+      <p class="text-sm text-ui-ink-secondary text-center leading-relaxed max-w-2xl mx-auto">
+        Every reasoning tool requires OAuth 2.1 Bearer (Clerk) and a linked SMEme account. Complete OAuth before calling tools.
+      </p>
+      <ol class="landing-mcp-sequence list-none p-0 m-0 space-y-2" role="list">
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">1</span>
+          <div>
+            <p class="font-medium text-ui-ink">Connect MCP</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed">Add the SMEme MCP server from your dashboard or docs; authenticate with Clerk OAuth. A web account is optional when MCP-first signup is enabled — complete email verification and Terms/Privacy in Clerk, then call a tool.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">2</span>
+          <div>
+            <p class="font-medium text-ui-ink">Deploy + Listed, or the sample</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed">You do not need a tree of your own first. The first empty list may create the per-user sample. To run a tree you authored, Deploy it and set it <strong class="font-medium text-ui-ink">Listed</strong> (not Hidden) on your dashboard.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">3</span>
+          <div>
+            <p class="font-medium text-ui-ink">Bootstrap session</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">smeme_reasoning_capabilities</code> &rarr; compare <code class="landing-mcp-code">guidance.content_digest</code> &rarr; on first use or mismatch call <code class="landing-mcp-code">smeme_reasoning_guidance_get</code> and cache the calling contract.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">4</span>
+          <div>
+            <p class="font-medium text-ui-ink">Pick decision tree</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">smeme_reasoning_list</code> &rarr; copy <code class="landing-mcp-code">id</code> from the response and pass it later as <code class="landing-mcp-code">decision_tree_id</code>. Sample rows also include <code class="landing-mcp-code">sample_key</code>. Do not guess UUIDs.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">5</span>
+          <div>
+            <p class="font-medium text-ui-ink">Guided gather (default)</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">smeme_reasoning_evaluate</code> (<code class="landing-mcp-code">decision_tree_id</code> only) &rarr; call <code class="landing-mcp-code">smeme_reasoning_evaluate_continue</code> while <code class="landing-mcp-code">harness_next</code> is <code class="landing-mcp-code">continue_evaluate</code>. When the loop ends, use the returned <code class="landing-mcp-code">report</code>. Do not call <code class="landing-mcp-code">template_get</code> first.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="mcp-sequence-heading" class="max-w-4xl mx-auto space-y-4">
+      <h2 id="mcp-sequence-heading" class="text-xl font-semibold text-ui-ink text-center">Typical call sequence</h2>
+      <p class="text-sm text-ui-ink-secondary text-center leading-relaxed max-w-2xl mx-auto">
+        Default path is <strong class="font-medium text-ui-ink">guided gather</strong>. Bulk worksheet Apply is a labeled alternate. Skills, runbooks, or <code class="landing-mcp-code">guidance_get</code> guide most agents.
+      </p>
+      <ol class="landing-mcp-sequence list-none p-0 m-0 space-y-2" role="list">
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">1</span>
+          <div>
+            <p class="font-medium text-ui-ink">Discover</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">smeme_reasoning_capabilities</code> (bootstrap + guidance digest) &rarr; <code class="landing-mcp-code">smeme_reasoning_guidance_get</code> when needed &rarr; <code class="landing-mcp-code">smeme_reasoning_list</code> to find the right Deployed + Listed tree (first empty list may seed the sample).</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">2</span>
+          <div>
+            <p class="font-medium text-ui-ink">Start guided gather</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">smeme_reasoning_evaluate(decision_tree_id)</code> starts a durable session. Returns a blind <code class="landing-mcp-code">task</code> (<code class="landing-mcp-code">question_id</code>, <code class="landing-mcp-code">stem</code>, <code class="landing-mcp-code">options</code>) plus <code class="landing-mcp-code">inquiry_session_id</code>, or is already terminal with a <code class="landing-mcp-code">report</code>.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">3</span>
+          <div>
+            <p class="font-medium text-ui-ink">Continue until terminal</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed">Gather evidence for <em>only that task</em>, then <code class="landing-mcp-code">smeme_reasoning_evaluate_continue</code>. Pass <code class="landing-mcp-code">selected_option</code> + <code class="landing-mcp-code">provenance_id</code> to admit; <strong class="font-medium text-ui-ink">omit option to abstain</strong>. Continue only while <code class="landing-mcp-code">harness_next</code> is <code class="landing-mcp-code">continue_evaluate</code>. When it is not, use the returned <code class="landing-mcp-code">report</code> and branch on <code class="landing-mcp-code">result_kind</code>. <code class="landing-mcp-code">inquire_stop_reason: isolated_verification_not_run</code> means chat returned the report without inventing isolated VERIFY trials; it is not an error or quota denial.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">4</span>
+          <div>
+            <p class="font-medium text-ui-ink">Bulk / audit (optional)</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed">When you already have a full worksheet assignment: <code class="landing-mcp-code">smeme_reasoning_template_get</code> &rarr; <code class="landing-mcp-code">smeme_reasoning_validate_answers</code> &rarr; <code class="landing-mcp-code">smeme_reasoning_evaluate_answers</code> with <code class="landing-mcp-code">raw_answers_json</code>.</p>
+          </div>
+        </li>
+        <li class="landing-mcp-sequence-item">
+          <span class="landing-mcp-sequence-step" aria-hidden="true">5</span>
+          <div>
+            <p class="font-medium text-ui-ink">Logical analysis (after gather)</p>
+            <p class="text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">smeme_reasoning_what_if</code>, <code class="landing-mcp-code">smeme_reasoning_edit_affects_path</code>, <code class="landing-mcp-code">smeme_reasoning_how_to_reach</code>, <code class="landing-mcp-code">smeme_reasoning_decisive_support</code>, and <code class="landing-mcp-code">smeme_reasoning_list_conclusions</code> use a provenance envelope — not during an active gather loop in the same thread.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="mcp-selection-heading" class="space-y-4">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 id="mcp-selection-heading" class="text-xl font-semibold text-ui-ink">Tool selection guide</h2>
+        <p class="text-sm text-ui-ink-secondary leading-relaxed">Use this table to pick the right tool. Do not substitute siblings.</p>
+      </div>
+      <div class="overflow-x-auto rounded-xl border border-ui-line max-w-5xl mx-auto">
+        <table class="landing-mcp-table min-w-full border-collapse text-left text-sm">
+          <thead>
+            <tr class="border-b border-ui-line bg-ui-surface-muted">
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Task</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Call</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Not</th>
+            </tr>
+          </thead>
+          <tbody class="bg-ui-surface divide-y divide-ui-line">
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Session bootstrap</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_capabilities</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">list</code> — capabilities returns service info, tool list, and <code class="landing-mcp-code">guidance.content_digest</code></td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Guidance digest only</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_guidance_check</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">guidance_get</code> — prefer digest from capabilities; use check only when skipping capabilities</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Full calling contract</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_guidance_get</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">template_get</code> — guidance is platform-wide; per-decision-tree worksheets come from template tools</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Find decision trees</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_list</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Guessing <code class="landing-mcp-code">decision_tree_id</code> — list returns Deployed + Listed trees (first empty list may create the sample). Copy row <code class="landing-mcp-code">id</code>, then pass it as <code class="landing-mcp-code">decision_tree_id</code></td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Drift probe only</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_template_check</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">template_get</code> — check returns digest + <code class="landing-mcp-code">in_sync</code> only, no worksheet body</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Full evidence worksheet (bulk)</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_template_get</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">evaluate</code> first — ordinary chat gather does not download the worksheet; use template_get for bulk/audit only</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Pre-flight ingest gate (bulk)</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_validate_answers</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">evaluate_answers</code> — validate does not run logic, persist audit rows, or return a report</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Start guided case gather</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_evaluate</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">evaluate_answers</code> — evaluate starts a blind-task session; bulk Apply is evaluate_answers</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Continue guided gather</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_evaluate_continue</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Guessing VERIFY — continue only while <code class="landing-mcp-code">harness_next: continue_evaluate</code>; then use the returned report</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Bulk Apply completed worksheet</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_evaluate_answers</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">evaluate</code> — evaluate_answers needs <code class="landing-mcp-code">raw_answers_json</code>; guided gather does not</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Catalog possible outcomes</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_list_conclusions</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">During an active gather loop — list conclusions needs no answers; not mid-continue</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Scenario delta (one fact change)</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_what_if</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">how_to_reach</code> — what-if compares baseline vs override; it does not search for a repair plan</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Minimal edits to reach a target</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_how_to_reach</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">what_if</code> — how-to-reach needs <code class="landing-mcp-code">target_conclusion_id</code> from list conclusions first</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Path sensitivity under an edit</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_edit_affects_path</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">what_if</code> — path-under-edit asks whether the <em>current</em> path stays forced; use what-if for the alternate world</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Which answers were sufficient</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_decisive_support</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">how_to_reach</code> — decisive support needs the target already forced; how-to-reach searches for edits when it is not</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="mcp-invoke-heading" class="max-w-3xl mx-auto space-y-4">
+      <h2 id="mcp-invoke-heading" class="text-xl font-semibold text-ui-ink text-center">How agents invoke tools</h2>
+      <ul class="space-y-3 text-sm text-ui-ink-secondary leading-relaxed" role="list">
+        <li class="rounded-xl border border-ui-line bg-ui-surface px-4 py-3">
+          <strong class="font-medium text-ui-ink">Semantic match</strong> — the agent recognizes the task fits a Deployed decision tree and calls SMEme without you naming a tool.
+        </li>
+        <li class="rounded-xl border border-ui-line bg-ui-surface px-4 py-3">
+          <strong class="font-medium text-ui-ink">Natural language</strong> — e.g. &ldquo;Run my foreign-national property tax decision tree on this folder.&rdquo;
+        </li>
+        <li class="rounded-xl border border-ui-line bg-ui-surface px-4 py-3">
+          <strong class="font-medium text-ui-ink">Direct MCP call</strong> — invoke <code class="landing-mcp-code">smeme_reasoning_evaluate</code> or any tool by wire name from a runbook or custom client.
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="mcp-tools-heading" class="space-y-6">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 id="mcp-tools-heading" class="text-xl font-semibold text-ui-ink">Tool catalog</h2>
+        <p class="text-sm text-ui-ink-secondary leading-relaxed">Conceptual map of what each tool does. Wire names match the MCP surface your agent discovers at connect time.</p>
+      </div>
+
+      <ul class="landing-capability-grid" role="list">
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Agent guidance</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_guidance_get</code></p>
+          <p class="landing-capability-desc">Connector-only bootstrap: full calling contract markdown (sequence, errors, provenance). Cache when <code class="landing-mcp-code">guidance.content_digest</code> matches.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Discover</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_list</code></p>
+          <p class="landing-capability-desc">List Deployed + Listed trees. Rows use <code class="landing-mcp-code">id</code> (pass later as <code class="landing-mcp-code">decision_tree_id</code>). First empty list may create the sample (<code class="landing-mcp-code">sample_key</code>). Not read-only.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Evidence checklist (bulk)</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_template_get</code></p>
+          <p class="landing-capability-desc">Authoritative worksheet for bulk/audit slot-filling — not the default chat gather path.</p>
+        </li>
+        <li class="landing-capability-card landing-capability-card-featured">
+          <h3 class="landing-capability-title">Start guided gather</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_evaluate</code></p>
+          <p class="landing-capability-desc">Start a durable inquire session with <code class="landing-mcp-code">decision_tree_id</code> only. Returns a blind task with <code class="landing-mcp-code">harness_next: continue_evaluate</code>, or a terminal <code class="landing-mcp-code">report</code>.</p>
+        </li>
+        <li class="landing-capability-card landing-capability-card-featured">
+          <h3 class="landing-capability-title">Continue guided gather</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_evaluate_continue</code></p>
+          <p class="landing-capability-desc">Admit one answer (<code class="landing-mcp-code">selected_option</code> + <code class="landing-mcp-code">provenance_id</code>) or omit option to abstain. Continue while <code class="landing-mcp-code">harness_next</code> is <code class="landing-mcp-code">continue_evaluate</code>; otherwise use the returned <code class="landing-mcp-code">report</code>.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Validate (bulk)</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_validate_answers</code></p>
+          <p class="landing-capability-desc">Ingest gate before bulk Apply: shape, IDs, option strings, evidence refs, and self-consistency.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Bulk Apply</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_evaluate_answers</code></p>
+          <p class="landing-capability-desc">Apply a completed worksheet envelope (<code class="landing-mcp-code">raw_answers_json</code>). Deterministic execution on SMEme — not model improvisation.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Non-concluded outcomes</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">result_kind</code> on report</p>
+          <p class="landing-capability-desc">When the report can&rsquo;t conclude — multiple outcomes, conflicts, or gaps — it says so. No fabricated single answer.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">List conclusions</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_list_conclusions</code></p>
+          <p class="landing-capability-desc">Catalog possible outcomes and structural reachability — before how-to-reach, not during an active gather loop.</p>
+        </li>
+        <li class="landing-capability-card landing-capability-card-featured">
+          <h3 class="landing-capability-title">What-if</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_what_if</code></p>
+          <p class="landing-capability-desc">Change one fact; see what flips. Baseline vs override with structured delta.</p>
+        </li>
+        <li class="landing-capability-card landing-capability-card-featured">
+          <h3 class="landing-capability-title">How-to-reach</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_how_to_reach</code></p>
+          <p class="landing-capability-desc">Minimal answer changes to reach a target outcome. Call list conclusions first to pick a valid target.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Path under edit</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_edit_affects_path</code></p>
+          <p class="landing-capability-desc">Would a hypothetical answer change break the current forced path? Pair with what-if when you also need the alternate world.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Decisive support</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_reasoning_decisive_support</code></p>
+          <p class="landing-capability-desc">Minimal sufficient evidence: which answered questions force the target when it is already concluded.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="mcp-wire-heading" class="space-y-4">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 id="mcp-wire-heading" class="text-xl font-semibold text-ui-ink">Wire reference</h2>
+        <p class="text-sm text-ui-ink-secondary leading-relaxed">Per-tool purpose, anti-patterns, and key parameters. Wire names match the MCP surface at connect time.</p>
+      </div>
+      <div class="overflow-x-auto rounded-xl border border-ui-line max-w-6xl mx-auto">
+        <table class="landing-mcp-table min-w-full border-collapse text-left text-sm">
+          <thead>
+            <tr class="border-b border-ui-line bg-ui-surface-muted">
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">MCP tool</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">When to call</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">When not to call</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Key parameters</th>
+            </tr>
+          </thead>
+          <tbody class="bg-ui-surface divide-y divide-ui-line">
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_capabilities</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Once per session after OAuth — service info, MCP surface version, authoritative tool list, and <code class="landing-mcp-code">guidance.content_digest</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Before OAuth completes; as a substitute for <code class="landing-mcp-code">list</code> when you need decision-tree IDs.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><span class="text-ui-ink-muted">(none)</span> — returns <code class="landing-mcp-code">guidance</code> block with digest</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_guidance_check</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Cheap guidance drift probe when you skipped capabilities — compare digest to cached copy.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">As default bootstrap — prefer <code class="landing-mcp-code">guidance.content_digest</code> from capabilities.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><span class="text-ui-ink-muted">(none)</span></td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_guidance_get</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">First use or digest mismatch — download full platform calling contract as <code class="landing-mcp-code">content_markdown</code>; cache locally.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">For per-decision-tree worksheets — use <code class="landing-mcp-code">template_get</code>; on every session when digest unchanged.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><span class="text-ui-ink-muted">(none)</span> — quota weight 0</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_list</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Discover Deployed + Listed decision trees; first empty list may create the sample. Copy <code class="landing-mcp-code">id</code> for later tools.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">When you already have a valid <code class="landing-mcp-code">decision_tree_id</code>; to probe Hidden or undeployed decision trees.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Quota 0, not read-only. Returns <code class="landing-mcp-code">decision_trees[]</code> with <code class="landing-mcp-code">id</code>, <code class="landing-mcp-code">title</code>, optional <code class="landing-mcp-code">sample_key</code></td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_template_check</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Cheap drift probe — skip <code class="landing-mcp-code">template_get</code> when cached digest still matches.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">When you need question IDs or valid option strings — use <code class="landing-mcp-code">template_get</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code> (UUID from list)</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_template_get</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Bulk/audit only — download the authoritative worksheet (<code class="landing-mcp-code">manifest_markdown</code>) with question IDs, labels, valid options.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Before ordinary guided gather — use <code class="landing-mcp-code">evaluate</code> / <code class="landing-mcp-code">evaluate_continue</code>; for drift-only — use <code class="landing-mcp-code">template_check</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code> (UUID from list)</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_validate_answers</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Bulk Phase 1 ingest gate — structure, option strings, evidence refs, consistency. Returns <code class="landing-mcp-code">harness_next</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">As a substitute for <code class="landing-mcp-code">evaluate_answers</code>; during guided gather; with guessed question IDs.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code>, <code class="landing-mcp-code">raw_answers_json</code> — JSON object (legacy flat or provenance envelope)</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_evaluate</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Start guided case gather — returns a blind <code class="landing-mcp-code">task</code> + <code class="landing-mcp-code">inquiry_session_id</code> with <code class="landing-mcp-code">harness_next: continue_evaluate</code>, or a terminal <code class="landing-mcp-code">report</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">With a completed worksheet / <code class="landing-mcp-code">raw_answers_json</code> — use <code class="landing-mcp-code">evaluate_answers</code>; after <code class="landing-mcp-code">template_get</code> as the default chat path.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code> only</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_evaluate_continue</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Continue guided gather — admit one answer; while <code class="landing-mcp-code">harness_next</code> is <code class="landing-mcp-code">continue_evaluate</code>, use the next blind task. Otherwise use the returned <code class="landing-mcp-code">report</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">To fake VERIFY trials; without <code class="landing-mcp-code">inquiry_session_id</code> from <code class="landing-mcp-code">evaluate</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">inquiry_session_id</code>, <code class="landing-mcp-code">question_id</code>; admit = <code class="landing-mcp-code">selected_option</code> + <code class="landing-mcp-code">provenance_id</code>; omit option to abstain</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_evaluate_answers</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Bulk Apply on a worksheet envelope; returns <code class="landing-mcp-code">report</code> with <code class="landing-mcp-code">result_kind</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">As the default chat path — prefer <code class="landing-mcp-code">evaluate</code> / <code class="landing-mcp-code">evaluate_continue</code>; before validate passes on bulk.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code>, <code class="landing-mcp-code">raw_answers_json</code>, optional <code class="landing-mcp-code">persist</code> (default true)</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_list_conclusions</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Catalog conclusion IDs and structural reachability — no answers required.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">When you need case-specific results — use guided gather or <code class="landing-mcp-code">evaluate_answers</code>; during an active gather loop.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code> — returns <code class="landing-mcp-code">conclusion_id</code> values for <code class="landing-mcp-code">how_to_reach</code></td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_what_if</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Compare baseline vs override assignments; returns before/after reports and structured <code class="landing-mcp-code">delta</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">To find minimal edits for a target outcome — use <code class="landing-mcp-code">how_to_reach</code>; with <code class="landing-mcp-code">persist=true</code> (v1 unsupported).</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code>, <code class="landing-mcp-code">base_raw_answers_json</code>, <code class="landing-mcp-code">override_raw_answers_json</code></td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_how_to_reach</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Cardinality-minimal answer-edit plans to reach a target conclusion.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Without <code class="landing-mcp-code">target_conclusion_id</code> from <code class="landing-mcp-code">list_conclusions</code>; for simple scenario deltas — use <code class="landing-mcp-code">what_if</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code>, <code class="landing-mcp-code">base_raw_answers_json</code>, <code class="landing-mcp-code">target_conclusion_id</code>; optional <code class="landing-mcp-code">locked_question_ids</code>, <code class="landing-mcp-code">max_changes</code>, <code class="landing-mcp-code">top_k</code></td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_edit_affects_path</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Whether a hypothetical override keeps the baseline path forced; returns path steps lost and a conclusion side-car.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">For the alternate-world report — use <code class="landing-mcp-code">what_if</code>; for &ldquo;which answers mattered&rdquo; — use <code class="landing-mcp-code">decisive_support</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code>, <code class="landing-mcp-code">base_raw_answers_json</code>, <code class="landing-mcp-code">override_raw_answers_json</code></td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_reasoning_decisive_support</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Inclusion-minimal answered-question supports that still force a target already entailed by the current answers.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">When the target is not yet forced — use <code class="landing-mcp-code">how_to_reach</code>; as abduction under incomplete or conflicting answers.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code>, <code class="landing-mcp-code">base_raw_answers_json</code>, <code class="landing-mcp-code">target_conclusion_id</code>; optional <code class="landing-mcp-code">top_k</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-center text-xs text-ui-ink-muted max-w-2xl mx-auto leading-relaxed">
+        For bulk Apply and analysis tools, <code class="landing-mcp-code">raw_answers_json</code> is a JSON <em>object</em> string — e.g. <code class="landing-mcp-code">{"Q1": "Yes"}</code> or a provenance envelope with <code class="landing-mcp-code">answers</code>, <code class="landing-mcp-code">evidence_items</code>, <code class="landing-mcp-code">evidence_refs</code>. Pass the bare object, not a double-encoded string.
+        Guided <code class="landing-mcp-code">evaluate</code> / <code class="landing-mcp-code">evaluate_continue</code> do not take a worksheet envelope.
+        Tool calls count against your monthly MCP allowance on paid plans.
+        <a href="/docs/mcp" class="text-ui-ink-secondary hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Connect via MCP</a> — try free, no credit card.
+      </p>
+    </section>
+
+    <section aria-labelledby="mcp-authoring-heading" class="space-y-4">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 id="mcp-authoring-heading" class="text-xl font-semibold text-ui-ink">Chat authoring tools</h2>
+        <p class="text-sm text-ui-ink-secondary leading-relaxed">
+          Design a decision tree with your agent in chat, then save it as a draft on your dashboard.
+          Included on hosted SMEme (Cloud). Self-hosted servers need
+          <code class="landing-mcp-code">MCP_AUTHORING_GRAPH_TOOLS_ENABLED=true</code> (and a restart).
+          Drafts are not live for agents yet — Deploy from the SMEme editor when you are ready.
+        </p>
+      </div>
+      <div class="overflow-x-auto rounded-xl border border-ui-line max-w-5xl mx-auto">
+        <table class="landing-mcp-table min-w-full border-collapse text-left text-sm">
+          <thead>
+            <tr class="border-b border-ui-line bg-ui-surface-muted">
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Task</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Call</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Not</th>
+            </tr>
+          </thead>
+          <tbody class="bg-ui-surface divide-y divide-ui-line">
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Design standard (bootstrap)</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_authoring_design_guidance</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">guidance_get</code> — authoring design is for building trees; reasoning guidance is the evaluate calling contract</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Validate chat-built graph</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_authoring_validate_graph</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">validate_answers</code> — graph validate checks tree structure; answer validate is case evidence</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Create dashboard draft</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_authoring_create_draft</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Auto-Deploy — draft is unpublished; open <code class="landing-mcp-code">editor_url</code>, polish, then Deploy + Listed</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Fetch owner draft</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_authoring_get_draft</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary"><code class="landing-mcp-code">reasoning_list</code> — list is Deployed + Listed only; get_draft reads unpublished owner graphs</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Revise dashboard draft</td>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_authoring_update_draft</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary">Create another draft — update revises in place with <code class="landing-mcp-code">expected_graph_hash</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="landing-capability-grid max-w-5xl mx-auto" role="list">
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Design guidance</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_authoring_design_guidance</code></p>
+          <p class="landing-capability-desc">Server-owned design standard for chat authoring. Call once per session; cache by <code class="landing-mcp-code">content_digest</code>. Quota 0.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Validate graph</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_authoring_validate_graph</code></p>
+          <p class="landing-capability-desc">Validate a chat-built <code class="landing-mcp-code">dt_graph_json</code> (raw graph or <code class="landing-mcp-code">.smeme.json</code> export). Returns <code class="landing-mcp-code">draft_ready</code>. Quota 0.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Create draft</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_authoring_create_draft</code></p>
+          <p class="landing-capability-desc">Create an unpublished dashboard draft when <code class="landing-mcp-code">draft_ready</code>. Returns <code class="landing-mcp-code">graph_hash</code>. MCP quota 0; still counts against the plan&rsquo;s decision-tree cap. Does not Deploy.</p>
+        </li>
+        <li class="landing-capability-card">
+          <h3 class="landing-capability-title">Get draft</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_authoring_get_draft</code></p>
+          <p class="landing-capability-desc">Owner-only read of the saved graph, hash, and current validation. Does not require Listed or Deployed. Quota 0.</p>
+        </li>
+        <li class="landing-capability-card landing-capability-card-featured">
+          <h3 class="landing-capability-title">Update draft</h3>
+          <p class="landing-mcp-wire"><code class="landing-mcp-code">smeme_authoring_update_draft</code></p>
+          <p class="landing-capability-desc">Lenient in-place revise with atomic <code class="landing-mcp-code">expected_graph_hash</code>. Prefer validate first. Does not Deploy or change Listed; Deployed trees become Stale until Redeploy.</p>
+        </li>
+      </ul>
+      <div class="overflow-x-auto rounded-xl border border-ui-line max-w-6xl mx-auto">
+        <table class="landing-mcp-table min-w-full border-collapse text-left text-sm">
+          <thead>
+            <tr class="border-b border-ui-line bg-ui-surface-muted">
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">MCP tool</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">When to call</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">When not to call</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Key parameters</th>
+            </tr>
+          </thead>
+          <tbody class="bg-ui-surface divide-y divide-ui-line">
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_authoring_design_guidance</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Start of a chat authoring session — radio-only rules, conclusion-first outcomes, preflight checklist.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">For evaluating a case — use reasoning tools; every turn when digest unchanged.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><span class="text-ui-ink-muted">(none)</span> — quota weight 0</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_authoring_validate_graph</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">After the plain-language tree is agreed, and after each fix pass until <code class="landing-mcp-code">draft_ready</code> is true.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">To validate case answers — use <code class="landing-mcp-code">smeme_reasoning_validate_answers</code>; before design guidance.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">dt_graph_json</code> — serialized graph object or export envelope</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_authoring_create_draft</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">When validate returns <code class="landing-mcp-code">draft_ready</code> and the user confirms — creates an unpublished draft, <code class="landing-mcp-code">editor_url</code>, and <code class="landing-mcp-code">graph_hash</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Before <code class="landing-mcp-code">draft_ready</code>; to revise an existing draft — use get/update; to Deploy or List — do that in the editor.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">dt_graph_json</code>; optional <code class="landing-mcp-code">title</code> override</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_authoring_get_draft</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Before revising an owned draft — returns graph, hash, and current validation.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">For Deployed + Listed evaluate discovery — use <code class="landing-mcp-code">smeme_reasoning_list</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code></td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs whitespace-nowrap text-brand-700 dark:text-brand-300">smeme_authoring_update_draft</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">After get + validate when revising — lenient save; pass <code class="landing-mcp-code">expected_graph_hash</code>; retry from get on <code class="landing-mcp-code">graph_conflict</code>.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">To create a brand-new tree — use create_draft; to Deploy — editor only.</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code>, <code class="landing-mcp-code">dt_graph_json</code>, <code class="landing-mcp-code">expected_graph_hash</code>; optional <code class="landing-mcp-code">title</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="mcp-responses-heading" class="space-y-4">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 id="mcp-responses-heading" class="text-xl font-semibold text-ui-ink">Responses &amp; errors</h2>
+        <p class="text-sm text-ui-ink-secondary leading-relaxed">All tools return JSON strings. Parse the payload and branch on <code class="landing-mcp-code">error.code</code> when present — tools never raise over MCP.</p>
+      </div>
+      <div class="overflow-x-auto rounded-xl border border-ui-line max-w-4xl mx-auto">
+        <table class="landing-mcp-table min-w-full border-collapse text-left text-sm">
+          <thead>
+            <tr class="border-b border-ui-line bg-ui-surface-muted">
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Shape</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Fields</th>
+            </tr>
+          </thead>
+          <tbody class="bg-ui-surface divide-y divide-ui-line">
+            <tr>
+              <td class="align-top px-4 py-3 font-medium text-ui-ink whitespace-nowrap">Active gather</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">inquiry_session_id</code>, <code class="landing-mcp-code">status: ACTIVE</code>, <code class="landing-mcp-code">harness_next: continue_evaluate</code>, blind <code class="landing-mcp-code">task</code> (<code class="landing-mcp-code">question_id</code>, <code class="landing-mcp-code">stem</code>, <code class="landing-mcp-code">options</code>)</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-medium text-ui-ink whitespace-nowrap">Success (report)</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">report</code> (<code class="landing-mcp-code">result_kind</code>, <code class="landing-mcp-code">headline</code>, <code class="landing-mcp-code">reasoning_path</code>, &hellip;), optional <code class="landing-mcp-code">evaluation_run_id</code>, <code class="landing-mcp-code">warnings</code>, <code class="landing-mcp-code">harness_next</code> — from gather STOP or bulk <code class="landing-mcp-code">evaluate_answers</code></td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-medium text-ui-ink whitespace-nowrap">Report before isolated verification</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">report</code> with <code class="landing-mcp-code">inquire_stop_reason: isolated_verification_not_run</code>, <code class="landing-mcp-code">status: ACTIVE</code>, and <code class="landing-mcp-code">harness_next</code> not equal to <code class="landing-mcp-code">continue_evaluate</code> — a successful report stop, not an error</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-medium text-ui-ink whitespace-nowrap">Success (validate)</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">status: "ok"</code>, <code class="landing-mcp-code">warnings</code>, <code class="landing-mcp-code">harness_next</code> — no report, no persistence</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-medium text-ui-ink whitespace-nowrap">Success (list)</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_trees[]</code> with <code class="landing-mcp-code">id</code> (pass later as <code class="landing-mcp-code">decision_tree_id</code>), <code class="landing-mcp-code">title</code>, optional <code class="landing-mcp-code">sample_key</code>, <code class="landing-mcp-code">count</code>; <code class="landing-mcp-code">hint</code> only on persistent empty (recovery — not the ordinary first run)</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-medium text-ui-ink whitespace-nowrap">Failure envelope</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">{"error": {"code": "...", "message": "..."}}</code> — stable <code class="landing-mcp-code">code</code> for programmatic recovery</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="overflow-x-auto rounded-xl border border-ui-line max-w-4xl mx-auto">
+        <table class="landing-mcp-table min-w-full border-collapse text-left text-sm">
+          <thead>
+            <tr class="border-b border-ui-line bg-ui-surface-muted">
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Common error codes</th>
+              <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Meaning</th>
+            </tr>
+          </thead>
+          <tbody class="bg-ui-surface divide-y divide-ui-line">
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300">auth_error</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Bearer token invalid or user not linked — complete OAuth first.</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300">invalid_decision_tree_id</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed"><code class="landing-mcp-code">decision_tree_id</code> is not a valid UUID — call <code class="landing-mcp-code">list</code> and copy an <code class="landing-mcp-code">id</code>.</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300">not_discoverable</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Decision tree exists but is hidden from MCP — set it Listed on the dashboard.</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300">no_reasoning_artifact</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Decision tree not Deployed for reasoning — Deploy from the editor.</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300">stale_theory</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Editor graph changed since last Deploy — Redeploy, then retry.</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300">ingest_*</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Provenance envelope hard rejects — unknown question ID, invalid option, dangling evidence ref, etc.</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300">quota_exceeded</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Monthly MCP allowance exhausted — upgrade or wait for reset.</td>
+            </tr>
+            <tr>
+              <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300">internal_error</td>
+              <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Unexpected server failure — retry once, then escalate with approximate time.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="max-w-3xl mx-auto rounded-2xl border border-ui-line bg-ui-surface p-6 sm:p-8 space-y-4 text-center">
+      <h2 class="text-lg font-semibold text-ui-ink">Need help connecting?</h2>
+      <p class="text-sm text-ui-ink-secondary leading-relaxed">
+        Signed-in setup guide includes endpoint URL and OAuth Client ID.
+        Stuck connecting?
+        <a href="https://github.com/AristaLabs/smeme/discussions/categories/mcp-clients"
+           class="underline-offset-2 hover:underline text-brand-700 dark:text-brand-300"
+           target="_blank"
+           rel="noopener noreferrer">Ask in MCP Clients (GitHub Discussions)</a>
+        — Sign in with GitHub (free). Account or billing:
+        <a href="mailto:contact@aristalabs.ai?subject=SMEme%20account%20%2F%20billing"
+           class="underline-offset-2 hover:underline text-brand-700 dark:text-brand-300">contact@aristalabs.ai</a>.
+      </p>
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
+        {{ btn("Create account", variant="secondary", size="md", href="/auth/register", full_width=true, extra_class="plausible-event-name=Signup+Click") }}
+        {{ btn("Open MCP setup guide", variant="gradient", size="md", href="/docs/mcp", full_width=true, extra_class="plausible-event-name=MCP+Setup") }}
+      </div>
+      <p class="text-sm text-ui-ink-secondary">
+        Building a LangGraph workflow?
+        <a href="/docs/langgraph" class="underline-offset-2 hover:underline text-brand-700 dark:text-brand-300">LangGraph technical preview</a>.
+      </p>
+    </section>
+  </div>
+</article>

@@ -1,0 +1,179 @@
+{% extends "layouts/base.html" %}
+{% from "components/macros.html" import btn, smeme_logo_link %}
+{% set show_nav = false %}
+{% block title %}MCP reasoning tools — SMEme{% endblock %}
+
+{% block head %}
+<meta name="description" content="Copy prompts to connect your chatbot to SMEme, then browse the public tool wire reference. Creator connector steps live in the MCP setup guide." />
+<meta property="og:title" content="MCP reasoning tools — SMEme" />
+<meta property="og:description" content="MCP hub: setup guide for any client, then the public tool wire reference for agents and integrators." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ site_base }}/mcp" />
+<meta property="og:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="SMEme — The formal reasoning layer for AI" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
+<meta name="twitter:image:alt" content="SMEme — The formal reasoning layer for AI" />
+<link rel="canonical" href="{{ site_base }}/mcp" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebAPI",
+      "@id": "{{ site_base }}/mcp#webapi",
+      "name": "SMEme Reasoning MCP",
+      "description": "SMEme is the expert reasoning layer for AI agents — a deterministic MCP server that runs expert-authored decision trees and returns traceable conclusions.",
+      "url": "{{ site_base }}/api/v1/mcp",
+      "documentation": "{{ site_base }}/mcp",
+      "provider": { "@id": "{{ site_base }}/#organization" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "{{ site_base }}/mcp#faq",
+      "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "When should I call smeme_reasoning_validate_answers vs smeme_reasoning_evaluate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ordinary chat case evaluation uses smeme_reasoning_evaluate then smeme_reasoning_evaluate_continue (do not template_get first). Call smeme_reasoning_validate_answers as a pre-flight ingest gate before bulk smeme_reasoning_evaluate_answers — it checks structure, option strings, evidence refs, and consistency but does not run branching logic or return a report."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When does guided evaluate / evaluate_continue stop?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Continue with smeme_reasoning_evaluate_continue only while harness_next is continue_evaluate. evaluate itself may already return a report. When the loop ends, the payload is a report; inquire_stop_reason may be isolated_verification_not_run because ordinary chat does not invent isolated VERIFY trials. The session remains ACTIVE for that stop. Always read report.result_kind for the outcome — inquire_stop_reason is Inquire status, not an error or MCP quota denial."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I call smeme_reasoning_template_get vs smeme_reasoning_template_check?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use smeme_reasoning_template_check for a lightweight drift probe (in_sync and manifest_core_digest only). Use smeme_reasoning_template_get when you need the full evidence worksheet for bulk/audit Apply — not before ordinary guided evaluate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I call smeme_reasoning_what_if vs smeme_reasoning_how_to_reach?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use smeme_reasoning_what_if to compare baseline vs override assignments and see what flips. Use smeme_reasoning_how_to_reach to find minimal answer edits to reach a target conclusion — obtain target_conclusion_id from smeme_reasoning_list_conclusions first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I call smeme_reasoning_edit_affects_path vs smeme_reasoning_decisive_support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use smeme_reasoning_edit_affects_path to ask whether a hypothetical answer change keeps the current forced path. Use smeme_reasoning_decisive_support when a conclusion is already forced and you need the minimal answered-question supports that force it — not abduction under incomplete answers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I call smeme_authoring_validate_graph vs smeme_authoring_create_draft?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Call smeme_authoring_validate_graph after agreeing a plain-language tree and after each fix pass until draft_ready is true. Call smeme_authoring_create_draft only then, after user confirmation — it creates an unpublished dashboard draft and does not Deploy. Prefer smeme_authoring_design_guidance first when authoring in chat."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I revise an existing draft with MCP authoring tools?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Call smeme_authoring_get_draft for the decision_tree_id, edit the graph, call smeme_authoring_validate_graph, then smeme_authoring_update_draft with expected_graph_hash from get_draft or create_draft. On graph_conflict, fetch again and retry. Update may save intentional intermediate graphs; create requires draft_ready. Redeploy in the editor if the tree was already Deployed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get a first report without building my own tree?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Click Load sample on the dashboard, or call smeme_reasoning_list when the account has zero Listed trees — that first empty list creates a per-user sample (Deployed + Listed, sample_key smeme_sample_v1). Pass list id to later tools as decision_tree_id. Core examples/smeme_apply_sample.py validates and evaluates canned answers with no LLM. Persistent empty is recovery, not the ordinary first run. The sample uses one tree slot and is not legal or tax advice."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need a web account before connecting MCP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not when MCP-first signup is enabled on SMEme: complete Clerk OAuth with email verification and Terms/Privacy acceptance, then your first tool call provisions a Free account. Creating an account on the website remains an alternative. If tools return auth_error with auth_reason no_local_user_for_clerk_sub, MCP-first signup is off: finish web sign-in once, then reconnect. Verification or consent failures have their own auth_reason."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What error format do SMEme MCP tools return?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "All tools return JSON strings. On failure the payload is {\"error\": {\"code\": \"<stable_code>\", \"message\": \"<human-readable>\"}}. Common codes include auth_error (see auth_reason), invalid_decision_tree_id, not_discoverable, no_reasoning_artifact, stale_theory, ingest_* family, graph_conflict, and quota_exceeded."
+      }
+    }
+      ]
+    }
+  ]
+}
+</script>
+{% include "landing/_styles.html" %}
+{% endblock %}
+
+{% block main_class %}w-full max-w-none px-0 py-0{% endblock %}
+
+{% block content %}
+<div class="landing-page-shell min-h-[calc(100vh-0px)] flex flex-col">
+  <header class="landing-header border-b border-ui-line backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-4">
+      {{ smeme_logo_link(href='/', img_class='h-16 w-auto sm:h-[4.5rem]') }}
+      <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+        <nav class="landing-page-nav flex items-center gap-4 sm:gap-5" aria-label="Page">
+          <a href="/">Home</a>
+          <a href="/pricing">Pricing</a>
+          <a href="/mcp" aria-current="page">MCP</a>
+          <a href="https://github.com/AristaLabs/smeme/discussions/categories/start-here"
+             target="_blank"
+             rel="noopener noreferrer">Community</a>
+        </nav>
+        {% include "landing/_social_icons.html" %}
+        {{ btn("Create account", variant="secondary", size="sm", href="/auth/register", extra_class="plausible-event-name=Signup+Click") }}
+        {{ btn("Log in", variant="primary", size="sm", href="/auth/login", attrs='aria-label="Log in to SMEme"', extra_class="plausible-event-name=Login+Click") }}
+      </div>
+    </div>
+  </header>
+
+  <div class="flex-1">
+    {% include "landing/_mcp_tools.html" %}
+  </div>
+
+  <footer class="landing-footer mt-auto border-t border-ui-line bg-ui-surface">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col items-center gap-y-2 text-sm text-ui-ink-muted">
+      {% set social_class = "justify-center" %}
+      {% include "landing/_social_icons.html" %}
+      <p class="flex flex-wrap gap-x-3 gap-y-1 justify-center items-center text-xs">
+        <a href="https://github.com/AristaLabs/smeme/discussions/categories/mcp-tools"
+           class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline"
+           target="_blank"
+           rel="noopener noreferrer">Authoring / tool help</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="https://github.com/AristaLabs/smeme/discussions/categories/mcp-clients"
+           class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline"
+           target="_blank"
+           rel="noopener noreferrer">Connector / OAuth help</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="mailto:contact@aristalabs.ai?subject=SMEme%20account%20%2F%20billing"
+           class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Account / billing</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/legal/privacy" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Privacy Policy</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/legal/terms" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Terms of Use</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Home</a>
+      </p>
+    </div>
+  </footer>
+</div>
+{% endblock %}

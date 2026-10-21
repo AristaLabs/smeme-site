@@ -1,0 +1,6 @@
+{# Clerk browser sync: dev URL-based session (__clerk_db_jwt) + prod callback cookie sync. #}
+{% if request.state.clerk_browser_sync %}
+<script defer crossorigin="anonymous" src="https://{{ request.state.clerk_frontend_api_host }}/npm/@clerk/ui@1/dist/ui.browser.js" type="text/javascript"></script>
+<script defer crossorigin="anonymous" data-clerk-publishable-key="{{ request.state.clerk_publishable_key }}" src="https://{{ request.state.clerk_frontend_api_host }}/npm/@clerk/clerk-js@6/dist/clerk.browser.js" type="text/javascript"></script>
+<script defer src="/static/js/clerk-browser-sync.js"></script>
+{% endif %}
