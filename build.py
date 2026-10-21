@@ -24,6 +24,7 @@ PUBLIC_ROUTES = [
     ("/", "SMEme — The formal reasoning layer for AI", "Product overview."),
     ("/pricing", "Pricing", "Hosted Free and Pro plans and self-hosting."),
     ("/mcp", "MCP", "Connect an agent and run deterministic reasoning."),
+    ("/how-it-works", "How it works", "See how SMEme turns expert judgment into reports."),
     ("/marketplace/business", "Business tier", "Private distribution and monetization."),
     ("/docs", "Docs", "Public creator and agent documentation."),
     ("/docs/quick-start", "Quick start", "Connect, find a procedure, and build a first tree."),
@@ -64,6 +65,7 @@ LANDING = {
     "/": "preview.html",
     "/pricing": "pricing.html",
     "/mcp": "mcp.html",
+    "/how-it-works": "how_it_works.html",
     "/marketplace/business": "business.html",
 }
 
