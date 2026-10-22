@@ -24,3 +24,6 @@ The build uses production URLs intentionally:
 
 The waitlist is a normal form post to the app. Account, dashboard, API, and
 MCP links leave the static site for `app.smeme.ai`.
+
+For the procedure for changing public copy, routes, generated crawler files,
+and publishing, see [docs/website-copy.md](docs/website-copy.md).

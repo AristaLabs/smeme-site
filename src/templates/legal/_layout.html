@@ -1,5 +1,8 @@
 {% extends "layouts/base.html" %}
 {% block title %}{{ page_title }} — SMEme{% endblock %}
+{% block head %}
+<link rel="canonical" href="{{ site_base }}{{ canonical_path }}" />
+{% endblock %}
 {% block content %}
 <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 space-y-8">
   <div class="flex flex-wrap items-center justify-between gap-3">

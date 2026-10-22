@@ -92,6 +92,7 @@ def _context(route: str) -> dict[str, object]:
         "user": None,
         "brand": {"dark_logo_src": "/static/smeme_logo_v15_dark.svg"},
         "site_base": SITE_BASE,
+        "canonical_path": route,
         "active_page": "docs" if route.startswith("/docs") else route.strip("/"),
         "docs_section": route.removeprefix("/docs/") or "index",
         "docs_version": "static",
