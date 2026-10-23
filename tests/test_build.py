@@ -102,6 +102,34 @@ class StaticBuildTests(unittest.TestCase):
                     str(path),
                 )
 
+    def test_docs_nav_has_one_tool_reference_link(self):
+        for route in build.DOCS:
+            html = build._output_path(route).read_text(encoding="utf-8")
+            navs = re.findall(
+                r'<nav aria-label="Docs sections"[^>]*>.*?</nav>',
+                html,
+                re.DOTALL,
+            )
+            self.assertEqual(len(navs), 2, route)
+            for nav in navs:
+                hrefs = re.findall(r'href="([^"]+)"', nav)
+                self.assertEqual(hrefs.count("/mcp"), 1, route)
+                self.assertIn("/docs/mcp", hrefs, route)
+                self.assertIn("MCP tool reference", nav, route)
+                self.assertIn("Connect your agent", nav, route)
+
+    def test_homepage_does_not_link_the_arista_blog(self):
+        html = build._output_path("/").read_text(encoding="utf-8")
+        self.assertNotIn("aristalabs.ai/blog.html", html)
+        self.assertNotIn("Arista Labs blog", html)
+
+    def test_blog_route_is_unpublished(self):
+        routes = {route for route, _, _ in build.PUBLIC_ROUTES}
+        self.assertNotIn("/blog", routes)
+        for filename in ("sitemap.xml", "llms.txt", "llms-full.txt"):
+            contents = (self.output / filename).read_text(encoding="utf-8")
+            self.assertNotIn("/blog", contents, filename)
+
     def test_delete_account_is_not_generated(self):
         self.assertFalse(
             (self.output / "docs" / "delete-account" / "index.html").exists()
