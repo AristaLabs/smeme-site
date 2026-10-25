@@ -20,31 +20,15 @@
 <meta name="twitter:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
 <meta name="twitter:image:alt" content="SMEme — The formal reasoning layer for AI" />
 {% include "landing/_styles.html" %}
+{% include "landing/_v4_styles.html" %}
 {% endblock %}
 
 {% block main_class %}w-full max-w-none px-0 py-0{% endblock %}
 
 {% block content %}
 <div class="landing-page-shell min-h-[calc(100vh-0px)] flex flex-col">
-  <header class="landing-header border-b border-ui-line backdrop-blur-sm">
-    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-4">
-      {{ smeme_logo_link(href='/', img_class='h-16 w-auto sm:h-[4.5rem]') }}
-      <div class="flex flex-wrap items-center gap-3 sm:gap-4">
-        <nav class="landing-page-nav flex items-center gap-4 sm:gap-5" aria-label="Page">
-          <a href="/">Home</a>
-          <a href="/how-it-works" aria-current="page">How it works</a>
-          <a href="/pricing">Pricing</a>
-          <a href="/mcp">MCP</a>
-          <a href="https://github.com/AristaLabs/smeme/discussions/categories/start-here"
-             target="_blank"
-             rel="noopener noreferrer">Community</a>
-        </nav>
-        {% include "landing/_social_icons.html" %}
-        {{ btn("Create account", variant="secondary", size="sm", href="/auth/register", extra_class="plausible-event-name=Signup+Click") }}
-        {{ btn("Log in", variant="primary", size="sm", href="/auth/login", attrs='aria-label="Log in to SMEme"', extra_class="plausible-event-name=Login+Click") }}
-      </div>
-    </div>
-  </header>
+  {% set v4_current = 'how' %}
+  {% include "landing/_v4_header.html" %}
 
   <div class="flex-1">
     {% include "landing/_how_it_works_scroll.html" %}

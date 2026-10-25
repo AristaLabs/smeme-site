@@ -1,15 +1,14 @@
-{# Pricing — Free / Pro / Self-host cards + Need more strip. Tier limits mirror billing tiers. #}
+{# Pricing — Free / Pro cards + Need more strip. Tier limits mirror billing tiers. #}
 {% from "components/macros.html" import btn %}
 <section id="pricing" aria-labelledby="pricing-heading" class="landing-section landing-section-band">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-8 sm:space-y-10">
         <div class="text-center space-y-3 max-w-2xl mx-auto">
           <p class="landing-pricing-eyebrow">Pricing</p>
           <h2 id="pricing-heading" class="text-2xl sm:text-3xl font-semibold tracking-tight text-ui-ink">
-            Hosted or self-host
+            Free and Pro
           </h2>
           <p class="text-sm sm:text-base text-ui-ink-secondary leading-relaxed">
-            Hosted Free and Pro for convenience. Prefer your own environment? Self-host instead.
-            You own the decision trees either way.
+            Hosted Free and Pro. You own the decision trees either way.
           </p>
         </div>
 
@@ -61,25 +60,6 @@
             </div>
           </div>
 
-          {# Self-hosting — peer path, not a dollar tier #}
-          <div class="landing-pricing-card">
-            <div class="space-y-1">
-              <p class="text-xs font-semibold uppercase tracking-wider text-ui-ink-muted">Self Hosting</p>
-              <h3 class="text-xl font-semibold text-ui-ink">Run it yourself</h3>
-            </div>
-            <p class="text-sm text-ui-ink-secondary leading-relaxed flex-1">
-              The same SMEme Core engine, source-available under a fair-code license. You operate it in your environment.
-            </p>
-            <div class="landing-pricing-selfhost-actions">
-              <a
-                href="https://github.com/AristaLabs/smeme/blob/main/docs/guides/self-host-quickstart.md"
-                class="landing-selfhost-guide plausible-event-name=Selfhost+Guide"
-                rel="noopener noreferrer"
-                target="_blank">
-                Self-host guide
-              </a>
-            </div>
-          </div>
         </div>
 
         <details class="landing-pricing-usage max-w-2xl mx-auto">

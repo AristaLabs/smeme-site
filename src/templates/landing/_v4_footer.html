@@ -1,0 +1,36 @@
+{#- Shared V4 landing footer. Keeps the veteran line, Arista Labs link, social icons, and legal row. -#}
+<footer class="landing-footer mt-auto border-t border-ui-line bg-ui-surface">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col items-center gap-y-2 text-sm text-ui-ink-muted">
+    <p class="flex items-center gap-x-2">
+      <span>Veteran owned and operated</span>
+      <span role="img" aria-label="American flag">&#127482;&#127480;</span>
+    </p>
+    <p class="flex flex-wrap gap-x-3 gap-y-2 justify-center items-center">
+      <span>Built by</span>
+      <a href="https://aristalabs.ai" class="footer-logo" title="Arista Labs, LLC" target="_blank" rel="noopener noreferrer">ARISTA LABS</a>
+      <span>&copy; 2026 Arista Labs, LLC. All rights reserved.</span>
+    </p>
+    {% set social_class = "justify-center" %}
+    {% include "landing/_social_icons.html" %}
+    <p class="flex flex-wrap gap-x-3 gap-y-1 justify-center items-center text-xs">
+      <a href="/docs" class="hover:text-brand-600 underline-offset-2 hover:underline">Docs</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="/builders" class="hover:text-brand-600 underline-offset-2 hover:underline">For builders</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="/pricing" class="hover:text-brand-600 underline-offset-2 hover:underline">Pricing</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="https://github.com/AristaLabs/smeme/discussions/categories/start-here"
+         class="hover:text-brand-600 underline-offset-2 hover:underline"
+         target="_blank"
+         rel="noopener noreferrer">Community help</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="/legal/principles" class="hover:text-brand-600 underline-offset-2 hover:underline">Sovereignty &amp; AI Principles</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="/legal/security" class="hover:text-brand-600 underline-offset-2 hover:underline">Security</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="/legal/privacy" class="hover:text-brand-600 underline-offset-2 hover:underline">Privacy Policy</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="/legal/terms" class="hover:text-brand-600 underline-offset-2 hover:underline">Terms of Use</a>
+    </p>
+  </div>
+</footer>
