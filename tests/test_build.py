@@ -37,6 +37,20 @@ class StaticBuildTests(unittest.TestCase):
             self.assertIn('data-theme-pin="light"', html, route)
             self.assertNotIn('id="theme-toggle"', html, route)
 
+    def test_docs_keep_the_marketing_header_and_sidebar(self):
+        html = build._output_path("/docs").read_text(encoding="utf-8")
+        self.assertIn('class="landing-header v4 v4-header', html)
+        self.assertIn(">Pricing</a>", html)
+        self.assertIn('aria-current="page">Docs</a>', html)
+        self.assertIn("docs-public", html)
+        self.assertNotIn('aria-label="Main navigation"', html)
+
+    def test_pricing_does_not_paint_a_blurred_glow(self):
+        html = build._output_path("/pricing").read_text(encoding="utf-8")
+        self.assertNotIn("filter: blur(30px)", html)
+        self.assertIn("color-scheme: light", html)
+        self.assertIn(".landing-page-shell { background: #F6F7FA; }", html)
+
     def test_homepage_shows_all_use_cases(self):
         html = build._output_path("/").read_text(encoding="utf-8")
         self.assertEqual(html.count('<article class="v4-case">'), 11)

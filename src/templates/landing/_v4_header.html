@@ -4,7 +4,7 @@
 {% from "components/macros.html" import smeme_logo_link %}
 {% set v4_current = v4_current|default('home') %}
 {% set v4_home = '' if v4_current == 'home' else '/' %}
-<header class="landing-header v4 v4-header border-b border-ui-line backdrop-blur-sm">
+<header class="landing-header v4 v4-header border-b border-ui-line">
   <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-3">
     {{ smeme_logo_link(href='/', img_class='h-16 w-auto sm:h-[4.5rem]') }}
     <div class="v4-nav-group">
@@ -13,7 +13,7 @@
         <a href="{{ v4_home }}#example">Example</a>
         <a href="{{ v4_home }}#tech">Technology</a>
         <a href="/builders"{% if v4_current == 'builders' %} aria-current="page"{% endif %}>For builders</a>
-        <a href="/docs">Docs</a>
+        <a href="/docs"{% if v4_current == 'docs' %} aria-current="page"{% endif %}>Docs</a>
         <a href="/pricing"{% if v4_current == 'pricing' %} aria-current="page"{% endif %}>Pricing</a>
       </nav>
       <div class="v4-nav-actions">
