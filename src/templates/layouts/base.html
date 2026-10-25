@@ -75,6 +75,7 @@
             {% endif %}
           </div>
           <div class="flex items-center justify-end gap-1">
+            {% if not theme_pin_light|default(false) %}
             <button type="button"
                     id="theme-toggle"
                     class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-ui-ink-muted hover:bg-ui-surface-hover hover:text-ui-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
@@ -90,6 +91,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
               </svg>
             </button>
+            {% endif %}
             {% if user is defined and user %}
             <a href="/auth/profile/dashboard"
                class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-ui-ink-muted hover:bg-ui-surface-hover hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 {% if active == 'profile' %}bg-brand-50 text-brand-800 ring-2 ring-brand-200{% endif %}"

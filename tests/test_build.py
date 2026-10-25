@@ -31,6 +31,17 @@ class StaticBuildTests(unittest.TestCase):
         public_routes = {route for route, _, _ in build.PUBLIC_ROUTES}
         self.assertEqual(mapped_routes, public_routes)
 
+    def test_docs_pages_are_pinned_light_without_theme_toggle(self):
+        for route in build.DOCS:
+            html = build._output_path(route).read_text(encoding="utf-8")
+            self.assertIn('data-theme-pin="light"', html, route)
+            self.assertNotIn('id="theme-toggle"', html, route)
+
+    def test_homepage_shows_all_use_cases(self):
+        html = build._output_path("/").read_text(encoding="utf-8")
+        self.assertEqual(html.count('<article class="v4-case">'), 11)
+        self.assertNotIn("v4-cases-more", html)
+
     def test_every_mapped_route_generates_index(self):
         for route in build.LANDING | build.DOCS | build.LEGAL:
             output = build._output_path(route)
@@ -134,6 +145,62 @@ class StaticBuildTests(unittest.TestCase):
         self.assertFalse(
             (self.output / "docs" / "delete-account" / "index.html").exists()
         )
+
+    def test_homepage_keeps_retained_elements(self):
+        html = build._output_path("/").read_text(encoding="utf-8")
+        self.assertTrue(
+            "&#127482;&#127480;" in html or "\U0001F1FA\U0001F1F8" in html,
+            "homepage footer flag",
+        )
+        self.assertIn("Veteran owned and operated", html)
+        self.assertIn("lm-app-icon", html)
+        self.assertIn("Decide the withholding", html)
+        self.assertIn("Rational AI for the decisions that run your business", html)
+        self.assertIn('id="faq"', html)
+
+    def test_v4_pages_have_no_design_tool_leftovers(self):
+        for route in ("/", "/builders"):
+            html = build._output_path(route).read_text(encoding="utf-8")
+            self.assertNotIn("{{", html, route)
+            self.assertNotIn("Shot list", html, route)
+            self.assertNotIn("Video placeholder", html, route)
+            self.assertNotIn("poster frame", html, route)
+            self.assertIn("IBM+Plex", html, route)
+
+    def test_builders_page_links_docs(self):
+        html = build._output_path("/builders").read_text(encoding="utf-8")
+        self.assertIn('href="/docs/langgraph"', html)
+        self.assertIn('href="/docs/mcp"', html)
+        self.assertNotIn("SMEme Core on GitHub", html)
+        self.assertNotIn("self-host-quickstart", html)
+
+    def test_marketing_pages_do_not_offer_self_hosting(self):
+        banned = (
+            "self-host guide",
+            "self-host-quickstart",
+            "source available",
+            "source-available",
+            "sul 1.0",
+            "fair-code",
+            "fair code",
+            "self hosting",
+            "run it yourself",
+            "run smeme core yourself",
+            "smeme ai tree builds",
+            "ai-assisted build credits",
+            "ai-assisted wizard",
+            "generation wizard",
+            "build with the wizard",
+        )
+        for route in ("/", "/builders", "/pricing", "/how-it-works", "/mcp", "/docs"):
+            html = build._output_path(route).read_text(encoding="utf-8").lower()
+            for phrase in banned:
+                self.assertNotIn(phrase, html, f"{route} contains {phrase}")
+
+    def test_landing_pages_share_the_builders_nav_link(self):
+        for route in ("/", "/pricing", "/how-it-works", "/mcp"):
+            html = build._output_path(route).read_text(encoding="utf-8")
+            self.assertIn('href="/builders"', html, route)
 
 
 if __name__ == "__main__":

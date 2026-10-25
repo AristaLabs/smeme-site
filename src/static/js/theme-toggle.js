@@ -4,6 +4,10 @@
 (function () {
   var toggle = document.getElementById("theme-toggle");
   if (!toggle) return;
+  if (document.documentElement.getAttribute("data-theme-pin") === "light") {
+    toggle.hidden = true;
+    return;
+  }
 
   var cookieName = "smeme_theme";
   var maxAge = 365 * 24 * 3600;

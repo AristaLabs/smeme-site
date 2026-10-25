@@ -21,8 +21,9 @@ MCP_ENDPOINT = f"{APP_BASE}/api/v1/mcp"
 OAUTH_CLIENT_ID = "NRdsdBvrio0DW9yo"
 
 PUBLIC_ROUTES = [
-    ("/", "SMEme — The formal reasoning layer for AI", "Product overview."),
-    ("/pricing", "Pricing", "Hosted Free and Pro plans and self-hosting."),
+    ("/", "SMEme — Rational AI for the decisions that run your business", "Product overview."),
+    ("/builders", "For builders", "Add a SMEme reasoning step to agent workflows over MCP."),
+    ("/pricing", "Pricing", "Hosted Free and Pro plans."),
     ("/mcp", "MCP", "Connect an agent and run deterministic reasoning."),
     ("/how-it-works", "How it works", "See how SMEme turns expert judgment into reports."),
     ("/marketplace/business", "Business tier", "Private distribution and monetization."),
@@ -63,6 +64,7 @@ DOCS = {
 
 LANDING = {
     "/": "preview.html",
+    "/builders": "builders.html",
     "/pricing": "pricing.html",
     "/mcp": "mcp.html",
     "/how-it-works": "how_it_works.html",
