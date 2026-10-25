@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"{% if theme_pin_light|default(false) %} data-theme-pref="light" data-theme-pin="light"{% else %}{% if theme_dark|default(false) %} class="dark"{% endif %} data-theme-pref="{{ theme_preference|default('system') }}"{% endif %}>
+<html lang="en"{% if theme_pin_light|default(false) %} data-theme-pref="light" data-theme-pin="light" style="color-scheme: light; background-color: #F6F7FA"{% else %}{% if theme_dark|default(false) %} class="dark"{% endif %} data-theme-pref="{{ theme_preference|default('system') }}"{% endif %}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,6 +27,22 @@
 
     <!-- Pre-built, purged Tailwind stylesheet (replaces the Play CDN; see tailwind.input.css / scripts/build_css.sh) -->
     <link rel="stylesheet" href="/static/css/app.css" />
+    {# The purged stylesheet drops the dark-logo rule and the docs responsive utilities. #}
+    <style>
+      .smeme-logo-light, .smeme-logo-dark { height: 4.5rem; width: auto; }
+      html:not(.dark) .smeme-logo-dark { display: none; }
+      html.dark .smeme-logo-light { display: none; }
+    </style>
+    {% if (active_page|default('')).startswith('docs') %}
+    {% include "landing/_v4_styles.html" %}
+    <style>
+      @media (min-width: 1024px) {
+        .docs-public .max-w-5xl > .mt-6 { display: flex; gap: 3rem; align-items: flex-start; }
+        .docs-public .max-w-5xl > .mt-6 > aside.hidden { display: block; width: 11rem; flex: none; }
+        .docs-public .max-w-5xl > .mt-6 > aside.hidden + div > .mb-8 { display: none; }
+      }
+    </style>
+    {% endif %}
 
     {% block head %}{% endblock %}
   </head>
@@ -37,8 +53,11 @@
     {% block body %}
     {%- from "components/macros.html" import smeme_logo_link, workflow_launch_link -%}
     {%- set active = active_page|default('') -%}
-    <div id="app-layout-shift" class="relative z-10 min-h-screen flex flex-col bg-ui-canvas">
-      {% if show_nav|default(true) %}
+    <div id="app-layout-shift" class="relative z-10 min-h-screen flex flex-col bg-ui-canvas{% if active.startswith('docs') %} docs-public{% endif %}">
+      {% if active.startswith('docs') %}
+      {% set v4_current = 'docs' %}
+      {% include "landing/_v4_header.html" %}
+      {% elif show_nav|default(true) %}
       <nav class="bg-ui-surface shadow-sm border-b border-ui-line" role="navigation" aria-label="Main navigation">
         <div class="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <div class="flex min-w-0 justify-start">
