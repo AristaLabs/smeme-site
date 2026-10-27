@@ -22,7 +22,6 @@ OAUTH_CLIENT_ID = "NRdsdBvrio0DW9yo"
 
 PUBLIC_ROUTES = [
     ("/", "SMEme — Rational AI for the decisions that run your business", "Product overview."),
-    ("/builders", "For builders", "Add a SMEme reasoning step to agent workflows over MCP."),
     ("/pricing", "Pricing", "Hosted Free and Pro plans."),
     ("/faq", "FAQ", "Answers about SMEme, decision trees, and what it costs."),
     ("/mcp", "MCP", "Connect an agent and let a constraint solver reason over your approved procedures."),
@@ -64,7 +63,6 @@ DOCS = {
 
 LANDING = {
     "/": "preview.html",
-    "/builders": "builders.html",
     "/pricing": "pricing.html",
     "/faq": "faq.html",
     "/mcp": "mcp.html",
@@ -196,6 +194,24 @@ def main() -> None:
     )
     (OUTPUT / "build-manifest.json").write_text(
         json.dumps({"site_base": SITE_BASE, "app_base": APP_BASE, "mcp_endpoint": MCP_ENDPOINT}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    # Retired marketing URL. Kept out of PUBLIC_ROUTES so it is not in the sitemap or crawler files.
+    retired = OUTPUT / "builders" / "index.html"
+    retired.parent.mkdir(parents=True, exist_ok=True)
+    retired.write_text(
+        "<!DOCTYPE html>\n"
+        '<html lang="en">\n'
+        "<head>\n"
+        '<meta charset="utf-8">\n'
+        f'<link rel="canonical" href="{SITE_BASE}/docs/langgraph">\n'
+        '<meta http-equiv="refresh" content="0; url=/docs/langgraph">\n'
+        "<title>LangGraph docs — SMEme</title>\n"
+        "</head>\n"
+        "<body>\n"
+        '<p><a href="/docs/langgraph">LangGraph docs</a></p>\n'
+        "</body>\n"
+        "</html>\n",
         encoding="utf-8",
     )
 

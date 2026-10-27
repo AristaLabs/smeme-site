@@ -1,5 +1,5 @@
 {#- Shared V4 landing header.
-    Set v4_current before including: home | builders | pricing | faq | mcp.
+    Set v4_current before including: home | pricing | faq | mcp.
     In-page anchors (#demos) resolve to the homepage from other pages. -#}
 {% from "components/macros.html" import smeme_logo_link %}
 {% set v4_current = v4_current|default('home') %}
@@ -10,7 +10,6 @@
     <div class="v4-nav-group">
       <nav class="landing-page-nav v4-nav" aria-label="Main">
         <a href="{{ v4_home }}#demos">Demos</a>
-        <a href="/builders"{% if v4_current == 'builders' %} aria-current="page"{% endif %}>For builders</a>
         <a href="/docs"{% if v4_current == 'docs' %} aria-current="page"{% endif %}>Docs</a>
         <a href="/pricing"{% if v4_current == 'pricing' %} aria-current="page"{% endif %}>Pricing</a>
         <a href="/faq"{% if v4_current == 'faq' %} aria-current="page"{% endif %}>FAQ</a>
