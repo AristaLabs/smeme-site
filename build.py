@@ -30,14 +30,13 @@ PUBLIC_ROUTES = [
     ("/docs/quick-start", "Quick start", "Connect, find a procedure, and build a first tree."),
     ("/docs/run-a-tree", "Run a tree", "Run a deployed decision tree."),
     ("/docs/ask-more", "Ask more", "Explore what follows from a report."),
+    ("/docs/mcp", "Connect your agent (MCP)", "MCP setup and guidance."),
     ("/docs/introduction", "Building decision trees", "Create and edit decision trees."),
     ("/docs/download-workflow", "Download your decision tree", "Export a decision tree."),
     ("/docs/import", "Upload decision tree", "Upload a downloaded decision tree."),
     ("/docs/plans", "Plans & usage", "Hosted plans and usage limits."),
     ("/docs/creator-dashboard", "Deploy, list, & delete", "Manage deployed decision trees."),
     ("/docs/changelog", "Docs changelog", "Documentation release notes."),
-    ("/docs/mcp", "Connect your agent (MCP)", "MCP setup and guidance."),
-    ("/docs/langgraph", "LangGraph technical preview", "Technical preview documentation."),
     ("/legal", "Legal", "Legal and policy index."),
     ("/legal/principles", "Guiding principles", "How SMEme handles expertise and data."),
     ("/legal/security", "Security", "Security and data handling."),
@@ -58,7 +57,6 @@ DOCS = {
     "/docs/creator-dashboard": "creator_dashboard.html",
     "/docs/changelog": "changelog.html",
     "/docs/mcp": "mcp.html",
-    "/docs/langgraph": "langgraph.html",
 }
 
 LANDING = {
@@ -196,24 +194,25 @@ def main() -> None:
         json.dumps({"site_base": SITE_BASE, "app_base": APP_BASE, "mcp_endpoint": MCP_ENDPOINT}, indent=2) + "\n",
         encoding="utf-8",
     )
-    # Retired marketing URL. Kept out of PUBLIC_ROUTES so it is not in the sitemap or crawler files.
-    retired = OUTPUT / "builders" / "index.html"
-    retired.parent.mkdir(parents=True, exist_ok=True)
-    retired.write_text(
-        "<!DOCTYPE html>\n"
-        '<html lang="en">\n'
-        "<head>\n"
-        '<meta charset="utf-8">\n'
-        f'<link rel="canonical" href="{SITE_BASE}/docs/langgraph">\n'
-        '<meta http-equiv="refresh" content="0; url=/docs/langgraph">\n'
-        "<title>LangGraph docs — SMEme</title>\n"
-        "</head>\n"
-        "<body>\n"
-        '<p><a href="/docs/langgraph">LangGraph docs</a></p>\n'
-        "</body>\n"
-        "</html>\n",
-        encoding="utf-8",
-    )
+    # Retired URLs. Kept out of PUBLIC_ROUTES so they are not in the sitemap or crawler files.
+    for retired_path in ("/builders", "/docs/langgraph"):
+        retired = OUTPUT / retired_path.strip("/") / "index.html"
+        retired.parent.mkdir(parents=True, exist_ok=True)
+        retired.write_text(
+            "<!DOCTYPE html>\n"
+            '<html lang="en">\n'
+            "<head>\n"
+            '<meta charset="utf-8">\n'
+            f'<link rel="canonical" href="{SITE_BASE}/docs">\n'
+            '<meta http-equiv="refresh" content="0; url=/docs">\n'
+            "<title>Docs — SMEme</title>\n"
+            "</head>\n"
+            "<body>\n"
+            '<p><a href="/docs">Docs</a></p>\n'
+            "</body>\n"
+            "</html>\n",
+            encoding="utf-8",
+        )
 
 
 if __name__ == "__main__":
