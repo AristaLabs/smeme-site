@@ -53,7 +53,7 @@ class StaticBuildTests(unittest.TestCase):
 
     def test_homepage_shows_all_use_cases(self):
         html = build._output_path("/").read_text(encoding="utf-8")
-        self.assertEqual(html.count('<article class="v4-case">'), 11)
+        self.assertEqual(html.count('<article class="v4-case">'), 10)
         self.assertNotIn("v4-cases-more", html)
 
     def test_every_mapped_route_generates_index(self):
@@ -67,8 +67,7 @@ class StaticBuildTests(unittest.TestCase):
         sitemap = ElementTree.parse(self.output / "sitemap.xml")
         namespace = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
         sitemap_urls = [
-            element.text
-            for element in sitemap.findall("s:url/s:loc", namespace)
+            element.text for element in sitemap.findall("s:url/s:loc", namespace)
         ]
         self.assertEqual(set(sitemap_urls), expected)
         self.assertEqual(len(sitemap_urls), len(expected))
@@ -101,7 +100,7 @@ class StaticBuildTests(unittest.TestCase):
     def test_app_owned_attributes_are_absolute(self):
         app_attributes = re.compile(r'(?:href|action)="([^"]+)"')
         forbidden_relative = re.compile(
-            r'^/(?:teams-waitlist|auth|decision-trees|billing|api|\.well-known)(?:/|$)'
+            r"^/(?:teams-waitlist|auth|decision-trees|billing|api|\.well-known)(?:/|$)"
         )
         app_prefixes = (
             "/teams-waitlist",
@@ -163,14 +162,100 @@ class StaticBuildTests(unittest.TestCase):
     def test_homepage_keeps_retained_elements(self):
         html = build._output_path("/").read_text(encoding="utf-8")
         self.assertTrue(
-            "&#127482;&#127480;" in html or "\U0001F1FA\U0001F1F8" in html,
+            "&#127482;&#127480;" in html or "\U0001f1fa\U0001f1f8" in html,
             "homepage footer flag",
         )
         self.assertIn("Veteran owned and operated", html)
         self.assertIn("lm-app-icon", html)
         self.assertIn("Decide the withholding", html)
         self.assertIn("Rational AI for the decisions that run your business", html)
-        self.assertIn('id="faq"', html)
+        self.assertIn('href="/faq"', html)
+        self.assertNotIn('id="faq"', html)
+
+    def test_homepage_demos_section_follows_the_hero(self):
+        html = build._output_path("/").read_text(encoding="utf-8")
+        demos = html[html.index('id="demos"') : html.index('id="use-cases"')]
+        self.assertIn("Build a decision tree", demos)
+        self.assertIn("Run a decision tree", demos)
+        self.assertIn(
+            "Build a decision tree with the AI you already use, then run it on a real case.",
+            demos,
+        )
+        self.assertNotIn("Two short demos.", demos)
+        self.assertIn('href="/docs/quick-start"', demos)
+        self.assertIn('href="/docs/mcp"', demos)
+        self.assertIn("smeme_reasoning_evaluate", demos)
+        self.assertNotIn("Why it matters", html)
+        self.assertNotIn('id="why"', html)
+        self.assertLess(html.index('id="use-cases"'), html.index('id="mission"'))
+        self.assertNotIn('id="start"', html)
+        for removed in ('id="how"', 'id="engine"', 'id="tech"', 'id="example"', "v4-close-steps", "v4-result"):
+            self.assertNotIn(removed, html, removed)
+        for removed in ("Natural language at the edges", "Does ACME withhold on the Party D royalty?"):
+            self.assertNotIn(removed, html, removed)
+
+    def test_homepage_leads_with_the_withholding_use_case(self):
+        html = build._output_path("/").read_text(encoding="utf-8")
+        self.assertIn(
+            "so you can approve the decision knowing exactly why it holds.",
+            html,
+        )
+        self.assertLess(
+            html.index("Decide the withholding"), html.index("Accept a new client")
+        )
+        self.assertNotIn("download, share, and delete", html)
+
+    def test_homepage_matches_gtm_entry_copy(self):
+        html = build._output_path("/").read_text(encoding="utf-8")
+        hero = html[html.index('id="top"') : html.index('id="demos"')]
+        self.assertIn('class="v4-dict-word">ra&middot;tion&middot;al</dfn>', hero)
+        self.assertNotIn('class="v4-kicker"', hero)
+        self.assertIn('href="#demos" class="v4-btn v4-btn--primary">Get started</a>', hero)
+        self.assertNotIn("/auth/register", hero)
+        self.assertNotIn("Watch the demos", hero)
+        self.assertNotIn("Build your first decision tree", hero)
+        self.assertIn("A reasoned cause is how you keep agency.", html)
+        self.assertIn("It is an act of autonomy", html)
+        self.assertIn("The model proposes, you authorize, and the solver decides", html)
+        security = html[html.index("Engineering") : html.index('id="mission"')]
+        self.assertLess(
+            security.index("Escalate the alert"), security.index("Ship the change")
+        )
+        self.assertIn("Splunk", security)
+        self.assertNotIn("Triage the incident", html)
+        self.assertIn(
+            "Fictional examples. Incomplete procedures. Not professional advice.", html
+        )
+        for retired in (
+            "Meets criteria",
+            "Triage the issue",
+            "SMEme is neurosymbolic",
+            "Review the facts, not the reasoning",
+            "DeveloperApplication",
+            "Your AI understands the situation",
+            "solver-backed",
+            "Our mission is to make AI rational.",
+            "Review admitted facts and unresolved cases",
+        ):
+            self.assertNotIn(retired, html, retired)
+        self.assertIn('"applicationCategory": "BusinessApplication"', html)
+
+    def test_supporting_pages_use_the_withholding_vignette(self):
+        for route in ("/docs/quick-start", "/docs/run-a-tree"):
+            html = build._output_path(route).read_text(encoding="utf-8")
+            self.assertNotIn("deal qualification", html.lower(), route)
+            self.assertIn("Cross-border withholding", html, route)
+        builders = build._output_path("/builders").read_text(encoding="utf-8")
+        self.assertIn("Same facts, same result", builders)
+        self.assertNotIn("Deterministic", builders)
+
+    def test_crawler_intro_uses_the_category_sentence(self):
+        for filename in ("llms.txt", "llms-full.txt"):
+            contents = (self.output / filename).read_text(encoding="utf-8")
+            self.assertIn(
+                "SMEme is the formal reasoning layer for AI", contents, filename
+            )
+            self.assertNotIn("deterministic", contents.lower(), filename)
 
     def test_v4_pages_have_no_design_tool_leftovers(self):
         for route in ("/", "/builders"):
@@ -206,15 +291,35 @@ class StaticBuildTests(unittest.TestCase):
             "generation wizard",
             "build with the wizard",
         )
-        for route in ("/", "/builders", "/pricing", "/how-it-works", "/mcp", "/docs"):
+        for route in ("/", "/builders", "/pricing", "/mcp", "/docs"):
             html = build._output_path(route).read_text(encoding="utf-8").lower()
             for phrase in banned:
                 self.assertNotIn(phrase, html, f"{route} contains {phrase}")
 
+    def test_faq_page_holds_the_homepage_questions(self):
+        html = build._output_path("/faq").read_text(encoding="utf-8")
+        self.assertIn('rel="canonical" href="https://smeme.ai/faq"', html)
+        self.assertIn('aria-current="page">FAQ</a>', html)
+        self.assertEqual(html.count("<summary>"), 12)
+        self.assertIn("What is a decision tree?", html)
+        self.assertIn("Hosted Free includes 3 decision trees and 150 MCP calls.", html)
+
+    def test_how_it_works_is_unpublished(self):
+        routes = {route for route, _, _ in build.PUBLIC_ROUTES}
+        self.assertNotIn("/how-it-works", routes)
+        self.assertNotIn("/how-it-works", build.LANDING)
+        self.assertFalse((self.output / "how-it-works" / "index.html").exists())
+        for filename in ("sitemap.xml", "llms.txt", "llms-full.txt"):
+            contents = (self.output / filename).read_text(encoding="utf-8")
+            self.assertNotIn("/how-it-works", contents, filename)
+
     def test_landing_pages_share_the_builders_nav_link(self):
-        for route in ("/", "/pricing", "/how-it-works", "/mcp"):
+        for route in ("/", "/pricing", "/mcp", "/faq"):
             html = build._output_path(route).read_text(encoding="utf-8")
             self.assertIn('href="/builders"', html, route)
+            self.assertIn('href="/faq"', html, route)
+            self.assertNotIn('href="/how-it-works"', html, route)
+            self.assertNotIn(">How it works<", html, route)
 
 
 if __name__ == "__main__":

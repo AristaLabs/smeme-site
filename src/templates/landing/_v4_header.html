@@ -1,6 +1,6 @@
 {#- Shared V4 landing header.
-    Set v4_current before including: home | builders | pricing | how | mcp.
-    In-page anchors (#how, #example, #tech) resolve to the homepage from other pages. -#}
+    Set v4_current before including: home | builders | pricing | faq | mcp.
+    In-page anchors (#demos) resolve to the homepage from other pages. -#}
 {% from "components/macros.html" import smeme_logo_link %}
 {% set v4_current = v4_current|default('home') %}
 {% set v4_home = '' if v4_current == 'home' else '/' %}
@@ -9,12 +9,11 @@
     {{ smeme_logo_link(href='/', img_class='h-16 w-auto sm:h-[4.5rem]') }}
     <div class="v4-nav-group">
       <nav class="landing-page-nav v4-nav" aria-label="Main">
-        <a href="{{ v4_home }}#how"{% if v4_current == 'how' %} aria-current="page"{% endif %}>How it works</a>
-        <a href="{{ v4_home }}#example">Example</a>
-        <a href="{{ v4_home }}#tech">Technology</a>
+        <a href="{{ v4_home }}#demos">Demos</a>
         <a href="/builders"{% if v4_current == 'builders' %} aria-current="page"{% endif %}>For builders</a>
         <a href="/docs"{% if v4_current == 'docs' %} aria-current="page"{% endif %}>Docs</a>
         <a href="/pricing"{% if v4_current == 'pricing' %} aria-current="page"{% endif %}>Pricing</a>
+        <a href="/faq"{% if v4_current == 'faq' %} aria-current="page"{% endif %}>FAQ</a>
       </nav>
       <div class="v4-nav-actions">
         <a href="/auth/login" class="v4-btn v4-btn--outline v4-btn--sm plausible-event-name=Login+Click" aria-label="Sign in to SMEme">Sign in</a>

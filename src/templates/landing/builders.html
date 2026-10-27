@@ -8,7 +8,7 @@
 <meta name="description" content="Call SMEme over MCP to evaluate approved decision procedures inside your own harness. Your agent gathers the facts. SMEme returns what follows, what is unresolved, and the trace behind it." />
 <meta property="og:site_name" content="SMEme" />
 <meta property="og:title" content="SMEme for builders — Add a reasoning step to your AI workflows" />
-<meta property="og:description" content="Call SMEme over MCP to evaluate approved decision procedures inside your own harness. Deterministic results, an explicit admit step, and an audit-ready trace." />
+<meta property="og:description" content="Call SMEme over MCP to evaluate approved decision procedures inside your own harness. An explicit admit step, the same result for the same admitted facts, and an audit-ready trace." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{ site_base }}/builders" />
 <link rel="canonical" href="{{ site_base }}/builders" />
@@ -102,7 +102,7 @@ while harness_next == "continue_evaluate":
           <li class="v4-step"><span class="v4-step-id">1 &middot; bootstrap</span><strong>Get ready</strong><span>Check capabilities, cache the calling guidance, list deployed trees.</span></li>
           <li class="v4-step"><span class="v4-step-id">2 &middot; propose</span><strong>Agent proposes facts</strong><span>From documents, tools, and conversation.</span></li>
           <li class="v4-step v4-step--admit"><span class="v4-step-id">3 &middot; admit</span><strong>Facts are admitted</strong><span>By rule or by a human reviewer. Nothing is evaluated until it&rsquo;s admitted.</span></li>
-          <li class="v4-step v4-step--smeme"><span class="v4-step-id">4 &middot; evaluate</span><strong>SMEme reasons</strong><span>Admitted facts against the approved tree. Deterministic.</span></li>
+          <li class="v4-step v4-step--smeme"><span class="v4-step-id">4 &middot; evaluate</span><strong>SMEme reasons</strong><span>Admitted facts against the approved tree. Same facts, same result.</span></li>
           <li class="v4-step"><span class="v4-step-id">5 &middot; report</span><strong>Route the result</strong><span>Conclusions, open questions, and trace go downstream.</span></li>
         </ol>
         <div class="v4-loop"><span aria-hidden="true">&#8634;</span><span>Facts still missing? Report loops back to propose.</span></div>
@@ -123,8 +123,8 @@ while harness_next == "continue_evaluate":
         </figure>
         <div class="v4-split-side--sm">
           <h2 id="v4-demo-h" class="v4-h2 v4-h2--sm">See it run in a pipeline</h2>
-          <p class="v4-prose">A new intake form triggers the workflow. The agent proposes facts from the form and email, a reviewer admits them, and SMEme evaluates: Accept with escalation, plus the trace. The workflow routes on the result.</p>
-          <p class="v4-note" style="margin:0">The same step, written in LangGraph, is in the <a href="/docs/langgraph">LangGraph technical preview</a>.</p>
+          <p class="v4-prose">A quarterly royalty run triggers the workflow. The agent proposes facts from the agreement, the W-8BEN-E, and email, a reviewer admits each one with its source, and SMEme evaluates: Withhold at reduced treaty rate, plus the trace. The workflow codes the payment, or routes an Unsure answer to tax counsel.</p>
+          <p class="v4-note" style="margin:0">The same step, written in LangGraph on the fictional ACME matter, is in the <a href="/docs/langgraph">LangGraph technical preview</a>.</p>
         </div>
       </div>
     </section>
@@ -150,7 +150,7 @@ while harness_next == "continue_evaluate":
       <div class="v4-wrap v4-stack">
         <h2 id="v4-deploy-h" class="sr-only">Guarantees</h2>
         <div class="v4-grid v4-grid--260">
-          <div class="v4-card v4-card--white v4-card--tight"><strong class="v4-card-title">Deterministic</strong><p class="v4-card-text">Same admitted facts and approved tree, same result. Testable like any other step.</p></div>
+          <div class="v4-card v4-card--white v4-card--tight"><strong class="v4-card-title">Same facts, same result</strong><p class="v4-card-text">Same admitted facts and approved tree, same result. Testable like any other step.</p></div>
           <div class="v4-card v4-card--white v4-card--tight"><strong class="v4-card-title">Logic outside the prompt</strong><p class="v4-card-text">Trees are versioned and approved apart from the model. Swap models without rewriting rules.</p></div>
           <div class="v4-card v4-card--white v4-card--tight"><strong class="v4-card-title">Human in the loop</strong><p class="v4-card-text">The admit step is where a reviewer signs off on the facts.</p></div>
           <div class="v4-card v4-card--white v4-card--tight"><strong class="v4-card-title">Audit-ready trace</strong><p class="v4-card-text">Every report carries the reasoning behind it.</p></div>
