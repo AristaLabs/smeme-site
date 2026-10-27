@@ -150,6 +150,9 @@ class StaticBuildTests(unittest.TestCase):
                 self.assertIn("/docs/mcp", hrefs, route)
                 self.assertIn("MCP tool reference", nav, route)
                 self.assertIn("Connect your agent", nav, route)
+                self.assertLess(hrefs.index("/docs/ask-more"), hrefs.index("/docs/mcp"), route)
+                self.assertLess(hrefs.index("/docs/mcp"), hrefs.index("/mcp"), route)
+                self.assertLess(hrefs.index("/mcp"), hrefs.index("/docs/introduction"), route)
 
     def test_homepage_does_not_link_the_arista_blog(self):
         html = build._output_path("/").read_text(encoding="utf-8")
@@ -316,16 +319,21 @@ class StaticBuildTests(unittest.TestCase):
         routes = {route for route, _, _ in build.PUBLIC_ROUTES}
         self.assertNotIn("/builders", routes)
         self.assertNotIn("/builders", build.LANDING)
-        redirect = (self.output / "builders" / "index.html").read_text(encoding="utf-8")
-        self.assertIn('rel="canonical" href="https://smeme.ai/docs/langgraph"', redirect)
-        self.assertIn('url=/docs/langgraph', redirect)
-        self.assertNotIn("For builders", redirect)
+        for retired_path in ("builders", "docs/langgraph"):
+            redirect = (self.output / retired_path / "index.html").read_text(encoding="utf-8")
+            self.assertIn('rel="canonical" href="https://smeme.ai/docs"', redirect)
+            self.assertIn('content="0; url=/docs"', redirect)
+            self.assertNotIn("/docs/langgraph", redirect)
+            self.assertNotIn("For builders", redirect)
+        self.assertNotIn("/docs/langgraph", routes)
+        self.assertNotIn("/docs/langgraph", build.DOCS)
         for filename in ("sitemap.xml", "llms.txt", "llms-full.txt"):
             contents = (self.output / filename).read_text(encoding="utf-8")
             self.assertNotIn("/builders", contents, filename)
         for route in ("/", "/pricing", "/mcp", "/faq", "/docs"):
             html = build._output_path(route).read_text(encoding="utf-8")
             self.assertNotIn('href="/builders"', html, route)
+            self.assertNotIn('href="/docs/langgraph"', html, route)
             self.assertNotIn(">For builders<", html, route)
             self.assertIn('href="/faq"', html, route)
             self.assertNotIn('href="/how-it-works"', html, route)
