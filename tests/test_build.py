@@ -45,6 +45,15 @@ class StaticBuildTests(unittest.TestCase):
         self.assertIn("docs-public", html)
         self.assertNotIn('aria-label="Main navigation"', html)
 
+    def test_docs_mark_the_current_page_and_hide_the_duplicate_nav(self):
+        overview = build._output_path("/docs").read_text(encoding="utf-8")
+        quick_start = build._output_path("/docs/quick-start").read_text(encoding="utf-8")
+        self.assertIn('href="/docs" aria-current="page"', overview)
+        self.assertNotIn('href="/docs/quick-start" aria-current="page"', overview)
+        self.assertIn('href="/docs/quick-start" aria-current="page"', quick_start)
+        self.assertIn(".docs-public .lg\\:hidden { display: none; }", quick_start)
+        self.assertIn("docs-public v4", quick_start)
+
     def test_pricing_does_not_paint_a_blurred_glow(self):
         html = build._output_path("/pricing").read_text(encoding="utf-8")
         self.assertNotIn("filter: blur(30px)", html)

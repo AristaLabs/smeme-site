@@ -35,13 +35,7 @@
     </style>
     {% if (active_page|default('')).startswith('docs') %}
     {% include "landing/_v4_styles.html" %}
-    <style>
-      @media (min-width: 1024px) {
-        .docs-public .max-w-5xl > .mt-6 { display: flex; gap: 3rem; align-items: flex-start; }
-        .docs-public .max-w-5xl > .mt-6 > aside.hidden { display: block; width: 11rem; flex: none; }
-        .docs-public .max-w-5xl > .mt-6 > aside.hidden + div > .mb-8 { display: none; }
-      }
-    </style>
+    {% include "docs/_docs_styles.html" %}
     {% endif %}
 
     {% block head %}{% endblock %}
@@ -53,7 +47,7 @@
     {% block body %}
     {%- from "components/macros.html" import smeme_logo_link, workflow_launch_link -%}
     {%- set active = active_page|default('') -%}
-    <div id="app-layout-shift" class="relative z-10 min-h-screen flex flex-col bg-ui-canvas{% if active.startswith('docs') %} docs-public{% endif %}">
+    <div id="app-layout-shift" class="relative z-10 min-h-screen flex flex-col bg-ui-canvas{% if active.startswith('docs') %} docs-public v4{% endif %}">
       {% if active.startswith('docs') %}
       {% set v4_current = 'docs' %}
       {% include "landing/_v4_header.html" %}
@@ -131,7 +125,9 @@
       </main>
 
       <!-- Footer -->
-      {% if show_footer|default(false) %}
+      {% if active.startswith('docs') %}
+      {% include "landing/_v4_footer.html" %}
+      {% elif show_footer|default(false) %}
       <footer class="bg-ui-surface border-t border-ui-line mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-ui-ink-muted space-y-2">
           <p>&copy; 2026 Arista Labs, LLC. All rights reserved.</p>
