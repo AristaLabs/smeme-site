@@ -1,8 +1,7 @@
 # Homepage demo videos: plan
 
 Two videos fill the "Demo coming soon" frames in the homepage demos section
-(`src/templates/landing/preview.html`, `#demo-run` and `#demo-build`). The
-`/builders` frame stays "coming soon" for now.
+(`src/templates/landing/preview.html`, `#demo-run` and `#demo-build`).
 
 Real product on production, captions on, no voiceover, 16:9 (the `.v4-video`
 frame). Each video walks the prompts printed directly beneath it, in the same
@@ -58,6 +57,44 @@ The interview in step 2 is the long part. Record it in full, then cut to the
 three approval stops and one or two interview exchanges. Keep every on-screen
 answer short enough to read in a caption.
 
+## Synthetic data
+
+**Demo A** uses the existing ACME bundle, `smeme-acme-dataset-distributed.zip`
+(v`0.2.0-phase2-partial`, SHA-256
+`96b8534209b11ca64899be4f054077ca6000ead1059437cd6343968554add560`), kept in
+`smeme-cloud/smeme/landing/artifacts/` and mirrored at `src/downloads/`.
+Eight fictional matters, `matter-123` … `matter-130`; every document carries a
+source ID and the synthetic notice. `matter-123` is the clean treaty-rate case
+(agreement extract, intake memo, Sept 11 email, CRM and register records,
+royalty schedule, W-8BEN-E extracted-fields JSON). `matter-129` has a
+change-in-circumstances notice if a second case is ever needed.
+
+- The bundle ships no answer key, option strings, or question text. Expected
+  results come from the dry run (step 4), not from the dataset.
+- The W-8BEN-E is extracted-field JSON, not a form image, by design. Do not
+  fabricate a form for the camera; let captions name the files.
+- The dataset README states the tax content is not reviewed by qualified tax
+  counsel and should not be presented to prospects as a realistic legal
+  artifact until it is. Resolve before publishing: a practitioner review, or a
+  notice revision that matches the label-only posture. Recorded under Open
+  decisions.
+
+**Demo B** has no dataset yet. Build one small set for a fictional firm:
+
+1. A one-to-two page procedure, "New Client Acceptance and Conflicts," to
+   attach in prompt 2. Outcomes (Accept · Accept with escalation · Decline ·
+   Escalate to ethics partner), the questions a partner actually asks
+   (conflicts search, matter within practice scope, source of funds,
+   sanctions/PEP, engagement terms, capacity), two named edge cases.
+2. Two or three past matters with known outcomes, each a short intake form
+   and an email thread, for the "bring past cases" step. One goes the less
+   obvious way. These become the Deploy-time test cases.
+3. One fresh matter for the new-chat run in step 4.
+
+Same hygiene as ACME: source IDs in frontmatter, `.invalid` mail domains, the
+synthetic notice on every file, no resemblance to a real firm or client, and a
+caveat that it is a model procedure, not a bar-reviewed one.
+
 ## Pre-production
 
 1. **Serial.** Fix the Demo A step 4 prompt target in `preview.html`
@@ -77,12 +114,15 @@ answer short enough to read in a caption.
    many answers decide the outcome, and how the what-if and how-to-reach
    results read. Adjust the expected-result column above to what actually
    appears; do not script what the product does not show.
-5. **Parallel with 2.** Dry-run Demo B end to end, unassisted, in a fresh chat.
+5. **Parallel with 2, before 5a.** Write the Demo B synthetic set (see
+   Synthetic data). Keep it under `smeme-site/src/downloads/` beside the ACME
+   bundle only if it is meant to be public; otherwise outside the repos.
+5a. **Serial, after 5.** Dry-run Demo B end to end, unassisted, in a fresh chat.
    Time it. Log where it stalls (OAuth, empty account, interview length,
    Deploy/Listed, first run) in the activation friction log,
    @smeme-cloud/docs/campaign/gtm/workflow-builders/market-workflow-builders.md
    §12.5. Decide which interview exchanges to keep.
-6. **Serial, after 4 and 5.** Freeze the two shot tables above. If a dry run
+6. **Serial, after 4 and 5a.** Freeze the two shot tables above. If a dry run
    contradicts a prompt on the page, fix the page, not the video.
 
 ## Recording and post
@@ -120,5 +160,7 @@ answer short enough to read in a caption.
 - Demo B procedure: client acceptance (recommended, matches the GTM decision)
   or change the page placeholder to match whatever is recorded.
 - Hosting (step 9).
-- Whether to swap the `/builders` frame for a trimmed cut of Demo A later,
-  or shoot the LangGraph step separately.
+- ACME substantive-review caveat: practitioner review before publishing, or
+  revise the dataset notice to the label-only posture.
+- Whether the ACME maintainer archive (regression answers) still exists
+  outside the repos; it would shortcut step 4.
