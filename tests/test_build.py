@@ -245,9 +245,6 @@ class StaticBuildTests(unittest.TestCase):
             html = build._output_path(route).read_text(encoding="utf-8")
             self.assertNotIn("deal qualification", html.lower(), route)
             self.assertIn("Cross-border withholding", html, route)
-        builders = build._output_path("/builders").read_text(encoding="utf-8")
-        self.assertIn("Same facts, same result", builders)
-        self.assertNotIn("Deterministic", builders)
 
     def test_crawler_intro_uses_the_category_sentence(self):
         for filename in ("llms.txt", "llms-full.txt"):
@@ -258,20 +255,13 @@ class StaticBuildTests(unittest.TestCase):
             self.assertNotIn("deterministic", contents.lower(), filename)
 
     def test_v4_pages_have_no_design_tool_leftovers(self):
-        for route in ("/", "/builders"):
+        for route in ("/",):
             html = build._output_path(route).read_text(encoding="utf-8")
             self.assertNotIn("{{", html, route)
             self.assertNotIn("Shot list", html, route)
             self.assertNotIn("Video placeholder", html, route)
             self.assertNotIn("poster frame", html, route)
             self.assertIn("IBM+Plex", html, route)
-
-    def test_builders_page_links_docs(self):
-        html = build._output_path("/builders").read_text(encoding="utf-8")
-        self.assertIn('href="/docs/langgraph"', html)
-        self.assertIn('href="/docs/mcp"', html)
-        self.assertNotIn("SMEme Core on GitHub", html)
-        self.assertNotIn("self-host-quickstart", html)
 
     def test_marketing_pages_do_not_offer_self_hosting(self):
         banned = (
@@ -291,7 +281,7 @@ class StaticBuildTests(unittest.TestCase):
             "generation wizard",
             "build with the wizard",
         )
-        for route in ("/", "/builders", "/pricing", "/mcp", "/docs"):
+        for route in ("/", "/pricing", "/mcp", "/docs"):
             html = build._output_path(route).read_text(encoding="utf-8").lower()
             for phrase in banned:
                 self.assertNotIn(phrase, html, f"{route} contains {phrase}")
@@ -313,13 +303,35 @@ class StaticBuildTests(unittest.TestCase):
             contents = (self.output / filename).read_text(encoding="utf-8")
             self.assertNotIn("/how-it-works", contents, filename)
 
-    def test_landing_pages_share_the_builders_nav_link(self):
-        for route in ("/", "/pricing", "/mcp", "/faq"):
+    def test_builders_page_is_unpublished(self):
+        routes = {route for route, _, _ in build.PUBLIC_ROUTES}
+        self.assertNotIn("/builders", routes)
+        self.assertNotIn("/builders", build.LANDING)
+        redirect = (self.output / "builders" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('rel="canonical" href="https://smeme.ai/docs/langgraph"', redirect)
+        self.assertIn('url=/docs/langgraph', redirect)
+        self.assertNotIn("For builders", redirect)
+        for filename in ("sitemap.xml", "llms.txt", "llms-full.txt"):
+            contents = (self.output / filename).read_text(encoding="utf-8")
+            self.assertNotIn("/builders", contents, filename)
+        for route in ("/", "/pricing", "/mcp", "/faq", "/docs"):
             html = build._output_path(route).read_text(encoding="utf-8")
-            self.assertIn('href="/builders"', html, route)
+            self.assertNotIn('href="/builders"', html, route)
+            self.assertNotIn(">For builders<", html, route)
             self.assertIn('href="/faq"', html, route)
             self.assertNotIn('href="/how-it-works"', html, route)
             self.assertNotIn(">How it works<", html, route)
+        faq = build._output_path("/faq").read_text(encoding="utf-8")
+        self.assertIn('href="/docs/mcp"', faq)
+        self.assertNotIn("builders page", faq)
+
+    def test_public_pages_do_not_link_the_private_core_repo(self):
+        private_repo = re.compile(r"github\.com/AristaLabs/smeme(?!-)", re.IGNORECASE)
+        for path in self.output.rglob("*"):
+            if path.suffix.lower() not in {".html", ".txt", ".xml", ".json"}:
+                continue
+            contents = path.read_text(encoding="utf-8")
+            self.assertIsNone(private_repo.search(contents), path.relative_to(self.output))
 
 
 if __name__ == "__main__":

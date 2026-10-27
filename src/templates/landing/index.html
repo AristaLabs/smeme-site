@@ -43,7 +43,6 @@
       "parentOrganization": { "@id": "https://aristalabs.ai/#organization" },
       "sameAs": [
         "https://aristalabs.ai",
-        "https://github.com/AristaLabs/sMeMe",
         "https://x.com/smeme_ai",
         "{{ site_base }}/mcp"
       ]
@@ -115,9 +114,6 @@
         <nav class="landing-page-nav flex items-center gap-4 sm:gap-5" aria-label="On this page">
           <a href="/pricing">Pricing</a>
           <a href="/mcp">MCP</a>
-          <a href="https://github.com/AristaLabs/smeme/discussions/categories/start-here"
-             target="_blank"
-             rel="noopener noreferrer">Community</a>
         </nav>
         {% include "landing/_social_icons.html" %}
         {{ btn("Create account", variant="secondary", size="sm", href="/auth/register", extra_class="plausible-event-name=Signup+Click") }}
@@ -151,11 +147,6 @@
       {% include "landing/_social_icons.html" %}
       <p class="flex flex-wrap gap-x-3 gap-y-1 justify-center items-center text-xs">
         <a href="/mcp" class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">MCP</a>
-        <span aria-hidden="true">&middot;</span>
-        <a href="https://github.com/AristaLabs/smeme/discussions/categories/start-here"
-           class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline"
-           target="_blank"
-           rel="noopener noreferrer">Community help</a>
         <span aria-hidden="true">&middot;</span>
         <a href="mailto:contact@aristalabs.ai?subject=SMEme%20account%20%2F%20billing"
            class="hover:text-brand-600 dark:hover:text-brand-300 underline-offset-2 hover:underline">Account / billing</a>
