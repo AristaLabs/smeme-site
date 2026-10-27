@@ -24,8 +24,8 @@ PUBLIC_ROUTES = [
     ("/", "SMEme — Rational AI for the decisions that run your business", "Product overview."),
     ("/builders", "For builders", "Add a SMEme reasoning step to agent workflows over MCP."),
     ("/pricing", "Pricing", "Hosted Free and Pro plans."),
-    ("/mcp", "MCP", "Connect an agent and run deterministic reasoning."),
-    ("/how-it-works", "How it works", "See how SMEme turns expert judgment into reports."),
+    ("/faq", "FAQ", "Answers about SMEme, decision trees, and what it costs."),
+    ("/mcp", "MCP", "Connect an agent and let a constraint solver reason over your approved procedures."),
     ("/marketplace/business", "Business tier", "Private distribution and monetization."),
     ("/docs", "Docs", "Public creator and agent documentation."),
     ("/docs/quick-start", "Quick start", "Connect, find a procedure, and build a first tree."),
@@ -66,8 +66,8 @@ LANDING = {
     "/": "preview.html",
     "/builders": "builders.html",
     "/pricing": "pricing.html",
+    "/faq": "faq.html",
     "/mcp": "mcp.html",
-    "/how-it-works": "how_it_works.html",
     "/marketplace/business": "business.html",
 }
 
@@ -187,8 +187,8 @@ def main() -> None:
     )
     intro = (
         "# SMEme\n\n"
-        "> SMEme is the expert reasoning layer for AI agents: a deterministic MCP server "
-        "that runs expert-authored decision trees and returns traceable reports.\n\n"
+        "> SMEme is the formal reasoning layer for AI — a symbolic solver that evaluates "
+        "expert-authored decision trees over MCP and returns traceable conclusions.\n\n"
     )
     (OUTPUT / "llms.txt").write_text(f"{intro}## Pages\n\n{routes}\n", encoding="utf-8")
     (OUTPUT / "llms-full.txt").write_text(

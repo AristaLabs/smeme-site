@@ -1,0 +1,197 @@
+{% extends "layouts/base.html" %}
+{% set show_nav = false %}
+{% set theme_pin_light = true %}
+{% block title %}FAQ — SMEme{% endblock %}
+
+{% block head %}
+<meta name="description" content="Answers about SMEme: what a decision tree is, what you approve, where your data stays, and what the free tier includes." />
+<meta property="og:site_name" content="SMEme" />
+<meta property="og:title" content="FAQ — SMEme" />
+<meta property="og:description" content="Answers about SMEme: what a decision tree is, what you approve, where your data stays, and what the free tier includes." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ site_base }}/faq" />
+<link rel="canonical" href="{{ site_base }}/faq" />
+<meta property="og:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="SMEme — The formal reasoning layer for AI" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
+<meta name="twitter:image:alt" content="SMEme — The formal reasoning layer for AI" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "url": "{{ site_base }}/faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is SMEme?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SMEme connects to the chatbot you already use. You write and approve a decision tree for a recurring decision. When your chatbot gathers the facts, SMEme works out what your procedure requires."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a decision tree?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The procedure you can read. Questions, branches, and outcomes, in plain language. That is what you read and approve. Behind the scenes, SMEme compiles it into formal logic and reasons over that."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to be technical?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You don't need to know how the logic works. You only have to recognize when a draft is right, wrong, or incomplete. No coding, no special syntax, and no knowledge engineers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are constraints and evidence?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Constraints are the rules a decision must satisfy, such as your policies, the law, and your own judgment. After you deploy the tree, SMEme applies those rules as written. Evidence is context that has been used to answer a question in your decision tree, with its source attached. Your data stays in the apps you already use."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why not just ask the chatbot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A chatbot goes straight from documents to an answer, and you can't see the steps. With SMEme, the chatbot only proposes facts, each with its source. Your approved procedure decides the outcome. If the evidence conflicts or is incomplete, the answer stays open instead of being guessed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I already give Claude detailed instructions. Why add this?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Keep them. Instructions are still the right tool for drafting and open-ended judgment. For a recurring determination, an instruction file asks the model to re-interpret your procedure every time. A decision tree is the procedure itself, approved by you and applied the same way on every matter, and you can ask which facts decided it and what would change the result."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this legal or tax advice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. SMEme applies the procedure you approve to the facts you admit. It does not decide whether the procedure is right, whether the facts are true, or what to do next. You remain responsible for the conclusion. The withholding example is fictional and incomplete."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens after I build a tree?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You authorize in the editor by choosing Deploy. That saves the version SMEme will reason over. Then set it to Listed, which means it shows up among the SMEme tools in your chat."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where does my data go?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your files stay in the apps you already use. The chatbot turns context from those apps into evidence for a question in the tree. The tree does not keep the matter files."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I share a tree?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can download your decision tree. It stays on your account. Giving another account its own copy is not available yet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does it cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hosted Free includes 3 decision trees and 150 MCP calls. Deleting a tree frees a slot. It does not add calls. See pricing for Pro."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can developers build with SMEme?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. SMEme is a hosted MCP service. Start with the builders page and the MCP docs."
+      }
+    }
+  ]
+}
+</script>
+{% include "landing/_styles.html" %}
+{% include "landing/_v4_styles.html" %}
+{% endblock %}
+
+{% block main_class %}w-full max-w-none px-0 py-0{% endblock %}
+
+{% block content %}
+<div class="landing-page-shell v4 min-h-[calc(100vh-0px)] flex flex-col">
+  {% set v4_current = 'faq' %}
+  {% include "landing/_v4_header.html" %}
+
+  <div class="flex-1">
+    <section id="faq" class="v4-section" aria-labelledby="v4-faq-h">
+      <div class="v4-wrap v4-stack v4-center">
+        <h1 id="v4-faq-h" class="v4-h2 v4-h2--md">FAQ</h1>
+        <div class="v4-faq">
+          <details>
+            <summary>What is SMEme?</summary>
+            <p>SMEme connects to the chatbot you already use. You write and approve a decision tree for a recurring decision. When your chatbot gathers the facts, SMEme works out what your procedure requires.</p>
+          </details>
+          <details>
+            <summary>What is a decision tree?</summary>
+            <p>The procedure you can read. Questions, branches, and outcomes, in plain language. That is what you read and approve. Behind the scenes, SMEme compiles it into formal logic and reasons over that.</p>
+          </details>
+          <details>
+            <summary>Do I need to be technical?</summary>
+            <p>You don&rsquo;t need to know how the logic works. You only have to recognize when a draft is right, wrong, or incomplete. No coding, no special syntax, and no knowledge engineers.</p>
+          </details>
+          <details>
+            <summary>What are constraints and evidence?</summary>
+            <p>Constraints are the rules a decision must satisfy, such as your policies, the law, and your own judgment. After you deploy the tree, SMEme applies those rules as written. Evidence is context that has been used to answer a question in your decision tree, with its source attached. Your data stays in the apps you already use.</p>
+          </details>
+          <details>
+            <summary>Why not just ask the chatbot?</summary>
+            <p>A chatbot goes straight from documents to an answer, and you can&rsquo;t see the steps. With SMEme, the chatbot only proposes facts, each with its source. Your approved procedure decides the outcome. If the evidence conflicts or is incomplete, the answer stays open instead of being guessed.</p>
+          </details>
+          <details>
+            <summary>I already give Claude detailed instructions. Why add this?</summary>
+            <p>Keep them. Instructions are still the right tool for drafting and open-ended judgment. For a recurring determination, an instruction file asks the model to re-interpret your procedure every time. A decision tree is the procedure itself, approved by you and applied the same way on every matter, and you can ask which facts decided it and what would change the result.</p>
+          </details>
+          <details>
+            <summary>Is this legal or tax advice?</summary>
+            <p>No. SMEme applies the procedure you approve to the facts you admit. It does not decide whether the procedure is right, whether the facts are true, or what to do next. You remain responsible for the conclusion. The withholding example is fictional and incomplete.</p>
+          </details>
+          <details>
+            <summary>What happens after I build a tree?</summary>
+            <p>You authorize in the editor by choosing Deploy. That saves the version SMEme will reason over. Then set it to Listed, which means it shows up among the SMEme tools in your chat.</p>
+          </details>
+          <details>
+            <summary>Where does my data go?</summary>
+            <p>Your files stay in the apps you already use. The chatbot turns context from those apps into evidence for a question in the tree. The tree does not keep the matter files.</p>
+          </details>
+          <details>
+            <summary>Can I share a tree?</summary>
+            <p>You can download your decision tree. It stays on your account. Giving another account its own copy is not available yet.</p>
+          </details>
+          <details>
+            <summary>What does it cost?</summary>
+            <p>Hosted Free includes 3 decision trees and 150 MCP calls. Deleting a tree frees a slot. It does not add calls. <a href="/pricing">See pricing</a> for Pro.</p>
+          </details>
+          <details>
+            <summary>Can developers build with SMEme?</summary>
+            <p>Yes. SMEme is a hosted MCP service. Start with the <a href="/builders">builders page</a> and the <a href="/docs/mcp">MCP docs</a>.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  {% include "landing/_v4_footer.html" %}
+</div>
+{% endblock %}

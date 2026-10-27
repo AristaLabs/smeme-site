@@ -7,10 +7,10 @@
 {% block title %}SMEme — Rational AI for the decisions that run your business{% endblock %}
 
 {% block head %}
-<meta name="description" content="Your AI understands the situation. SMEme determines what follows. Solver-backed decision capability for Claude, ChatGPT, and agent workflows, using your approved decision procedures." />
+<meta name="description" content="Your name is on the conclusion. SMEme checks each matter against the procedure you authorized, so you can approve the decision knowing exactly why it holds. Approve your procedure once as a decision tree, and SMEme shows what it requires, which facts decided it, and what is still open, inside Claude, ChatGPT, and agent workflows, for attorneys, tax advisers, and the professionals who sign off." />
 <meta property="og:site_name" content="SMEme" />
 <meta property="og:title" content="SMEme — Rational AI for the decisions that run your business" />
-<meta property="og:description" content="Your AI understands the situation. SMEme determines what follows. Solver-backed decision capability for Claude, ChatGPT, and agent workflows, using your approved decision procedures." />
+<meta property="og:description" content="Your name is on the conclusion. SMEme checks each matter against the procedure you authorized, so you can approve the decision knowing exactly why it holds. Approve your procedure once as a decision tree, and SMEme shows what it requires, which facts decided it, and what is still open, inside Claude, ChatGPT, and agent workflows." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{ site_base }}/" />
 <link rel="canonical" href="{{ site_base }}/" />
@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="{{ site_base }}/static/og-card.png?v=20260919" />
 <meta name="twitter:image:alt" content="SMEme — The formal reasoning layer for AI" />
-{# Entity schema: category sentence must match registry/README.md and geo-execution-plan.md #}
+{# Entity schema: descriptions and category must match the V5 homepage section of smeme-cloud docs/product/messaging.md #}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -55,7 +55,7 @@
       "@id": "{{ site_base }}/#website",
       "url": "{{ site_base }}/",
       "name": "SMEme",
-      "description": "Your AI understands the situation. SMEme determines what follows.",
+      "description": "Your name is on the conclusion. SMEme checks each matter against the procedure you authorized, so you can approve the decision knowing exactly why it holds. Approve your procedure once as a decision tree, and SMEme shows what it requires, which facts decided it, and what is still open, inside Claude, ChatGPT, and agent workflows.",
       "publisher": { "@id": "{{ site_base }}/#organization" }
     },
     {
@@ -63,7 +63,7 @@
       "@id": "{{ site_base }}/#software",
       "name": "SMEme",
       "url": "{{ site_base }}/",
-      "applicationCategory": "DeveloperApplication",
+      "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, MCP (Model Context Protocol)",
       "description": "SMEme is the formal reasoning layer for AI — a symbolic solver that evaluates expert-authored decision trees over MCP and returns traceable conclusions.",
       "publisher": { "@id": "{{ site_base }}/#organization" },
@@ -110,19 +110,54 @@
   .v4-hero { padding: clamp(3.5rem, 8vw, 6.5rem) 0 clamp(3rem, 6vw, 5.5rem); }
   .v4-hero .v4-wrap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
   .v4-hero .v4-cta-row { padding-top: 0.5rem; }
-  .v4-hero .v4-pills { padding-top: 0.75rem; justify-content: center; }
+  .v4-works { display: flex; flex-direction: column; align-items: center; gap: 0.85rem; padding-top: 0.75rem; width: 100%; }
+  .v4-works-line { margin: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; column-gap: 1.25rem; row-gap: 0.65rem; max-width: 100%; font-size: 0.9375rem; line-height: 1.2; color: var(--v4-ink-2); }
+  .v4-works-label { color: var(--v4-muted); }
+  .v4-works-brand { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 600; color: var(--v4-ink); white-space: nowrap; }
+  .v4-works-icon { width: 1.35rem; height: 1.35rem; display: block; flex: none; }
+  .v4-works a { font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  @media (max-width: 720px) {
+    .v4-works-line { column-gap: 0.85rem; }
+  }
+  .v4-hero .v4-dict {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    white-space: normal;
+    font-size: clamp(0.8125rem, 1.02vw, 0.9rem);
+    line-height: 1.45;
+    color: var(--v4-ink-2);
+  }
+  .v4-dict-word { font-weight: 600; color: var(--v4-navy); }
+  .v4-dict-pos { font-style: italic; color: var(--v4-muted); margin: 0 0.35rem; }
+  @media (max-width: 980px) {
+    .v4-hero .v4-dict { font-size: 0.95rem; }
+  }
 
-  .v4-result { background: #fff; border: 1px solid var(--v4-line); border-radius: 16px; box-shadow: 0 1px 2px rgba(11,22,48,0.06), 0 12px 32px rgba(11,22,48,0.06); overflow: hidden; }
-  .v4-result-head { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap; padding: 0.875rem 1.375rem; border-bottom: 1px solid var(--v4-line-soft); background: #FAFBFC; font-family: var(--v4-mono); font-size: 0.75rem; color: var(--v4-muted); }
-  .v4-result-head .v4-tag { font-size: 0.6875rem; border: 1px dashed var(--v4-btn-line); border-radius: 999px; padding: 0.2rem 0.625rem; }
-  .v4-result dl { margin: 0; display: flex; flex-direction: column; }
-  .v4-result dl > div { padding: 1.25rem 1.375rem; border-bottom: 1px solid var(--v4-line-soft); display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; }
-  .v4-result dl > div:last-child { border-bottom: 0; }
-  .v4-result dt { flex: 0 0 96px; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--v4-muted); padding-top: 3px; }
-  .v4-result dd { margin: 0; flex: 1 1 260px; font-size: 1rem; line-height: 1.55; color: var(--v4-ink); }
-  .v4-result dd.v4-result-decision { font-size: 1.5rem; font-weight: 700; color: var(--v4-navy); line-height: 1.2; }
-  .v4-result dd .v4-soft { color: var(--v4-muted); }
-
+  .v4-demos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 2.5rem 3rem; align-items: start; }
+  .v4-demo { display: flex; flex-direction: column; gap: 1.25rem; min-width: 0; }
+  .v4-demo-h { margin: 0; font-size: 1.3125rem; font-weight: 700; color: var(--v4-ink); }
+  .v4-steps--compact { gap: 0.875rem; }
+  .v4-steps--compact strong { font-size: 1rem; }
+  .v4-steps--compact li > span:last-child > span { font-size: 0.875rem; }
+  .v4-demo-lead { margin: 0; font-size: 0.9375rem; line-height: 1.55; color: var(--v4-ink-2); }
+  .v4-free { margin: 0; display: flex; flex-direction: column; gap: 0.2rem; padding: 0.75rem 1rem; border: 1px solid color-mix(in srgb, var(--v4-navy) 25%, var(--v4-line)); border-left: 4px solid var(--v4-navy); border-radius: 10px; background: var(--v4-tint); }
+  .v4-free strong { font-size: 1rem; color: var(--v4-navy); }
+  .v4-free span { font-size: 0.875rem; line-height: 1.5; color: var(--v4-ink-2); }
+  .v4-free a { font-weight: 600; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+  .v4-steps--prompts { gap: 1.75rem; }
+  .v4-steps--prompts li > span:last-child { min-width: 0; flex: 1; gap: 0.4rem; }
+  .v4-prompt { margin: 0.25rem 0 0; border: 1px solid var(--v4-line); border-radius: 10px; background: #fff; overflow: hidden; }
+  .v4-prompt + .v4-prompt { margin-top: 0.5rem; }
+  .v4-prompt figcaption { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0.75rem; background: var(--v4-tint); border-bottom: 1px solid var(--v4-line-soft); font-family: var(--v4-mono); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--v4-muted); }
+  .v4-prompt figcaption > span:first-child { flex: 1; }
+  .v4-prompt figcaption code { font-family: var(--v4-mono); font-size: 0.6875rem; letter-spacing: 0; text-transform: none; color: var(--v4-navy); overflow-wrap: anywhere; min-width: 0; }
+  .v4-prompt-next { font-size: 0.875rem; line-height: 1.55; color: var(--v4-ink-2); }
+  .v4-prompt-next a { font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  .v4-prompt pre { margin: 0; padding: 0.75rem 0.875rem; font-family: var(--v4-sans); font-size: 0.875rem; line-height: 1.55; color: var(--v4-ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+  .v4 .v4-copy { flex: none; border: 1px solid var(--v4-btn-line); border-radius: 6px; background: #fff; padding: 0.15rem 0.6rem; font-family: var(--v4-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--v4-navy); cursor: pointer; }
+  .v4 .v4-copy:hover { border-color: var(--v4-navy); }
   .v4-cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1.25rem; align-items: start; }
   .v4-cases-col { display: flex; flex-direction: column; gap: 0.875rem; }
   .v4-cases-col h3 { margin: 0; text-align: center; font-family: var(--v4-mono); font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--v4-navy); }
@@ -162,111 +197,103 @@
   <div class="flex-1">
     <section id="top" class="v4-hero" aria-labelledby="v4-h1">
       <div class="v4-wrap v4-wrap--narrow">
-        <p class="v4-kicker" style="margin:0">Rational AI</p>
+        <p class="v4-dict"><dfn class="v4-dict-word">ra&middot;tion&middot;al</dfn> <span class="v4-dict-pos">adjective</span> <span class="v4-dict-def">Reasoned through formal argument; explicit in its premises and inference rules such that decisions and conclusions can be explained and openly examined.</span></p>
         <h1 id="v4-h1" class="v4-h1">Rational AI for the decisions that run your business.</h1>
-        <p class="v4-lead">Your AI understands the situation. <span class="v4-accent-navy" style="font-weight:700">SMEme determines what follows.</span></p>
-        <p class="v4-sub">SMEme adds solver-backed decision capability to Claude, ChatGPT, and other AI workflows, using your approved decision procedures.</p>
+        <p class="v4-lead">Your name is on the conclusion. SMEme checks each matter against the procedure you authorized, <span class="v4-accent-navy" style="font-weight:700">so you can approve the decision knowing exactly why it holds.</span></p>
+        <p class="v4-sub">Build your procedure with the AI you already use. SMEme turns your policies, research, and judgment into a decision tree you approve, then compiles it into formal logic, not just vibe-coded rules, not just a flowchart. This decision tree is an explicit and easily read and maintained artifact you 100% own and control. Your AI brings in the facts from your documents and tools. SMEme shows what the facts determine, which specific sets of facts were decisive, and what facts would have to change to reach another conclusion. You use these tools for logical analysis, counter-argument and negotiation analysis, and strategic decision support. Built for the attorney, the tax adviser, and anyone else who re-checks every AI answer because their name is on the conclusion.</p>
         <div class="v4-cta-row v4-cta-row--center">
-          <a href="#how" class="v4-btn v4-btn--outline">See how it works</a>
-          <a href="/auth/register" class="v4-btn v4-btn--primary plausible-event-name=Signup+Click">Build your first decision process</a>
+          <a href="#demos" class="v4-btn v4-btn--primary">Get started</a>
         </div>
-        <div class="v4-pills">
-          <span>Works with</span>
-          <span class="v4-pill">Claude</span>
-          <span class="v4-pill">ChatGPT</span>
-          <a class="v4-pill" href="/builders">Agent workflows over MCP</a>
+        <div class="v4-works">
+          <p class="v4-works-line">
+            <span class="v4-works-label">Works with any MCP client, like</span>
+            <span class="v4-works-brand"><svg class="v4-works-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#cc785c" d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>Claude</span>
+            <span class="v4-works-brand"><svg class="v4-works-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#111" d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>ChatGPT</span>
+          </p>
+          <p class="v4-works-line">
+            <span class="v4-works-label">Works with any MCP-enabled workflow framework, like</span>
+            <span class="v4-works-brand"><svg class="v4-works-icon" viewBox="0 0 24 24" aria-hidden="true"><g fill="#FF4F00"><rect x="10.35" y="1.5" width="3.3" height="21" rx="1.65"/><rect x="10.35" y="1.5" width="3.3" height="21" rx="1.65" transform="rotate(45 12 12)"/><rect x="10.35" y="1.5" width="3.3" height="21" rx="1.65" transform="rotate(90 12 12)"/><rect x="10.35" y="1.5" width="3.3" height="21" rx="1.65" transform="rotate(135 12 12)"/></g></svg>Zapier</span>
+            <span class="v4-works-brand"><svg class="v4-works-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#EA4B71" d="M21.4737 5.6842c-1.1772 0-2.1663.8051-2.4468 1.8947h-2.8955c-1.235 0-2.289.893-2.492 2.111l-.1038.623a1.263 1.263 0 0 1-1.246 1.0555H11.289c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947s-2.1663.8051-2.4467 1.8947H4.973c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947C1.1311 9.4737 0 10.6047 0 12s1.131 2.5263 2.5263 2.5263c1.1772 0 2.1663-.8051 2.4468-1.8947h1.4223c.2804 1.0896 1.2696 1.8947 2.4467 1.8947 1.1772 0 2.1663-.8051 2.4468-1.8947h1.0008a1.263 1.263 0 0 1 1.2459 1.0555l.1038.623c.203 1.218 1.257 2.111 2.492 2.111h.3692c.2804 1.0895 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263c-1.1772 0-2.1664.805-2.4468 1.8947h-.3692a1.263 1.263 0 0 1-1.246-1.0555l-.1037-.623A2.52 2.52 0 0 0 13.9607 12a2.52 2.52 0 0 0 .821-1.4794l.1038-.623a1.263 1.263 0 0 1 1.2459-1.0555h2.8955c.2805 1.0896 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263m0 1.2632a1.263 1.263 0 0 1 1.2631 1.2631 1.263 1.263 0 0 1-1.2631 1.2632 1.263 1.263 0 0 1-1.2632-1.2632 1.263 1.263 0 0 1 1.2632-1.2631M2.5263 10.7368A1.263 1.263 0 0 1 3.7895 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 1.2632 12a1.263 1.263 0 0 1 1.2631-1.2632m6.3158 0A1.263 1.263 0 0 1 10.1053 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 7.579 12a1.263 1.263 0 0 1 1.2632-1.2632m10.1053 3.7895a1.263 1.263 0 0 1 1.2631 1.2632 1.263 1.263 0 0 1-1.2631 1.2631 1.263 1.263 0 0 1-1.2632-1.2631 1.263 1.263 0 0 1 1.2632-1.2632"/></svg>n8n</span>
+            <span class="v4-works-brand"><svg class="v4-works-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#1C3C3C" d="M5 19H10A5 5 0 115 14ZM19 14A5 5 0 1114 19H19ZM10 5A5 5 0 105 10V5ZM19 5V10A5 5 0 1014 5Z"/></svg><a href="/docs/langgraph">LangGraph</a></span>
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="how" class="v4-section v4-section--white" aria-labelledby="v4-how-h">
-      <div class="v4-wrap v4-stack">
-        <h2 id="v4-how-h" class="v4-h2" style="text-align:center; max-width: 900px; margin: 0 auto;">Your AI already has language, knowledge, and tools. <span class="v4-accent-navy">SMEme gives it reason.</span></h2>
-        <div class="v4-flow">
-          <div class="v4-card">
-            <span class="v4-card-label">Your AI</span>
-            <strong class="v4-card-title">Understands language, documents, context, and tools</strong>
-            <p class="v4-card-text">Reads the email thread, the intake form, and the CRM record.</p>
-          </div>
-          <div class="v4-arrow" aria-hidden="true"><span class="v4-arrow-h">&rarr;</span><span class="v4-arrow-v">&darr;</span></div>
-          <div class="v4-card v4-card--smeme">
-            <span class="v4-card-label">SMEme</span>
-            <strong class="v4-card-title">Reasons over an approved decision procedure</strong>
-            <p class="v4-card-text">Applies your firm&rsquo;s Client Acceptance procedure to the facts.</p>
-          </div>
-          <div class="v4-arrow" aria-hidden="true"><span class="v4-arrow-h">&rarr;</span><span class="v4-arrow-v">&darr;</span></div>
-          <div class="v4-card">
-            <span class="v4-card-label">Your workflow</span>
-            <strong class="v4-card-title">Gets a deterministic, explainable result</strong>
-            <p class="v4-card-text">Accept with escalation, plus the facts that decided it.</p>
-          </div>
-        </div>
-        <p class="v4-prose" style="text-align:center; margin: 0 auto;">A clear division of labor: the language model handles the messy, open-ended part. SMEme handles the part that has to follow your logic.</p>
-      </div>
-    </section>
-
-    <section id="engine" class="v4-section v4-section--dark" aria-labelledby="v4-engine-h">
+    <section id="demos" class="v4-section v4-section--white" aria-labelledby="v4-demos-h">
       <div class="v4-wrap v4-stack">
         <div class="v4-head v4-head--center">
-          <h2 id="v4-engine-h" class="v4-h2">A decision tree is the interface.<br><span class="v4-accent-lite">A constraint solver is the engine.</span></h2>
-          <p class="v4-sub">You read and approve a simple tree. SMEme compiles it into constraints, so it can answer questions a flowchart can&rsquo;t.</p>
+          <h2 id="v4-demos-h" class="v4-h2">See it work, end to end.</h2>
+          <p class="v4-sub">Build a decision tree with the AI you already use, then run it on a real case.</p>
         </div>
-        <div class="v4-flow">
-          <div class="v4-panel v4-panel--flex">
-            <span class="v4-panel-label">What you read and approve</span>
-            <ol class="v4-tree">
-              <li>Conflict with an existing client? <span>Yes &rarr; Decline</span></li>
-              <li>Budget meets our minimum? <span>No &rarr; Decline</span></li>
-              <li>Scope within core services? <span>Yes &rarr; Accept &middot; No &rarr; Accept with escalation</span></li>
-            </ol>
-          </div>
-          <div class="v4-arrow v4-arrow--label" aria-hidden="true"><span class="v4-arrow-h">compiles to &rarr;</span><span class="v4-arrow-v">compiles to &darr;</span></div>
-          <div class="v4-panel v4-panel--flex">
-            <span class="v4-panel-label">What SMEme reasons over</span>
-            <div class="v4-code">decline  &hArr;  conflict &or; &not;budget_ok
-accept   &hArr;  &not;conflict &and; budget_ok
-escalate &hArr;  accept &and; &not;core_scope</div>
-            <span class="v4-panel-note">Illustrative notation</span>
-          </div>
-        </div>
-        <div class="v4-grid v4-grid--260">
-          <div class="v4-qcard"><span class="v4-qnum">01</span><strong>What follows?</strong><span>Every conclusion the facts so far establish, and every one they rule out.</span></div>
-          <div class="v4-qcard"><span class="v4-qnum">02</span><strong>What remains unresolved?</strong><span>The open questions, and whether answering them could change anything.</span></div>
-          <div class="v4-qcard"><span class="v4-qnum">03</span><strong>Which facts determined the result?</strong><span>The smallest set of facts that forces the conclusion.</span></div>
-          <div class="v4-qcard"><span class="v4-qnum">04</span><strong>What would need to change?</strong><span>The facts that would produce a different outcome.</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="example" class="v4-section" aria-labelledby="v4-example-h">
-      <div class="v4-wrap v4-stack">
-        <div class="v4-head">
-          <p class="v4-kicker" style="margin:0">Example &middot; Client acceptance</p>
-          <h2 id="v4-example-h" class="v4-h2 v4-h2--md">Should the agency take this client?</h2>
-        </div>
-        <div class="v4-split">
-          <div class="v4-split-main">
-            <figure class="v4-video">
+        <div class="v4-demos-grid">
+          <div class="v4-demo" id="demo-build">
+            <h3 class="v4-demo-h">Build a decision tree</h3>
+            <figure class="v4-video v4-video--bordered">
               <span class="v4-play"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M7 4v16l13-8z" fill="#0B1630" stroke="#0B1630" stroke-width="2" stroke-linejoin="round"></path></svg></span>
               <span class="v4-video-label">Demo coming soon</span>
-              <figcaption>A real run: client acceptance in Claude</figcaption>
+              <figcaption>Build your first decision process</figcaption>
             </figure>
-            <ol class="v4-steps">
-              <li><span class="v4-step-num">1</span><span><strong>An agency asks Claude</strong><span>&ldquo;Should we accept this new client?&rdquo;</span></span></li>
-              <li><span class="v4-step-num">2</span><span><strong>Claude gathers the information</strong><span>From the email thread, the intake form, and the client list.</span></span></li>
-              <li><span class="v4-step-num v4-step-num--on">3</span><span><strong>SMEme applies the firm&rsquo;s approved procedure</strong><span>Client Acceptance &middot; v4 &middot; approved.</span></span></li>
+            <p class="v4-free"><strong>Free to start. No credit card.</strong> <span>The free tier includes 3 decision trees. Upgrade to Pro later if you need more. <a href="/pricing">See pricing</a></span></p>
+            <p class="v4-demo-lead">Three prompts. Paste each one into Claude or ChatGPT and let it lead.</p>
+            <ol class="v4-steps v4-steps--compact v4-steps--prompts">
+              <li><span class="v4-step-num">1</span><span><strong>Connect SMEme</strong><span>Your chatbot finds the connector instructions and walks you through them. A sign-in tab opens; sign in and come back.</span>
+                <figure class="v4-prompt">
+                  <figcaption><span>Paste</span><button type="button" class="v4-copy" data-docs-copy="lp-prompt-connect">Copy</button></figcaption>
+                  <pre id="lp-prompt-connect">Connect me to SMEme over MCP. The instructions are at smeme.ai. Walk me through adding it as a connector in this app, step by step. When the sign-in tab opens I'll sign in and come back. Then confirm you can see SMEme's tools.</pre>
+                </figure>
+              </span></li>
+              <li><span class="v4-step-num">2</span><span><strong>Choose and build</strong><span>Name a decision you sign off on repeatedly. Your agent drafts the tree and stops for your approval: the outcomes, the questions, then the full outline.</span>
+                <figure class="v4-prompt">
+                  <figcaption><span>Paste</span><button type="button" class="v4-copy" data-docs-copy="lp-prompt-build">Copy</button></figcaption>
+                  <pre id="lp-prompt-build">Build a SMEme decision tree for a decision I sign off on repeatedly: [name it, e.g. approving a new vendor]. Load SMEme's design guidance and follow it. Interview me, then stop for my approval three times: the outcomes, the questions, then the full outline. Ask me where the answer to each question comes from. When I approve, save it as a draft and tell me how to Deploy it.</pre>
+                </figure>
+              </span></li>
+              <li><span class="v4-step-num">3</span><span><strong>Deploy, List, and try it</strong><span>Deploy the draft, switch Listed on, then start a <em>new chat</em> and run it on a case where you already know the answer.</span>
+                <figure class="v4-prompt">
+                  <figcaption><span>Paste</span><button type="button" class="v4-copy" data-docs-copy="lp-prompt-deploy">Copy</button></figcaption>
+                  <pre id="lp-prompt-deploy">My SMEme draft is saved. Walk me through Deploy and switching Listed on in the SMEme editor, step by step.</pre>
+                </figure>
+                <span class="v4-prompt-next">Then start a new chat and run it. The prompt is under <a href="#demo-run">Run a decision tree</a>.</span>
+              </span></li>
             </ol>
+            <p class="v4-note" style="margin:0">Longer prompts, including one that finds the decision for you, in the <a href="/docs/quick-start">full quick start</a>.</p>
           </div>
-          <div class="v4-split-side">
-            <div class="v4-result">
-              <div class="v4-result-head"><span>SMEme &middot; Client Acceptance v4</span><span class="v4-tag">Illustrative</span></div>
-              <dl>
-                <div><dt>Decision</dt><dd class="v4-result-decision">Accept with escalation</dd></div>
-                <div><dt>Why</dt><dd>No conflict with an existing client and the budget meets the minimum, so the client can be accepted. The scope is outside core services, so it needs escalation.</dd></div>
-                <div><dt>Missing</dt><dd>Payment terms are not yet verified. <span class="v4-soft">Unresolved, but they can&rsquo;t change this decision.</span></dd></div>
-                <div><dt>What if</dt><dd>If the work were within core services, the decision would be <strong>Accept</strong>, with no escalation.</dd></div>
-              </dl>
-            </div>
+          <div class="v4-demo" id="demo-run">
+            <h3 class="v4-demo-h">Run a decision tree</h3>
+            <figure class="v4-video v4-video--bordered">
+              <span class="v4-play"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M7 4v16l13-8z" fill="#0B1630" stroke="#0B1630" stroke-width="2" stroke-linejoin="round"></path></svg></span>
+              <span class="v4-video-label">Demo coming soon</span>
+              <figcaption>A real run: the ACME withholding matter in Claude</figcaption>
+            </figure>
+            <p class="v4-demo-lead">You ask in plain language. Your agent picks the SMEme tool. The examples use the ACME withholding matter; swap in your own.</p>
+            <ol class="v4-steps v4-steps--compact v4-steps--prompts">
+              <li><span class="v4-step-num">1</span><span><strong>See what&rsquo;s deployed</strong>
+                <figure class="v4-prompt">
+                  <figcaption><span>Ask</span><code>smeme_reasoning_list</code><button type="button" class="v4-copy" data-docs-copy="lp-prompt-list">Copy</button></figcaption>
+                  <pre id="lp-prompt-list">Which SMEme decision trees do I have deployed? Give me the name and a one-line description of each.</pre>
+                </figure>
+              </span></li>
+              <li><span class="v4-step-num">2</span><span><strong>Run a case</strong><span>Your agent gathers the evidence from your documents and tools, admits one sourced answer at a time, and returns the report.</span>
+                <figure class="v4-prompt">
+                  <figcaption><span>Ask</span><code>smeme_reasoning_evaluate</code><button type="button" class="v4-copy" data-docs-copy="lp-prompt-try">Copy</button></figcaption>
+                  <pre id="lp-prompt-try">Run my [cross-border withholding] SMEme decision tree on this case: [the ACME royalty to Party D; the agreement and W-8BEN-E are attached]. Gather the evidence, cite where each answer came from, and ask me when you can't find one. Then tell me the outcome and which answers decided it.</pre>
+                </figure>
+              </span></li>
+              <li><span class="v4-step-num">3</span><span><strong>Ask what-if</strong>
+                <figure class="v4-prompt">
+                  <figcaption><span>Ask</span><code>smeme_reasoning_what_if</code><button type="button" class="v4-copy" data-docs-copy="lp-prompt-whatif">Copy</button></figcaption>
+                  <pre id="lp-prompt-whatif">Same case, but suppose [Party D's W-8BEN-E had expired before the payment date]. Does the outcome change? Show me what's different from the baseline.</pre>
+                </figure>
+              </span></li>
+              <li><span class="v4-step-num">4</span><span><strong>Ask how to get a different outcome</strong>
+                <figure class="v4-prompt">
+                  <figcaption><span>Ask</span><code>smeme_reasoning_how_to_reach</code><button type="button" class="v4-copy" data-docs-copy="lp-prompt-reach">Copy</button></figcaption>
+                  <pre id="lp-prompt-reach">What's the smallest change in the facts that would get this matter to [the reduced treaty rate]? List each fact that would have to change and what evidence would support it.</pre>
+                </figure>
+              </span></li>
+            </ol>
+            <p class="v4-note" style="margin:0">Fictional matter. The tool names are what your agent calls behind the scenes. More detail in the <a href="/docs/mcp">full MCP docs</a>.</p>
           </div>
         </div>
       </div>
@@ -281,6 +308,27 @@ escalate &hArr;  accept &and; &not;core_scope</div>
         </div>
 
         <div class="v4-cases-grid">
+          <div class="v4-cases-col">
+            <h3>Licensed professionals</h3>
+            <article class="v4-case">
+              {{ apps(["Salesforce", "OneDrive", "Outlook"]) }}
+              <h4>Decide the withholding</h4>
+              <blockquote>&ldquo;Run my cross-border withholding <strong>decision tree</strong> on the Party D royalty. It is in Salesforce as matter 123. Read the agreement and the W-8BEN-E in OneDrive, the intake memo, and the Outlook mail.&rdquo;</blockquote>
+              <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>Withhold at treaty rate</strong> &middot; 9 decisive facts, each sourced</div>
+            </article>
+            <article class="v4-case">
+              {{ apps(["athenahealth", "Google Drive", "Gmail"]) }}
+              <h4>Check medical necessity</h4>
+              <blockquote>&ldquo;Run my medical necessity <strong>decision tree</strong> on this order. Read the chart in athenahealth, the clinical note in Google Drive, and the payer policy in Gmail.&rdquo;</blockquote>
+              <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>Escalate for review</strong> &middot; 1 open question that can&rsquo;t change it</div>
+            </article>
+            <article class="v4-case">
+              {{ apps(["Salesforce", "Google Drive", "Gmail"]) }}
+              <h4>Review the recommendation</h4>
+              <blockquote>&ldquo;Run my suitability <strong>decision tree</strong> on this recommendation. Read the Salesforce client profile, the product disclosure in Google Drive, and the compliance note in Gmail.&rdquo;</blockquote>
+              <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>Escalate to compliance</strong> &middot; 2 decisive facts</div>
+            </article>
+          </div>
           <div class="v4-cases-col">
             <h3>Client work</h3>
             <article class="v4-case">
@@ -311,16 +359,16 @@ escalate &hArr;  accept &and; &not;core_scope</div>
           <div class="v4-cases-col">
             <h3>Engineering &amp; security</h3>
             <article class="v4-case">
+              {{ apps(["Splunk", "Sentinel", "Teams"]) }}
+              <h4>Escalate the alert</h4>
+              <blockquote>&ldquo;Run my alert triage <strong>decision tree</strong> on this incident. Pull the alerts from Splunk and the sign-in history from Sentinel, and check the Teams channel for a change that explains it.&rdquo;</blockquote>
+              <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>Escalate</strong> &middot; 2 decisive facts</div>
+            </article>
+            <article class="v4-case">
               {{ apps(["GitHub", "Slack"]) }}
               <h4>Ship the change</h4>
               <blockquote>&ldquo;Run my release <strong>decision tree</strong> on this pull request. Read the diff, the linked issues, and what we said in Slack.&rdquo;</blockquote>
               <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>Hold for review</strong> &middot; 1 decisive fact</div>
-            </article>
-            <article class="v4-case">
-              {{ apps(["Linear", "Gmail", "Google Chat"]) }}
-              <h4>Triage the issue</h4>
-              <blockquote>&ldquo;Run my triage <strong>decision tree</strong> on this issue. Read the issue, the customer Gmail, and the Google Chat thread.&rdquo;</blockquote>
-              <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>Escalate to on-call</strong> &middot; 2 decisive facts</div>
             </article>
             <article class="v4-case">
               {{ apps(["Notion", "Atlassian"]) }}
@@ -328,123 +376,11 @@ escalate &hArr;  accept &and; &not;core_scope</div>
               <blockquote>&ldquo;Run my scope <strong>decision tree</strong> on this request. Read the spec and the related project work.&rdquo;</blockquote>
               <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>In scope</strong> &middot; 2 decisive facts</div>
             </article>
-            <article class="v4-case">
-              {{ apps(["Sentinel", "Teams"]) }}
-              <h4>Escalate the alert</h4>
-              <blockquote>&ldquo;Run my alert triage <strong>decision tree</strong> on this incident. Pull the alerts and sign in history from Sentinel, and check the Teams channel for a change that explains it.&rdquo;</blockquote>
-              <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>Escalate</strong> &middot; 2 decisive facts</div>
-            </article>
-          </div>
-          <div class="v4-cases-col">
-            <h3>Licensed professionals</h3>
-            <article class="v4-case">
-              {{ apps(["Salesforce", "OneDrive", "Outlook"]) }}
-              <h4>Decide the withholding</h4>
-              <blockquote>&ldquo;Run my cross border tax withholding <strong>decision tree</strong> on the ACME matter, the sale of asset X to party D. It is in Salesforce as matter 123. Read the project files in OneDrive, the intake memo, and the Outlook mail.&rdquo;</blockquote>
-              <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>Withholding applies</strong> &middot; 3 decisive facts &middot; 1 open question</div>
-            </article>
-            <article class="v4-case">
-              {{ apps(["athenahealth", "Google Drive", "Gmail"]) }}
-              <h4>Check medical necessity</h4>
-              <blockquote>&ldquo;Run my medical necessity <strong>decision tree</strong> on this order. Read the chart in athenahealth, the clinical note in Google Drive, and the payer policy in Gmail.&rdquo;</blockquote>
-              <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>Meets criteria</strong> &middot; 1 open question that can&rsquo;t change it</div>
-            </article>
-            <article class="v4-case">
-              {{ apps(["Salesforce", "Google Drive", "Gmail"]) }}
-              <h4>Review the recommendation</h4>
-              <blockquote>&ldquo;Run my suitability <strong>decision tree</strong> on this recommendation. Read the Salesforce client profile, the product disclosure in Google Drive, and the compliance note in Gmail.&rdquo;</blockquote>
-              <div class="v4-case-outcome"><span aria-hidden="true">&rarr; </span><strong>Escalate to compliance</strong> &middot; 2 decisive facts</div>
-            </article>
           </div>
         </div>
         <div class="v4-cases-foot">
-          <span class="v4-note">Outcomes shown are illustrative.</span>
+          <span class="v4-note">Fictional examples. Incomplete procedures. Not professional advice.</span>
           <a href="/docs/quick-start" class="v4-note" style="font-size:0.9375rem">Build your own in the quick start</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="why" class="v4-section" aria-labelledby="v4-why-h">
-      <div class="v4-wrap v4-stack">
-        <h2 id="v4-why-h" class="v4-h2 v4-h2--md">Why it matters</h2>
-        <div class="v4-grid v4-grid--320">
-          <div class="v4-card v4-card--white v4-card--why"><strong class="v4-card-title">More capable AI</strong><p class="v4-card-text">Give your existing assistant formal reasoning it doesn&rsquo;t have on its own.</p></div>
-          <div class="v4-card v4-card--white v4-card--why"><strong class="v4-card-title">Approved reasoning</strong><p class="v4-card-text">Keep important business logic explicit, inspectable, and maintainable.</p></div>
-          <div class="v4-card v4-card--white v4-card--why"><strong class="v4-card-title">Deterministic decisions</strong><p class="v4-card-text">Same admitted facts and approved procedure &rarr; same logical consequences.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="tech" class="v4-section v4-section--white" aria-labelledby="v4-tech-h">
-      <div class="v4-wrap v4-stack">
-        <div class="v4-head">
-          <p class="v4-kicker" style="margin:0">The technology</p>
-          <h2 id="v4-tech-h" class="v4-h2 v4-h2--md">Natural language at the edges. Symbolic reasoning at the core.</h2>
-          <p class="v4-prose">SMEme is neurosymbolic: language models handle what they&rsquo;re good at, understanding people and documents, while a symbolic constraint solver handles the logic. Your procedure is written in plain language, compiled into formal constraints, and served over MCP to whatever AI you use.</p>
-        </div>
-        <div class="v4-pipeline">
-          <span class="v4-chip">Natural-language decision procedure</span>
-          <span class="v4-arrow" aria-hidden="true">&rarr;</span>
-          <span class="v4-chip v4-chip--navy">Formal constraints</span>
-          <span class="v4-arrow" aria-hidden="true">&rarr;</span>
-          <span class="v4-chip v4-chip--navy">Solver</span>
-          <span class="v4-arrow" aria-hidden="true">&rarr;</span>
-          <span class="v4-chip">MCP</span>
-          <span class="v4-arrow" aria-hidden="true">&rarr;</span>
-          <span class="v4-chip">Claude / ChatGPT / agent workflow</span>
-        </div>
-        <div class="v4-legend">
-          <span><span class="v4-swatch" aria-hidden="true"></span>Natural language</span>
-          <span><span class="v4-swatch v4-swatch--navy" aria-hidden="true"></span>Symbolic reasoning</span>
-          <a href="/how-it-works" style="font-weight:500">Read the technical overview</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="faq" class="v4-section" aria-labelledby="v4-faq-h">
-      <div class="v4-wrap v4-stack v4-center">
-        <h2 id="v4-faq-h" class="v4-h2 v4-h2--md">Questions</h2>
-        <div class="v4-faq">
-          <details>
-            <summary>What is SMEme?</summary>
-            <p>SMEme connects to the chatbot you already use. You authorize a decision tree. SMEme compiles that tree and a constraint solver determines what follows.</p>
-          </details>
-          <details>
-            <summary>What is a decision tree?</summary>
-            <p>The procedure you can read. Questions, branches, and outcomes, in plain language. You see the tree. SMEme compiles the authorized tree into an intermediate representation and reasons over it as boolean constraints.</p>
-          </details>
-          <details>
-            <summary>Do I need to be technical?</summary>
-            <p>You don&rsquo;t have to know how to explain it. You only have to recognize when a draft is right, wrong, or incomplete. No coding, no special syntax, and no knowledge engineers.</p>
-          </details>
-          <details>
-            <summary>What are constraints and evidence?</summary>
-            <p>Constraints are the rules a decision must satisfy, such as your policies, the law, and your own judgment. After you deploy the tree, SMEme applies those rules as written. Evidence is context that has been used to answer a question in your decision tree, with its source attached. Your data stays in the apps you already use.</p>
-          </details>
-          <details>
-            <summary>Why not just ask the chatbot?</summary>
-            <p>A chatbot goes from context to an answer. SMEme puts evidence in the middle and constraints in charge. The reasoning follows the tree you deployed. The facts stay visible. If the evidence conflicts or is incomplete, the answer stays unresolved.</p>
-          </details>
-          <details>
-            <summary>What happens after I build a tree?</summary>
-            <p>You authorize in the editor by choosing Deploy. That saves the version SMEme will reason over. Then set it to Listed, which means it shows up among the SMEme tools in your chat.</p>
-          </details>
-          <details>
-            <summary>Where does my data go?</summary>
-            <p>Your files stay in the apps you already use. The chatbot turns context from those apps into evidence for a question in the tree. The tree does not keep the matter files.</p>
-          </details>
-          <details>
-            <summary>Can I share a tree?</summary>
-            <p>You can download your decision tree. It stays on your account. Giving another account its own copy is not available yet.</p>
-          </details>
-          <details>
-            <summary>What does it cost?</summary>
-            <p>Hosted Free includes 3 decision trees and 150 MCP calls. Deleting a tree frees a slot. It does not add calls. <a href="/pricing">See pricing</a> for Pro.</p>
-          </details>
-          <details>
-            <summary>Can developers build with SMEme?</summary>
-            <p>Yes. SMEme is a hosted MCP service. Start with the <a href="/builders">builders page</a> and the <a href="/docs/mcp">MCP docs</a>.</p>
-          </details>
         </div>
       </div>
     </section>
@@ -452,29 +388,15 @@ escalate &hArr;  accept &and; &not;core_scope</div>
     <section id="mission" class="v4-section v4-section--white" aria-labelledby="v4-mission-h">
       <div class="v4-wrap">
         <div class="v4-mission">
-          <h2 id="v4-mission-h" class="v4-h2 v4-h2--sm">Our mission is to make AI increase human agency.</h2>
-          <p>AI should expand judgment you can stand behind, not bury consequential decisions in model weights. You write and authorize the decision tree. SMEme reasons over it. Every tree is yours to download, share, and delete. Read our <a href="/legal/principles">Sovereignty and AI Principles</a> and <a href="/legal/privacy">Privacy Policy</a>.</p>
+          <h2 id="v4-mission-h" class="v4-h2 v4-h2--sm">A reasoned cause is how you keep agency.</h2>
+          <p>A decision is yours when you can say why you made it. Rationality is not a personality trait of a model or a promise that an answer sounds right. It is an act of autonomy: a reasoned cause you can examine, question, and choose to act on. Without that cause, you are accepting an output, not exercising agency.</p>
+          <p>SMEme puts the reason outside the model. You design and authorize a readable decision tree; your AI gathers the facts; and SMEme determines what follows from the procedure you approved. The model proposes, you authorize, and the solver decides what the admitted facts entail. The result is a decision you can inspect, challenge, and stand behind. This is the idea behind our <a href="/legal/principles">Sovereignty and AI Principles</a>. The decision tree is yours to download, copy, and delete as you see fit. See our <a href="/legal/privacy">Privacy Policy</a>.</p>
         </div>
-      </div>
-    </section>
-
-    <section id="start" class="v4-section v4-section--navy" aria-labelledby="v4-start-h">
-      <div class="v4-wrap v4-wrap--narrow v4-stack v4-center" style="gap: 1.375rem;">
-        <h2 id="v4-start-h" class="v4-h2">Start with one decision your business makes repeatedly.</h2>
-        <div class="v4-close-steps">
-          <span>Capture the procedure.</span><span>Approve it.</span><span>Connect it to your AI.</span><strong>See what follows.</strong>
-        </div>
-        <figure class="v4-video v4-video--bordered" style="width:100%; max-width:760px;">
-          <span class="v4-play"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M7 4v16l13-8z" fill="#002868" stroke="#002868" stroke-width="2" stroke-linejoin="round"></path></svg></span>
-          <span class="v4-video-label">Demo coming soon</span>
-          <figcaption>Build your first decision process</figcaption>
-        </figure>
-        <a href="/auth/register" class="v4-btn v4-btn--white plausible-event-name=Signup+Click" style="margin-top:0.5rem">Build your first decision process</a>
-        <p class="v4-close-note">Free tier with 3 decision trees and 150 MCP calls. No credit card. Or follow the <a href="/docs/quick-start" style="text-decoration:underline">quick start</a> from your chatbot.</p>
       </div>
     </section>
   </div>
 
   {% include "landing/_v4_footer.html" %}
 </div>
+<script src="/static/js/docs-copy.js"></script>
 {% endblock %}
