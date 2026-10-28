@@ -76,6 +76,8 @@
             Copy the connect prompt into your chatbot. It walks you through adding SMEme in the app&rsquo;s settings,
             using the values below. In ChatGPT, Claude, and Microsoft Copilot you click through the settings yourself.
             Coding agents such as Cursor and Claude Code can usually add the connector for you.
+            Step-by-step instructions for each app are in
+            <a href="/docs/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Connect your agent</a>.
           </p>
           <div class="mb-4">
             {% include "docs/_docs_connector_values.html" %}
@@ -229,6 +231,8 @@ Rank them by value and recommend one. When I pick one, build it as a SMEme decis
           {%- set prompt_text -%}
 Run my [decision tree name] SMEme decision tree on this case: [describe it, or attach the file].
 
+First list the other apps and connectors you can already read. Then use the sources I name: [attached files / my mailbox / this drive / our CRM].
+
 Gather the evidence for each question using the hints in the tree, and cite where each answer came from. Ask me when you can't find an answer. Then tell me the outcome and which answers decided it.
           {%- endset %}
           {% include "docs/_docs_prompt.html" %}
@@ -236,8 +240,9 @@ Gather the evidence for each question using the hints in the tree, and cite wher
 
         <p class="text-sm text-ui-ink-secondary leading-relaxed">
           <span class="font-medium text-ui-ink">Next:</span>
-          <a href="/docs/run-a-tree" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Run a tree →</a>.
-          After a run, <a href="/docs/ask-more" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Ask more</a>
+          <a href="/docs/run-a-tree" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Run a tree →</a>
+          shows how to point your agent at the right sources and how a run proceeds. After a run,
+          <a href="/docs/ask-more" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Ask more</a>
           shows how to find out which facts decided the outcome and what would change it.
         </p>
       </div>

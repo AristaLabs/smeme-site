@@ -39,21 +39,34 @@
         The tree must be <strong class="font-medium">Deployed</strong> and <strong class="font-medium">Listed</strong>.
         Run it in a <strong class="font-medium">new chat</strong>, not the one where you built it. An agent that has seen
         the tree&rsquo;s branches can be drawn toward the outcome it expects. A new chat sees only each question and its options.
+        Your agent finds the tree by its name, so name each tree for what it decides, such as &ldquo;Foreign national
+        property tax analysis,&rdquo; not &ldquo;Tree 3.&rdquo;
       {% endcall %}
 
       <div class="space-y-10">
         <section aria-labelledby="context-heading">
-          <h2 id="context-heading" class="text-base font-semibold text-ui-ink mb-3">Put the case where your agent can reach it</h2>
-          <p class="text-sm text-ui-ink-secondary leading-relaxed mb-4 max-w-prose">
-            Attach the files, point to a folder, or name the connected apps that hold the facts, such as email, a CRM,
-            or a shared drive. SMEme doesn&rsquo;t store your files. Your agent reads them and sends each answer with a
-            short reference to where it found it.
-          </p>
+          <h2 id="context-heading" class="text-base font-semibold text-ui-ink mb-3">Name the sources</h2>
+          <div class="space-y-3 text-sm text-ui-ink-secondary leading-relaxed mb-4 max-w-prose">
+            <p>
+              SMEme doesn&rsquo;t store your files and doesn&rsquo;t read your apps. Your agent does the reading, and it
+              can only look where it has access. That is its files, plus whatever its other connectors reach: email, a
+              shared drive, a CRM, a ticketing system, a records system. Those are separate connectors you added to
+              your chatbot, apart from SMEme.
+            </p>
+            <p>
+              Before you run a case, decide where each kind of fact lives. Ask your agent which connectors it can
+              already read, and add the ones that hold your evidence. Then name them in the prompt. The tree&rsquo;s
+              question hints say where to look and what to avoid for each question. Your prompt says which of your
+              sources to use. For each question SMEme sends, your agent finds the answer there and sends it back with
+              a short reference to where it found it.
+            </p>
+          </div>
           {% set prompt_id = "prompt-run" %}
           {% set prompt_label = "Run prompt" %}
           {%- set prompt_text -%}
 Run my [decision tree name] SMEme decision tree on this case: [one line describing the case].
-The evidence is in [the attached files / this folder / these connected apps].
+
+First list the other apps and connectors you can already read. Then use the sources I name: [the attached files / this folder / these connected apps]. Don't look anywhere else.
 
 For each question SMEme asks, follow the hints on that question about where to look and what to avoid. Cite where each answer came from. If the evidence is missing or unclear, ask me. If I don't know either, leave it unanswered rather than guess. If two sources disagree, show me both before you answer.
 
@@ -62,9 +75,81 @@ When SMEme returns the report, tell me the outcome, the path that led there, and
           {% include "docs/_docs_prompt.html" %}
         </section>
 
+        <section aria-labelledby="standing-heading">
+          <h2 id="standing-heading" class="text-base font-semibold text-ui-ink mb-3">Set up your chat once</h2>
+          <p class="text-sm text-ui-ink-secondary leading-relaxed mb-4 max-w-prose">
+            If you run the same kind of case again and again, don&rsquo;t re-explain your sources every time. Put them in
+            your chat app&rsquo;s project or custom instructions, if it has them, and keep a short run prompt for each
+            tree with your sources already filled in. The agent then starts every run knowing where facts live, what to
+            avoid, and when to ask you.
+          </p>
+          {% set prompt_id = "prompt-standing" %}
+          {% set prompt_label = "Standing instructions" %}
+          {%- set prompt_text -%}
+When I ask you to run a SMEme decision tree, use these standing instructions.
+
+My sources, by kind of fact:
+- [kind of fact, e.g. contracts]: [where it lives, e.g. the Contracts folder in the shared drive]
+- [kind of fact, e.g. client history]: [where it lives, e.g. the CRM]
+- Don't use: [outdated folders, drafts, anything else to avoid]
+
+Before the first question, tell me which of these you can reach. For each question SMEme asks, follow the hints on that question, cite where each answer came from, and ask me when the evidence is missing or unclear. If I don't know either, leave the question unanswered rather than guess. If two sources disagree, show me both before you answer.
+          {%- endset %}
+          {% include "docs/_docs_prompt.html" %}
+        </section>
+
         <section aria-labelledby="chat-heading">
           <h2 id="chat-heading" class="text-base font-semibold text-ui-ink mb-3">What a run looks like</h2>
           {% include "docs/_docs_chat_mock.html" %}
+        </section>
+
+        <section aria-labelledby="modes-heading">
+          <h2 id="modes-heading" class="text-base font-semibold text-ui-ink mb-3">Two ways to answer</h2>
+          <p class="text-sm text-ui-ink-secondary leading-relaxed mb-6 max-w-prose">
+            The run prompt above uses the first way, which is the default. Use the second when you already have the
+            answers for many cases. Either way, the result is the same kind of report.
+          </p>
+
+          <div class="space-y-8">
+            <div>
+              <h3 class="text-sm font-semibold text-ui-ink">One question at a time</h3>
+              <p class="mt-1 text-sm text-ui-ink-secondary leading-relaxed max-w-prose">
+                Use this for a single case whose evidence you gather as you go. SMEme sends one question and its answer
+                options. Your agent finds the answer in your sources and sends it back with a reference to where it
+                found it. You can review the cited evidence and correct an answer. SMEme then decides which question matters next, and asks only the questions that can still change the
+                outcome. The run continues until SMEme returns a report. If your agent can&rsquo;t find an answer, it
+                can leave the question unanswered, and the report says whether the outcome is settled without it.
+              </p>
+              <p class="mt-2 text-xs text-ui-ink-muted leading-relaxed max-w-prose">
+                Behind the scenes your agent uses <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_evaluate</code>
+                and <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_evaluate_continue</code>.
+              </p>
+            </div>
+
+            <div>
+              <h3 id="batch-heading" class="text-sm font-semibold text-ui-ink">One sheet of answers</h3>
+              <p class="mt-1 mb-3 text-sm text-ui-ink-secondary leading-relaxed max-w-prose">
+                For a batch of cases, an audit, or an automated agent pipeline, your agent can send the answers it has
+                for a case to a decision tree in one call, instead of one question at a time. SMEme reasons over the
+                answers you send. Questions you leave out stay open, and the report tells you whether the outcome is
+                settled without them.
+              </p>
+              {% set prompt_id = "prompt-batch" %}
+              {% set prompt_label = "Batch prompt" %}
+              {%- set prompt_text -%}
+Load the worksheet for my [decision tree name] SMEme decision tree. For each case in [the attached files / this folder / this list], answer the questions you can from the evidence, following each question's hints on where to look and what to avoid, and cite where each answer came from. Leave a question unanswered when the evidence doesn't settle it.
+
+Send each case's answers to SMEme in one call. Then give me a table with each case, its outcome, and any questions left open.
+              {%- endset %}
+              {% include "docs/_docs_prompt.html" %}
+              <p class="mt-2 text-xs text-ui-ink-muted leading-relaxed max-w-prose">
+                Behind the scenes your agent uses <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_template_get</code>,
+                <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_validate_answers</code>,
+                and <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_evaluate_answers</code>.
+                The full list is in the <a href="/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">MCP tool reference</a>.
+              </p>
+            </div>
+          </div>
         </section>
 
         <section aria-labelledby="report-heading">
@@ -114,23 +199,6 @@ When SMEme returns the report, tell me the outcome, the path that led there, and
             When the answers settle the outcome, the run returns a report. That report notes when the
             deciding answers were not independently re-checked.
           </p>
-        </section>
-
-        <section aria-labelledby="batch-heading">
-          <h2 id="batch-heading" class="text-base font-semibold text-ui-ink mb-3">Send a batch of answers in one shot</h2>
-          <p class="text-sm text-ui-ink-secondary leading-relaxed mb-4 max-w-prose">
-            For a batch of cases, an audit, or an automated agent pipeline, your agent can send the answers it has for a
-            case to a decision tree in one call, instead of one question at a time. SMEme reasons over the answers you
-            send. Questions you leave out stay open, and the report tells you whether the outcome is settled without them.
-          </p>
-          {% set prompt_id = "prompt-batch" %}
-          {% set prompt_label = "Batch prompt" %}
-          {%- set prompt_text -%}
-Load the worksheet for my [decision tree name] SMEme decision tree. For each case in [the attached files / this folder / this list], answer the questions you can from the evidence, following each question's hints on where to look and what to avoid, and cite where each answer came from. Leave a question unanswered when the evidence doesn't settle it.
-
-Send each case's answers to SMEme in one call. Then give me a table with each case, its outcome, and any questions left open.
-          {%- endset %}
-          {% include "docs/_docs_prompt.html" %}
         </section>
 
         <p class="text-sm text-ui-ink-secondary leading-relaxed">

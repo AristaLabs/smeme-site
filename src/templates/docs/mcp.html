@@ -4,7 +4,7 @@
 {% block head %}
 {% set docs_canonical_path = "/docs/mcp" %}
 {% set docs_og_title = "Connect your agent (MCP) — Docs" %}
-{% set docs_meta_description = "Creator setup for SMEme MCP: add a connector, OAuth, build or revise drafts in chat, then run Deployed Listed decision trees against evidence. For the public tool wire reference, see /mcp." %}
+{% set docs_meta_description = "Add SMEme to your AI app over MCP: the endpoint URL, the OAuth Client ID, step-by-step setup for Claude and ChatGPT, and what to check after you sign in. For the public tool wire reference, see /mcp." %}
 {% set docs_breadcrumb_items = [{"name": "Docs", "path": "/docs"}, {"name": "Connect your agent", "path": "/docs/mcp"}] %}
 {% include "docs/_docs_seo.html" %}
 {% endblock %}
@@ -34,19 +34,18 @@
       <header class="mb-10">
         <h1 class="text-2xl font-semibold tracking-tight text-ui-ink">Connect your agent</h1>
         <p class="mt-2 text-sm text-ui-ink-secondary leading-relaxed max-w-prose">
-          Start with
-          <a href="/docs/quick-start" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Quick start</a>
-          if you want copy-paste prompts.
-          This page is the creator how-to for MCP: connect Claude, Cursor, Copilot, or another client,
-          then either <strong class="font-medium text-ui-ink">build or revise a draft in chat</strong>
-          or <strong class="font-medium text-ui-ink">run Deployed Listed decision trees against evidence</strong>.
+          This page adds the SMEme connector to your AI app: the endpoint, the sign-in, and the steps for each client.
+          Building a decision tree is in
+          <a href="/docs/quick-start" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Quick start</a>.
+          Pointing your agent at your evidence and how a run proceeds are in
+          <a href="/docs/run-a-tree" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Run a tree</a>.
           For the public wire-level tool catalog, use
           <a href="/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">/mcp</a>.
         </p>
         <nav aria-label="MCP docs sections" class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm">
-          <a href="#mcp-authoring-quickstart" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Build or revise in chat</a>
-          <a href="#install-steps-heading" class="text-ui-ink-secondary hover:text-ui-ink font-medium">Connect a client</a>
-          <a href="#tools-heading" class="text-ui-ink-secondary hover:text-ui-ink font-medium">Run deployed trees</a>
+          <a href="#install-steps-heading" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Connect a client</a>
+          <a href="#prereq-heading" class="text-ui-ink-secondary hover:text-ui-ink font-medium">Check the connection</a>
+          <a href="#mcp-authoring-quickstart" class="text-ui-ink-secondary hover:text-ui-ink font-medium">Build or revise in chat</a>
         </nav>
       </header>
 
@@ -57,70 +56,6 @@
       {% endif %}
 
       <div class="space-y-10">
-
-        {# Authoring quickstart #}
-        <section id="mcp-authoring-quickstart" aria-labelledby="mcp-authoring-quickstart-heading">
-          <h2 id="mcp-authoring-quickstart-heading" class="text-base font-semibold text-ui-ink mb-3">Build or revise a draft in chat</h2>
-          <p class="text-sm text-ui-ink-secondary leading-relaxed mb-4">
-            Your agent constructs the <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">dt_graph_json</code>
-            using SMEme&rsquo;s design guidance. SMEme <strong class="font-medium text-ui-ink">validates and saves</strong>
-            the agent-constructed graph — the MCP authoring tools do not generate the graph, and they never
-            automatically <strong class="font-medium text-ui-ink">Deploy</strong> or change
-            <strong class="font-medium text-ui-ink">Listed</strong> / <strong class="font-medium text-ui-ink">Hidden</strong>.
-          </p>
-          <ol class="space-y-3 text-sm text-ui-ink-secondary leading-relaxed list-decimal list-inside">
-            <li>
-              Call <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_authoring_design_guidance</code>
-              before drafting.
-            </li>
-            <li>
-              You and your agent agree the questions, options, branches, and conclusions.
-              The agent then constructs the <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">dt_graph_json</code>
-              from that design using SMEme&rsquo;s guidance.
-            </li>
-            <li>
-              Call <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_authoring_validate_graph</code>
-              repeatedly, fixing findings, until <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">draft_ready</code>
-              is true.
-            </li>
-            <li>
-              For a new tree, call <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_authoring_create_draft</code>
-              (strict: requires <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">draft_ready</code>).
-              To revise an existing draft, call
-              <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_authoring_get_draft</code>,
-              then <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_authoring_update_draft</code>
-              with <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">expected_graph_hash</code>.
-              Update may save an intentional intermediate graph; on
-              <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">graph_conflict</code>, re-fetch and retry.
-            </li>
-            <li>
-              Open the editor, <strong class="font-medium text-ui-ink">review</strong> the saved draft, then
-              <strong class="font-medium text-ui-ink">Deploy</strong> and choose
-              <strong class="font-medium text-ui-ink">Listed</strong> or
-              <strong class="font-medium text-ui-ink">Hidden</strong>. Review, Deploy, and Listed/Hidden are editor actions —
-              separate from MCP authoring saves.
-            </li>
-          </ol>
-        </section>
-
-        <div class="border-t border-ui-line"></div>
-
-        {# Prerequisites #}
-        <section aria-labelledby="prereq-heading">
-          <h2 id="prereq-heading" class="text-base font-semibold text-ui-ink mb-3">Before you run a deployed tree</h2>
-          <ul class="space-y-2 text-sm text-ui-ink-secondary leading-relaxed">
-            <li class="flex gap-2.5">
-              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
-              <span>OAuth has succeeded. If the first MCP call returns <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">auth_error</code>, complete the web sign-in or legal consent the message names, then reconnect once.</span>
-            </li>
-            <li class="flex gap-2.5">
-              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
-              <span>You do not need a tree of your own first. The first empty <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_list</code> creates a per-user sample (Deployed + Listed). You can also click <strong class="font-medium text-ui-ink">Load sample</strong> on the <a href="/decision-trees/dashboard" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">dashboard</a>. To run a tree you authored, <strong class="font-medium text-ui-ink">Deploy</strong> it and set <strong class="font-medium text-ui-ink">Listed</strong>. See <a href="/docs/creator-dashboard" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Deploy, list, & delete</a>.</span>
-            </li>
-          </ul>
-        </section>
-
-        <div class="border-t border-ui-line"></div>
 
         {# Installation — connector first #}
         <section aria-labelledby="install-steps-heading">
@@ -245,17 +180,10 @@
                 <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-brand-200 bg-brand-50 text-xs font-semibold text-brand-700 dark:border-brand-800 dark:bg-brand-950/40 dark:text-brand-300">2</span>
                 <h3 id="bootstrap-heading" class="text-sm font-semibold text-ui-ink">Let your agent bootstrap</h3>
               </div>
-              <p class="text-sm text-ui-ink-secondary leading-relaxed mb-3">
-                After OAuth, your agent should call tools in this order (most capable agents do this automatically):
-              </p>
-              <ol class="space-y-2 text-sm text-ui-ink-secondary leading-relaxed list-decimal list-inside">
-                <li><code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_capabilities</code> — read <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">guidance.content_digest</code> and the tool list.</li>
-                <li>If there is no cached guidance or the digest changed → <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_guidance_get</code> — cache <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">content_markdown</code> (full calling contract).</li>
-                <li><strong class="font-medium text-ui-ink">Guided (default):</strong> <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_list</code> (first empty list may create the sample; pass list <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">id</code> as <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">decision_tree_id</code>) → <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_evaluate</code> → loop <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_evaluate_continue</code> until <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">harness_next</code> is not <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">continue_evaluate</code> (a <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">report</code>).</li>
-                <li><strong class="font-medium text-ui-ink">Bulk/audit:</strong> <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_template_get</code> → <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_validate_answers</code> → <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_evaluate_answers</code>.</li>
-              </ol>
-              <p class="mt-3 text-sm text-ui-ink-muted leading-relaxed">
-                Public tool reference: <a href="/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">/mcp</a>.
+              <p class="text-sm text-ui-ink-secondary leading-relaxed">
+                After OAuth, your agent reads SMEme&rsquo;s tool list and its calling guidance on its own. There is no
+                separate package to install. The tools it calls, and the order it calls them in, are in the public
+                <a href="/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">MCP tool reference</a>.
               </p>
             </div>
 
@@ -264,182 +192,53 @@
 
         <div class="border-t border-ui-line"></div>
 
-        {# Tools #}
-        <section aria-labelledby="tools-heading">
-          <h2 id="tools-heading" class="text-base font-semibold text-ui-ink mb-3">MCP tools — run deployed trees</h2>
-          <p class="text-sm text-ui-ink-secondary leading-relaxed mb-4">
-            Your agent discovers these at connect time. Guidance tools (quota 0) bootstrap the session; the rest follow the sequence in step 2.
-            Authoring tools for building drafts are listed under
-            <a href="#mcp-authoring-quickstart" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Build or revise a draft in chat</a>.
-          </p>
-          <div class="overflow-x-auto rounded-xl border border-ui-line">
-            <table class="min-w-full border-collapse text-left text-sm">
-              <thead>
-                <tr class="border-b border-ui-line bg-ui-surface-muted">
-                  <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">Tool</th>
-                  <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted">What it does</th>
-                  <th scope="col" class="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ui-ink-muted text-center">Quota</th>
-                </tr>
-              </thead>
-              <tbody class="bg-ui-surface divide-y divide-ui-line">
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_capabilities</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Session bootstrap: service info, MCP surface version, authoritative tool list, and <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">guidance.content_digest</code>.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">0</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_guidance_check</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Cheap guidance digest probe — use only when skipping capabilities.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">0</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_guidance_get</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Full platform calling contract as markdown — cache when digest matches.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">0</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_list</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Returns your Deployed + Listed trees. Rows use <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">id</code> (pass later as <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">decision_tree_id</code>). Sample rows also include <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">sample_key: smeme_sample_v1</code>. The first empty list may create that sample (one tree slot; not read-only). Persistent empty is recovery: click <strong class="font-medium text-ui-ink">Load sample</strong> or Deploy + Listed.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">0</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_list_conclusions</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Catalog of possible outcomes — used before <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">how_to_reach</code>.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">0</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_template_check</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Lightweight worksheet drift check — does not return question bodies.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">0</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_template_get</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Authoritative per-decision-tree worksheet — question IDs, labels, and valid option strings.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">0</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_validate_answers</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Validates provenance envelope shape, refs, and consistency before bulk Apply.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">1</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_evaluate</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Guided case gather <strong>start</strong> — returns a blind task (or a terminal <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">report</code>).</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">1</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_evaluate_continue</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Guided case gather <strong>continue</strong> — admit one answer; next blind task or terminal <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">report</code> (may include <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">stop_reason</code>; branch on <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">report.result_kind</code>).</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">1</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_evaluate_answers</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Bulk Apply on a worksheet envelope; returns <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">report</code> with <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">result_kind</code>.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">1</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_what_if</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Scenario comparison: baseline vs override with structured delta.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">2</td>
-                </tr>
-                <tr>
-                  <td class="align-top px-4 py-3 font-mono text-xs text-brand-700 dark:text-brand-300 whitespace-nowrap">smeme_reasoning_how_to_reach</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">Minimal answer edits to reach a target conclusion.</td>
-                  <td class="align-top px-4 py-3 text-sm text-ui-ink-muted text-center tabular-nums">2.5</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="mt-3 text-xs text-ui-ink-muted leading-relaxed">Quota weights count against your monthly MCP tool call allowance. See <a href="/docs/plans" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Plans &amp; usage</a>.</p>
-        </section>
-
-        <div class="border-t border-ui-line"></div>
-
-        {# How to invoke #}
-        <section aria-labelledby="invoke-heading">
-          <h2 id="invoke-heading" class="text-base font-semibold text-ui-ink mb-3">Invoking a decision tree</h2>
-          <p class="text-sm text-ui-ink-secondary leading-relaxed mb-3">
-            Once connected, prompt your agent in plain language. Mention the decision tree name or describe the task:
-          </p>
-          <div class="space-y-2">
-            <div class="rounded-xl border border-ui-line bg-ui-surface-muted/60 px-4 py-3 font-mono text-sm text-ui-ink-secondary">
-              "Run the foreign national property tax decision tree on the Chen matter using the files in this project."
-            </div>
-            <div class="rounded-xl border border-ui-line bg-ui-surface-muted/60 px-4 py-3 font-mono text-sm text-ui-ink-secondary">
-              "Evaluate whether this lease qualifies as a triple-net lease."
-            </div>
-            <div class="rounded-xl border border-ui-line bg-ui-surface-muted/60 px-4 py-3 font-mono text-sm text-ui-ink-secondary">
-              "Use SMEme to determine eligibility and then draft the client letter."
-            </div>
-          </div>
-          <p class="mt-3 text-sm text-ui-ink-muted leading-relaxed">
-            Your agent should: bootstrap guidance → list decision trees (the first empty list may seed the sample) → guided <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">evaluate</code> / <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">evaluate_continue</code> until a report (or, for bulk/audit: worksheet → validate → <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">evaluate_answers</code>). To get a first report without an LLM, see Core <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">examples/smeme_apply_sample.py</code>.
-          </p>
-        </section>
-
-        <div class="border-t border-ui-line"></div>
-
-        {# Tips #}
-        <section aria-labelledby="tips-heading">
-          <h2 id="tips-heading" class="text-base font-semibold text-ui-ink mb-4">Tips</h2>
-          <ul class="space-y-4 text-sm text-ui-ink-secondary leading-relaxed">
-            <li>
-              <strong class="font-medium text-ui-ink">Try the sample first.</strong>
-              Click <strong class="font-medium text-ui-ink">Load sample</strong> on the dashboard, or let the first empty MCP list create it. It is a sanitized walkthrough owned by you — not legal, tax, or other expert advice — and it uses one decision-tree slot.
+        {# Prerequisites #}
+        <section aria-labelledby="prereq-heading">
+          <h2 id="prereq-heading" class="text-base font-semibold text-ui-ink mb-3">Check the connection</h2>
+          <ul class="space-y-2 text-sm text-ui-ink-secondary leading-relaxed">
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <span>If your chatbot can&rsquo;t see SMEme tools, start a new conversation. Most apps load connectors only when a chat starts.</span>
             </li>
-            <li>
-              <strong class="font-medium text-ui-ink">Connector first.</strong>
-              URL + OAuth Client ID + OAuth connects SMEme. After OAuth, your agent loads the calling contract via <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_guidance_get</code> — there is no separate install package.
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <span>OAuth has succeeded. If the first MCP call returns <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">auth_error</code>, complete the web sign-in or legal consent the message names, then reconnect once.</span>
             </li>
-            <li>
-              <strong class="font-medium text-ui-ink">Name decision trees clearly.</strong>
-              The name is how your agent finds the right tool — e.g. "Foreign national property tax analysis" rather than "DecisionTree 3".
-            </li>
-            <li>
-              <strong class="font-medium text-ui-ink">Redeploy after edits.</strong>
-              Changes saved in the editor don't take effect until you redeploy. If your decision tree shows <strong class="font-medium text-ui-ink">Stale</strong> on the dashboard, agents run the old version.
-            </li>
-            <li>
-              <strong class="font-medium text-ui-ink">Use Hidden for drafts.</strong>
-              Keep a decision tree Hidden until it's fully tested. Listed decision trees are available to your AI immediately.
-            </li>
-            <li>
-              <strong class="font-medium text-ui-ink">Ask follow-ups after evaluation.</strong>
-              Stay in the same conversation for what-if, how-to-reach, or document drafts — scenario comparisons count as <strong class="font-medium text-ui-ink">2</strong> quota units; repair plans as <strong class="font-medium text-ui-ink">2.5</strong>.
+            <li class="flex gap-2.5">
+              <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ui-ink-subtle"></span>
+              <span>You do not need a tree of your own first. The first empty <code class="text-xs font-mono px-1 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_list</code> creates a per-user sample (Deployed + Listed). You can also click <strong class="font-medium text-ui-ink">Load sample</strong> on the <a href="/decision-trees/dashboard" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">dashboard</a>. To run a tree you authored, <strong class="font-medium text-ui-ink">Deploy</strong> it and set <strong class="font-medium text-ui-ink">Listed</strong>. See <a href="/docs/creator-dashboard" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Deploy, list, & delete</a>.</span>
             </li>
           </ul>
         </section>
 
         <div class="border-t border-ui-line"></div>
 
-        {# Use cases #}
-        <section aria-labelledby="use-cases-heading">
-          <h2 id="use-cases-heading" class="text-base font-semibold text-ui-ink mb-4">Example use cases</h2>
-          <dl class="grid sm:grid-cols-2 gap-3">
-            <div class="rounded-xl border border-ui-line bg-ui-surface p-4">
-              <dt class="text-sm font-semibold text-ui-ink">Legal matter analysis</dt>
-              <dd class="mt-1.5 text-sm text-ui-ink-secondary leading-relaxed">Encode a checklist for a category of matter. Your agent gathers facts, calls SMEme, returns a determined outcome with the full reasoning chain.</dd>
-            </div>
-            <div class="rounded-xl border border-ui-line bg-ui-surface p-4">
-              <dt class="text-sm font-semibold text-ui-ink">Compliance &amp; eligibility screening</dt>
-              <dd class="mt-1.5 text-sm text-ui-ink-secondary leading-relaxed">Build decision trees for regulatory eligibility questions. Get a yes/no/conditional with the conditions that decided it.</dd>
-            </div>
-            <div class="rounded-xl border border-ui-line bg-ui-surface p-4">
-              <dt class="text-sm font-semibold text-ui-ink">Repeatable triage</dt>
-              <dd class="mt-1.5 text-sm text-ui-ink-secondary leading-relaxed">Encode a triage procedure so every intake gets evaluated the same way.</dd>
-            </div>
-            <div class="rounded-xl border border-ui-line bg-ui-surface p-4">
-              <dt class="text-sm font-semibold text-ui-ink">Scenario analysis</dt>
-              <dd class="mt-1.5 text-sm text-ui-ink-secondary leading-relaxed">Vary one input and re-run with <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_what_if</code> or find minimal edits with <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-ui-surface-muted">smeme_reasoning_how_to_reach</code>.</dd>
-            </div>
-          </dl>
+        {# Authoring pointer #}
+        <section id="mcp-authoring-quickstart" aria-labelledby="mcp-authoring-quickstart-heading">
+          <h2 id="mcp-authoring-quickstart-heading" class="text-base font-semibold text-ui-ink mb-3">Build or revise a draft in chat</h2>
+          <p class="text-sm text-ui-ink-secondary leading-relaxed max-w-prose">
+            Your agent builds the draft from SMEme&rsquo;s design guidance. SMEme validates and saves it, and never
+            Deploys it or changes <strong class="font-medium text-ui-ink">Listed</strong> or
+            <strong class="font-medium text-ui-ink">Hidden</strong> for you. Review the draft in the editor, then Deploy.
+            The prompts to start with are in
+            <a href="/docs/quick-start#build-heading" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Quick start</a>.
+            The authoring tools and the revise procedure are in the
+            <a href="/mcp#mcp-authoring-quickstart" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">MCP tool reference</a>.
+          </p>
         </section>
+
+        {# Next #}
+        <p class="text-sm text-ui-ink-secondary leading-relaxed">
+          <span class="font-medium text-ui-ink">Next:</span>
+          <a href="/docs/quick-start" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Quick start →</a>
+          to build your first decision tree. To run one against your evidence, see
+          <a href="/docs/run-a-tree" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Run a tree</a>.
+        </p>
 
         {# See also #}
         <div class="pt-2 border-t border-ui-line text-sm text-ui-ink-muted space-y-1.5">
           <p class="font-medium text-ui-ink">See also</p>
           <ul class="space-y-1">
-            <li><a href="#mcp-authoring-quickstart" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Build or revise a draft in chat</a> — MCP authoring sequence</li>
             <li><a href="/mcp" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Public MCP tool reference</a> — wire names, anti-patterns, error codes</li>
             <li><a href="/docs/introduction" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Building decision trees</a> — create and edit your decision trees</li>
             <li><a href="/docs/creator-dashboard" class="text-brand-600 hover:text-brand-700 dark:text-brand-300 font-medium">Deploy, list, & delete</a> — compile and expose your decision trees</li>
