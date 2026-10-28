@@ -265,7 +265,7 @@
               <span class="v4-video-label">Demo coming soon</span>
               <figcaption>A real run: the ACME withholding matter in Claude</figcaption>
             </figure>
-            <p class="v4-demo-lead">You ask in plain language. Your agent picks the SMEme tool. The examples use the ACME withholding matter; swap in your own.</p>
+            <p class="v4-demo-lead">You ask in plain language. Your agent picks the SMEme tool. These prompts are for a decision tree you have deployed; fill in the blanks with your own tree, case, and sources. The video is a demo of one fictional matter.</p>
             <ol class="v4-steps v4-steps--compact v4-steps--prompts">
               <li><span class="v4-step-num">1</span><span><strong>See what&rsquo;s deployed</strong>
                 <figure class="v4-prompt">
@@ -276,23 +276,23 @@
               <li><span class="v4-step-num">2</span><span><strong>Run a case</strong><span>Your agent gathers the evidence from your documents and tools, admits one sourced answer at a time, and returns the report.</span>
                 <figure class="v4-prompt">
                   <figcaption><span>Ask</span><code>smeme_reasoning_evaluate</code><button type="button" class="v4-copy" data-docs-copy="lp-prompt-try">Copy</button></figcaption>
-                  <pre id="lp-prompt-try">Run my [cross-border withholding] SMEme decision tree on this case: [the ACME royalty to Party D; the agreement and W-8BEN-E are attached]. Gather the evidence, cite where each answer came from, and ask me when you can't find one. Then tell me the outcome and which answers decided it.</pre>
+                  <pre id="lp-prompt-try">Run my [decision tree name] SMEme decision tree on this case: [describe it, or attach the file]. First list the other apps and connectors you can already read. Then use the sources I name: [attached files / my mailbox / this drive / our CRM]. Gather the evidence, cite where each answer came from, and ask me when you can't find one. Then tell me the outcome and which answers decided it.</pre>
                 </figure>
               </span></li>
               <li><span class="v4-step-num">3</span><span><strong>Ask what-if</strong>
                 <figure class="v4-prompt">
                   <figcaption><span>Ask</span><code>smeme_reasoning_what_if</code><button type="button" class="v4-copy" data-docs-copy="lp-prompt-whatif">Copy</button></figcaption>
-                  <pre id="lp-prompt-whatif">Same case, but suppose [Party D's W-8BEN-E had expired before the payment date]. Does the outcome change? Show me what's different from the baseline.</pre>
+                  <pre id="lp-prompt-whatif">Same case, but suppose [one fact were different]. Does the outcome change? Show me what's different from the baseline.</pre>
                 </figure>
               </span></li>
               <li><span class="v4-step-num">4</span><span><strong>Ask how to get a different outcome</strong>
                 <figure class="v4-prompt">
                   <figcaption><span>Ask</span><code>smeme_reasoning_how_to_reach</code><button type="button" class="v4-copy" data-docs-copy="lp-prompt-reach">Copy</button></figcaption>
-                  <pre id="lp-prompt-reach">What's the smallest change in the facts that would get this matter to [the reduced treaty rate]? List each fact that would have to change and what evidence would support it.</pre>
+                  <pre id="lp-prompt-reach">What's the smallest change in the facts that would get this matter to [the other outcome]? List each fact that would have to change and what evidence would support it.</pre>
                 </figure>
               </span></li>
             </ol>
-            <p class="v4-note" style="margin:0">Fictional matter. The tool names are what your agent calls behind the scenes. More detail in the <a href="/docs/mcp">full MCP docs</a>.</p>
+            <p class="v4-note" style="margin:0">How to name your sources and how a run proceeds: <a href="/docs/run-a-tree">Run a tree</a>. The tool names are what your agent calls behind the scenes. Connector steps are in the <a href="/docs/mcp">MCP setup guide</a>.</p>
           </div>
         </div>
       </div>

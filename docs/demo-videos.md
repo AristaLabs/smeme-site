@@ -4,11 +4,20 @@ Two videos fill the "Demo coming soon" frames in the homepage demos section
 (`src/templates/landing/preview.html`, `#demo-run` and `#demo-build`).
 
 Real product on production, captions on, no voiceover, 16:9 (the `.v4-video`
-frame). Each video walks the prompts printed directly beneath it, in the same
-order and with the same wording, so a viewer can pause and copy.
+frame). These are demos, not how-to videos. A viewer watches a run and a
+build on our account. They do not need the ACME files, and they are not
+asked to paste the lines said on screen.
+
+The copyable prompts on the page are sample prompts for the harness the
+visitor already uses: connect SMEme, find a decision procedure worth
+encoding, build it, deploy it, and try it on a case of their own. Those
+prompts are specified in
+@smeme-cloud/docs/campaign/gtm/canonical-example-brief.md. They are not the
+script below.
 
 Governing decisions: @smeme-cloud/docs/campaign/gtm/SMEme_GTM_Plan.md §1
 (oversight split), §6 (claims boundaries, terminology), §8 (website demos).
+Recording notes for the ACME matter live in the canonical-example brief.
 
 ## Demo A · Run a decision tree (1:00–1:15)
 
@@ -25,33 +34,39 @@ Withhold at Reduced Treaty Rate · Withhold at Statutory 30% · Backup
 Withholding Applies (24%) · Special-Regime Withholding Applies · Escalate to
 Tax Counsel.
 
-| # | On screen | Page prompt | Expected result |
+| # | On screen | Said in the demo | Expected result |
 |---|---|---|---|
-| 1 | Paste prompt 1 in a new Claude chat | "Which SMEme decision trees do I have deployed? …" | Claude lists the ACME tree with its one-line description |
-| 2 | Paste prompt 2; agreement and W-8BEN-E visible in the Project | "Run my cross-border withholding SMEme decision tree on this case: the ACME royalty to Party D …" | Claude gathers answers from the files, cites a source per answer, asks when it can't find one, returns **Withhold at Reduced Treaty Rate** and names the deciding answers |
-| 3 | Paste prompt 3 | "Same case, but suppose Party D's W-8BEN-E had expired before the payment date …" | **Withhold at Statutory 30%**, with the difference from baseline |
-| 4 | Paste prompt 4 | "What's the smallest change in the facts that would get this matter to **No Withholding Required**? …" | The facts that would have to change and the evidence each would need |
+| 1 | Ask in a new Claude chat | "Which SMEme decision trees do I have deployed? …" | Claude lists the ACME tree with its one-line description |
+| 2 | Ask; agreement and W-8BEN-E visible in the Project | "Run my cross-border withholding SMEme decision tree on this case: the ACME royalty to Party D …" | Claude gathers answers from the files, cites a source per answer, asks when it can't find one, returns **Withhold at Reduced Treaty Rate** and names the deciding answers |
+| 3 | Ask | "Same case, but suppose Party D's W-8BEN-E had expired before the payment date …" | **Withhold at Statutory 30%**, with the difference from baseline |
+| 4 | Ask | "What's the smallest change in the facts that would get this matter to **No Withholding Required**? …" | The facts that would have to change and the evidence each would need |
 
 Cut between prompts; keep the tool-call indicator visible when Claude calls
 SMEme. Hold on the result in steps 2 and 4.
 
-Step 4 target: the page prompt currently says "[the reduced treaty rate]", which
-is the baseline outcome. Change it to "No Withholding Required" (step 1 below).
+These lines are the recording script. They are not copyable prompts on the
+page. Step 4 asks for **No Withholding Required**. The reduced treaty rate is
+the baseline, so the recording does not ask how to reach it.
 
 ## Demo B · Build a decision tree (1:15–1:30)
 
 Frame caption: "Build your first decision process."
 
 Procedure: client acceptance (new-client intake and conflicts), per the GTM
-decision of 2026-10-24. The page's bracketed example "approving a new vendor"
-is a placeholder; the video shows what the user typed in its place.
+decision of 2026-10-24. The recording fills that name in. The sample prompt
+on the page keeps a plain placeholder for the visitor.
 
-| # | On screen | Page prompt | Expected result |
+| # | On screen | Said in the demo | Expected result |
 |---|---|---|---|
-| 1 | Paste the Connect prompt in Claude; sign-in tab opens; sign in; back to chat | "Connect me to SMEme over MCP. The instructions are at smeme.ai …" | Claude confirms it can see SMEme's tools |
-| 2 | Paste the Build prompt with "client acceptance" filled in; answer the interview briefly | "Build a SMEme decision tree for a decision I sign off on repeatedly: …" | Three approval stops, each shown and approved: outcomes → questions → full outline. Claude saves the draft and says how to Deploy |
-| 3 | Paste the Deploy prompt; follow it in the SMEme editor | "My SMEme draft is saved. Walk me through Deploy and switching Listed on …" | Deploy, then Listed on; tree shows Live |
-| 4 | New chat; run it on a case with a known answer (the page's own "then start a new chat" instruction) | A one-line run prompt in the style of Demo A step 2 | Report with the outcome and deciding facts |
+| 1 | Connect in Claude; sign-in tab opens; sign in; back to chat | "Connect me to SMEme over MCP. The instructions are at smeme.ai …" | Claude confirms it can see SMEme's tools |
+| 2 | Build, with "client acceptance" filled in; answer the interview briefly | "Build a SMEme decision tree for a decision I sign off on repeatedly: …" | Three approval stops, each shown and approved: outcomes → questions → full outline. Claude saves the draft and says how to Deploy |
+| 3 | Deploy in the SMEme editor | "My SMEme draft is saved. Walk me through Deploy and switching Listed on …" | Deploy, then Listed on; tree shows Live |
+| 4 | New chat; run it on a case with a known answer | A one-line run of the tree just built, on a case in the Demo B files | Report with the outcome and deciding facts |
+
+The page's sample build prompt may keep a plain placeholder such as
+"approving a new vendor." That placeholder is for the visitor's own
+procedure. The recording shows client acceptance. The visitor is not asked
+to reproduce the recording.
 
 The interview in step 2 is the long part. Record it in full, then cut to the
 three approval stops and one or two interview exchanges. Keep every on-screen
@@ -97,12 +112,14 @@ caveat that it is a model procedure, not a bar-reviewed one.
 
 ## Pre-production
 
-1. **Serial.** Fix the Demo A step 4 prompt target in `preview.html`
-   (`#lp-prompt-reach`): "[the reduced treaty rate]" → "No Withholding
-   Required". Run `pytest tests/test_build.py`.
+1. **Serial.** On the homepage, the copyable prompts are the sample prompts
+   in the canonical-example brief: connect, find a procedure to encode,
+   build, deploy, and try a case of their own. Remove the ACME paste prompts
+   from the run column. The recording script stays in the shot table above.
+   Run `pytest tests/test_build.py`.
 2. **Serial, after 1.** Commit the pending site redesign so the frames and
-   prompts the videos reference are fixed. Ship it with the "Demo coming soon"
-   frames; the videos replace them later.
+   the sample prompts are fixed. Ship it with the "Demo coming soon" frames;
+   the videos replace them later.
 3. **Parallel with 2.** Create the demo account on production (free tier: the
    ACME tree and the client-acceptance tree use two of three slots). Load the
    ACME example and download the case bundle. Create a Claude Project
@@ -123,7 +140,8 @@ caveat that it is a model procedure, not a bar-reviewed one.
    @smeme-cloud/docs/campaign/gtm/workflow-builders/market-workflow-builders.md
    §12.5. Decide which interview exchanges to keep.
 6. **Serial, after 4 and 5a.** Freeze the two shot tables above. If a dry run
-   contradicts a prompt on the page, fix the page, not the video.
+   contradicts the recording script, fix this shot table. Leave the sample
+   prompts on the page as the visitor's own starting point.
 
 ## Recording and post
 
@@ -157,8 +175,8 @@ caveat that it is a model procedure, not a bar-reviewed one.
 
 ## Open decisions
 
-- Demo B procedure: client acceptance (recommended, matches the GTM decision)
-  or change the page placeholder to match whatever is recorded.
+- Demo B procedure is client acceptance, per the GTM decision. The sample
+  prompt on the page keeps its own placeholder.
 - Hosting (step 9).
 - ACME substantive-review caveat: practitioner review before publishing, or
   revise the dataset notice to the label-only posture.
