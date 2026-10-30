@@ -226,9 +226,10 @@ class StaticBuildTests(unittest.TestCase):
         self.assertNotIn("/auth/register", hero)
         self.assertNotIn("Watch the demos", hero)
         self.assertNotIn("Build your first decision tree", hero)
-        self.assertIn("A reasoned cause is how you keep agency.", html)
-        self.assertIn("It is an act of autonomy", html)
-        self.assertIn("The model proposes, you authorize, and the solver decides", html)
+        self.assertIn("Automate <em>your</em> reasoning with Rational AI.", html)
+        self.assertIn("That is control by design, not by monitoring an error rate.", html)
+        self.assertIn("makes the automated reasoning over it transparent", html)
+        self.assertNotIn("A reasoned cause is how you keep agency.", html)
         security = html[html.index("Engineering") : html.index('id="mission"')]
         self.assertLess(
             security.index("Escalate the alert"), security.index("Ship the change")
