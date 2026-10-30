@@ -120,8 +120,9 @@
           <p class="text-sm text-ui-ink-secondary leading-relaxed mb-4">
             The <strong class="font-medium text-ui-ink">Tools</strong> column on your dashboard compares your
             <strong class="font-medium text-ui-ink">current saved graph</strong> with your
-            <strong class="font-medium text-ui-ink">last deployment</strong>. Your AI always evaluates against
-            the deployed version — not unsaved or undeployed edits.
+            <strong class="font-medium text-ui-ink">last deployment</strong>. Your AI evaluates the deployed
+            version, never unsaved or undeployed edits. If the saved graph no longer matches the deployment, the run
+            stops until you redeploy.
           </p>
 
           <div class="overflow-x-auto rounded-xl border border-ui-line">
@@ -146,7 +147,7 @@
                     {{ badge("Stale", "amber") }}
                   </th>
                   <td class="align-top px-4 py-3 text-sm text-ui-ink-secondary leading-relaxed">
-                    The graph has changed since the last deploy. Your AI is running the <strong class="font-medium text-ui-ink">older version</strong> until you redeploy.
+                    The graph has changed since the last deploy. Your AI <strong class="font-medium text-ui-ink">can&rsquo;t run this tree</strong> until you redeploy. It reports that the tree changed since it was last deployed and asks you to Redeploy.
                   </td>
                 </tr>
                 <tr>
