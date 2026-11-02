@@ -206,6 +206,28 @@ class StaticBuildTests(unittest.TestCase):
         for removed in ("Natural language at the edges", "Does ACME withhold on the Party D royalty?"):
             self.assertNotIn(removed, html, removed)
 
+    def test_homepage_demo_videos_are_copied_into_the_build(self):
+        html = build._output_path("/").read_text(encoding="utf-8")
+        demos = html[html.index('id="demos"') : html.index('id="use-cases"')]
+        build_block = demos[demos.index('id="demo-build"') : demos.index('id="demo-run"')]
+        run_block = demos[demos.index('id="demo-run"') :]
+        self.assertNotIn("Demo coming soon", demos)
+        self.assertIn('src="/media/demo-b-build.mp4"', build_block)
+        self.assertIn('poster="/media/demo-b-build.jpg"', build_block)
+        self.assertIn("Build your first decision process", build_block)
+        self.assertIn('src="/media/demo-a-withholding.mp4"', run_block)
+        self.assertIn('poster="/media/demo-a-withholding.jpg"', run_block)
+        self.assertIn("A real run: the ACME withholding matter in Claude", run_block)
+        for name in (
+            "demo-a-withholding.mp4",
+            "demo-a-withholding.jpg",
+            "demo-b-build.mp4",
+            "demo-b-build.jpg",
+        ):
+            asset = self.output / "media" / name
+            self.assertTrue(asset.is_file(), name)
+            self.assertGreater(asset.stat().st_size, 0, name)
+
     def test_homepage_leads_with_the_withholding_use_case(self):
         html = build._output_path("/").read_text(encoding="utf-8")
         self.assertIn(
