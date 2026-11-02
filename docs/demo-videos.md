@@ -2,14 +2,13 @@
 
 Version: 1.0 | Finalized October 28, 2026 | Owner: Dan Arista
 
-Status: ready to produce. The site work the videos depend on is live
-(generic sample prompts, redesign committed, `/builders` and `/docs/langgraph`
-retired). What remains is account setup, the Demo B data set, two dry runs,
-recording, and post.
+Status: shipped in this change. Render publishes the players when this
+merges to `main`.
 
-Two videos fill the two "Demo coming soon" frames in the homepage demos
-section (`src/templates/landing/preview.html`, `#demo-run` and
-`#demo-build`). There is no third frame; `/builders` redirects to `/docs`.
+The homepage demo frames (`src/templates/landing/preview.html`, `#demo-run`
+and `#demo-build`) play `/media/demo-a-withholding.mp4` and
+`/media/demo-b-build.mp4`. There is no third frame; `/builders` redirects
+to `/docs`.
 
 Real product on production, captions on, no voiceover, 16:9 (the `.v4-video`
 frame). These are demos, not how-to videos. A viewer watches a run and a

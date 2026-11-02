@@ -162,6 +162,14 @@ def main() -> None:
         destination = OUTPUT / "downloads" / dataset.name
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(dataset, destination)
+    media = ROOT / "src" / "media"
+    if media.is_dir():
+        for asset in media.iterdir():
+            if asset.suffix.lower() not in {".mp4", ".jpg", ".png", ".webp"}:
+                continue
+            destination = OUTPUT / "media" / asset.name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(asset, destination)
 
     routes = "\n".join(
         f"- [{label}]({SITE_BASE}{path}): {description}"
