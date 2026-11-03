@@ -249,8 +249,9 @@ class StaticBuildTests(unittest.TestCase):
         self.assertNotIn("Watch the demos", hero)
         self.assertNotIn("Build your first decision tree", hero)
         self.assertIn("Automate <em>your</em> reasoning with Rational AI.", html)
-        self.assertIn("That is control by design, not by monitoring an error rate.", html)
-        self.assertIn("makes the automated reasoning over it transparent", html)
+        self.assertIn("That is control by design, not by monitoring drift or error rates.", html)
+        self.assertIn("Control doesn&rsquo;t come from monitoring, it comes from reasoned design.", html)
+        self.assertIn("makes the automated reasoning over it transparent and fully deterministic", html)
         self.assertNotIn("A reasoned cause is how you keep agency.", html)
         security = html[html.index("Engineering") : html.index('id="mission"')]
         self.assertLess(
