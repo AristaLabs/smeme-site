@@ -22,10 +22,34 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Organization",
+      "@id": "https://aristalabs.ai/#organization",
+      "name": "Arista Labs",
+      "legalName": "Arista Labs, LLC",
+      "url": "https://aristalabs.ai/",
+      "email": "contact@aristalabs.ai"
+    },
+    {
+      "@type": "Organization",
+      "@id": "{{ site_base }}/#organization",
+      "name": "SMEme",
+      "legalName": "Arista Labs, LLC",
+      "url": "{{ site_base }}/",
+      "logo": "{{ site_base }}/static/icon-512.png",
+      "email": "contact@aristalabs.ai",
+      "parentOrganization": { "@id": "https://aristalabs.ai/#organization" },
+      "sameAs": [
+        "https://aristalabs.ai",
+        "https://x.com/AristaLabs",
+        "https://www.linkedin.com/company/aristalabs/",
+        "{{ site_base }}/mcp"
+      ]
+    },
+    {
       "@type": "WebAPI",
       "@id": "{{ site_base }}/mcp#webapi",
       "name": "SMEme Reasoning MCP",
-      "description": "SMEme is the expert reasoning layer for AI agents — a deterministic MCP server that runs expert-authored decision trees and returns traceable conclusions.",
+      "description": "SMEme is the formal reasoning layer for AI — a symbolic solver that evaluates expert-authored decision trees over MCP and returns traceable conclusions.",
       "url": "{{ site_base }}/api/v1/mcp",
       "documentation": "{{ site_base }}/mcp",
       "provider": { "@id": "{{ site_base }}/#organization" }

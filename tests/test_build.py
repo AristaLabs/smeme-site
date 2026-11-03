@@ -289,6 +289,29 @@ class StaticBuildTests(unittest.TestCase):
                 "SMEme is the formal reasoning layer for AI", contents, filename
             )
             self.assertNotIn("deterministic", contents.lower(), filename)
+            self.assertNotIn("Product overview.", contents, filename)
+
+    def test_homepage_meta_matches_the_share_card(self):
+        html = build._output_path("/").read_text(encoding="utf-8")
+        description = re.search(
+            r'<meta name="description" content="([^"]*)"', html
+        )
+        og_description = re.search(
+            r'<meta property="og:description" content="([^"]*)"', html
+        )
+        self.assertIsNotNone(description)
+        self.assertIsNotNone(og_description)
+        self.assertEqual(description.group(1), og_description.group(1))
+        self.assertNotIn("attorneys, tax advisers", description.group(1))
+
+    def test_mcp_json_ld_uses_the_category_sentence(self):
+        html = build._output_path("/mcp").read_text(encoding="utf-8")
+        self.assertIn(
+            "SMEme is the formal reasoning layer for AI — a symbolic solver that evaluates expert-authored decision trees over MCP and returns traceable conclusions.",
+            html,
+        )
+        self.assertIn('"@id": "https://smeme.ai/#organization"', html)
+        self.assertNotIn("expert reasoning layer", html)
 
     def test_v4_pages_have_no_design_tool_leftovers(self):
         for route in ("/",):
