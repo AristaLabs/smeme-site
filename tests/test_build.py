@@ -352,6 +352,14 @@ class StaticBuildTests(unittest.TestCase):
         self.assertEqual(html.count("<summary>"), 12)
         self.assertIn("What is a decision tree?", html)
         self.assertIn("Hosted Free includes 3 decision trees and 150 MCP calls.", html)
+        shared = (
+            "You can download a decision tree as a file, and another SMEme user can "
+            "upload that file as their own copy. The copy is a separate tree on their account."
+        )
+        self.assertIn(shared, html)
+        self.assertNotIn("not available yet", html)
+        home = build._output_path("/").read_text(encoding="utf-8")
+        self.assertIn(shared, home)
 
     def test_how_it_works_is_unpublished(self):
         routes = {route for route, _, _ in build.PUBLIC_ROUTES}
